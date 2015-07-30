@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace SmashLeague.OAuth.Battlenet
+namespace SmashLeague.Authentication.Battlenet
 {
     internal class BattlenetAuthenticationHandler : OAuthAuthenticationHandler<BattlenetAuthenticationOptions>
     {

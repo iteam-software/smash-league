@@ -1,0 +1,10 @@
+﻿
+<h1>Welcome, please <strong>sign-in.</strong></h1>
+
+<button onclick="beginOAuth()">Click to sign-in with Battle.net</button>
+
+<script>
+  function beginOAuth() {
+    window.open("https://localhost:5000/auth/signin-with-battlenet", "OAuthWindow", 'top=50,left=50,status=0,width=800,height=600')
+  }
+</script>

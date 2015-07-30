@@ -6,7 +6,7 @@ using Microsoft.Framework.Logging;
 using Microsoft.Framework.OptionsModel;
 using Microsoft.Framework.WebEncoders;
 
-namespace SmashLeague.OAuth.Battlenet
+namespace SmashLeague.Authentication.Battlenet
 {
     public class BattlenetAuthenticationMiddleware : OAuthAuthenticationMiddleware<BattlenetAuthenticationOptions>
     {

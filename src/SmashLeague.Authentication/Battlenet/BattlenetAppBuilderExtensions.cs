@@ -2,7 +2,7 @@
 using Microsoft.Framework.OptionsModel;
 using System;
 
-namespace SmashLeague.OAuth.Battlenet
+namespace SmashLeague.Authentication.Battlenet
 {
     public static class BattlenetAppBuilderExtensions
     {

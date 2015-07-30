@@ -1,0 +1,26 @@
+﻿{
+  "version": "1.0.0-alpha1",
+  "title": "SmashLeague.Authentication",
+  "description": "SmashLeague.Authentication Class Library",
+  "authors": [ "mlynam" ],
+  "tags": [ "" ],
+  "projectUrl": "https://github.com/iteam-software/smash-league",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iteam-software/smash-league.git"
+  },
+
+  "dependencies": {
+    "Microsoft.AspNet.Authentication.OAuth": "1.0.0-beta6"
+  },
+
+  "frameworks": {
+    "dnxcore50": {
+      "dependencies": {
+        "System.Runtime": "4.0.20-beta-23109",
+        "System.Runtime.Extensions": "4.0.10-beta-23109"
+      }
+    },
+    "dnx451": { }
+  }
+}
