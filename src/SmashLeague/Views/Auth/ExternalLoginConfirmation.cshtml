@@ -1,0 +1,21 @@
+﻿@model ExternalLoginConfirmationViewModel
+
+<h1>Associate your @ViewData["LoginProvider"] account.</h1>
+
+<form asp-controller="Auth" asp-action="ExternalLoginConfirmation" method="post" role="form">
+  <h4>Associate Form</h4>
+  <hr />
+  <div asp-validation-summary="ValidationSummary.All"></div>
+
+  <div>
+    <label asp-for="Email"></label>
+    <div>
+      <input asp-for="Email" />
+      <span asp-validation-for="Email"></span>
+    </div>
+  </div>
+
+  <div>
+    <button type="submit">Register</button>
+  </div>
+</form>

@@ -10,5 +10,9 @@ namespace SmashLeague.Authentication.Battlenet
 		public const string TokenEndpoint = "https://us.battle.net/oauth/token";
 
         public const string UserInformationEndpoint = "https://us.api.battle.net/account/user";
+
+        public const string BattletagClaimType = "urn:battlenet:battletag";
+
+        public const string BattletagRegex = "^[a-z]{3,16}#[0-9]{4}$";
     }
 }

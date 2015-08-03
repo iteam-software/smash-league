@@ -6,6 +6,7 @@ using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.Runtime;
 using SmashLeague.Authentication.Battlenet;
+using SmashLeague.Data;
 
 namespace SmashLeague
 {
@@ -14,6 +15,7 @@ namespace SmashLeague
         public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
             var builder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
+                .AddJsonFile("config.json")
                 .AddUserSecrets()
                 .AddEnvironmentVariables();
 
@@ -22,9 +24,14 @@ namespace SmashLeague
 
         public IConfiguration Configuration { get; set; }
 
-        // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add Smash League data
+            services.AddSmashLeagueData(options =>
+            {
+                options.ConnectionString = Configuration["Data:DefaultConnection:ConnectionString"];
+            });
+
             // Congfigure logging
             services.AddLogging();
 
@@ -36,17 +43,27 @@ namespace SmashLeague
                 options.ClientSecret = Configuration["Battlenet:ClientSecret"];
             });
 
+            // Configure identity authentication
+            services.ConfigureIdentity(options =>
+            {
+                options.ClaimsIdentity.UserNameClaimType = BattlenetAuthenticationDefaults.BattletagClaimType;
+                options.User.UserNameValidationRegex = BattlenetAuthenticationDefaults.BattletagRegex;
+            });
+
             // Add Mvc services
             services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            // Using battlenet authentication
-            app.UseBattlenetAuthentication();
-
             // Setup logging
             loggerFactory.AddConsole();
+
+            // Using Identity
+            app.UseIdentity();
+
+            // Using battlenet authentication
+            app.UseBattlenetAuthentication();
 
             app.UseMvc();
         }

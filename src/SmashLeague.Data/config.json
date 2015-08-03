@@ -1,0 +1,7 @@
+﻿{
+	"Data": {
+		"DefaultConnection": {
+			"ConnectionString": "Server=(localdb)\\MSSQLLocalDB;Database=SmashLeague;Trusted_Connection=True;"
+		}
+	}
+}

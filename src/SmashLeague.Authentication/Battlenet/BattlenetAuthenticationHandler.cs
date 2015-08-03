@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Http.Features.Authentication;
 
 namespace SmashLeague.Authentication.Battlenet
 {
@@ -43,12 +44,17 @@ namespace SmashLeague.Authentication.Battlenet
             var battletag = BattlenetAuthenticationHelper.GetBattletag(payload);
             if (!string.IsNullOrEmpty(battletag))
             {
-                identity.AddClaim(new Claim("urn:battlenet:battletag", battletag, ClaimValueTypes.String, Options.ClaimsIssuer));
+                identity.AddClaim(new Claim(BattlenetAuthenticationDefaults.BattletagClaimType, battletag, ClaimValueTypes.String, Options.ClaimsIssuer));
             }
 
             await Options.Notifications.Authenticated(notification);
 
             return new AuthenticationTicket(notification.Principal, notification.Properties, notification.Options.AuthenticationScheme);
+        }
+
+        protected override Task HandleSignInAsync(SignInContext context)
+        {
+            return base.HandleSignInAsync(context);
         }
 
         protected override string BuildChallengeUrl(AuthenticationProperties properties, string redirectUri)

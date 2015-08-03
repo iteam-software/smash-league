@@ -1,0 +1,27 @@
+{
+  "version": "1.0.0-*",
+  "description": "SmashLeague.Data Class Library",
+  "authors": [ "mlynam" ],
+  "tags": [ "" ],
+  "projectUrl": "https://github.com/iteam-software/smash-league",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iteam-software/smash-league.git"
+  },
+
+  "dependencies": {
+    "EntityFramework.Commands": "7.0.0-beta6",
+    "EntityFramework.SqlServer": "7.0.0-beta6",
+    "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta6",
+    "Microsoft.Framework.Configuration.Json": "1.0.0-beta5"
+  },
+
+  "frameworks": {
+    "dnx451": { },
+    "dnxcore50": { }
+  },
+
+  "commands": {
+    "ef": "EntityFramework.Commands"
+  }
+}

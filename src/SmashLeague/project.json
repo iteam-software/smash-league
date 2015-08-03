@@ -4,13 +4,18 @@
   "userSecretsId": "SmashLeague",
 
   "dependencies": {
+    "Microsoft.AspNet.Authentication.Cookies": "1.0.0-beta6",
+    "Microsoft.AspNet.Identity": "3.0.0-beta6",
     "Microsoft.AspNet.Mvc": "6.0.0-beta6",
+    "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-beta6",
     "Microsoft.AspNet.Server.IIS": "1.0.0-beta6",
     "Microsoft.AspNet.Server.WebListener": "1.0.0-beta6",
+    "Microsoft.AspNet.Tooling.Razor": "1.0.0-beta6",
     "Microsoft.Framework.Configuration.UserSecrets": "1.0.0-beta6",
     "Microsoft.Framework.Logging": "1.0.0-beta6",
     "Microsoft.Framework.Logging.Console": "1.0.0-beta6",
-    "SmashLeague.Authentication": "1.0.0-*"
+    "SmashLeague.Authentication": "1.0.0-*",
+    "SmashLeague.Data": "1.0.0-*"
   },
 
   "commands": {
