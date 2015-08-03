@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 using Microsoft.Framework.DependencyInjection;
-using SmashLeague.Data.Security;
 using System;
 
 namespace SmashLeague.Data

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace SmashLeague.Data.Security
+namespace SmashLeague.Data
 {
     public class ApplicationUser : IdentityUser
     {

@@ -14,8 +14,7 @@
     "Microsoft.Framework.Configuration.UserSecrets": "1.0.0-beta6",
     "Microsoft.Framework.Logging": "1.0.0-beta6",
     "Microsoft.Framework.Logging.Console": "1.0.0-beta6",
-    "SmashLeague.Authentication": "1.0.0-*",
-    "SmashLeague.Data": "1.0.0-*"
+    "SmashLeague.Authentication": "1.0.0-*"
   },
 
   "commands": {
@@ -23,8 +22,11 @@
   },
 
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
+    "dnx451": {
+      "dependencies": {
+        "SmashLeague.Data": "1.0.0-*"
+      }
+    }
   },
 
   "publishExclude": [

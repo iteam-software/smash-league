@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.Logging;
 using SmashLeague.Authentication.Battlenet;
-using SmashLeague.Data.Security;
+using SmashLeague.Data;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using SmashLeague.Models;
@@ -26,21 +26,14 @@ namespace SmashLeague.Controllers
             _logger = loggerFactory.CreateLogger(nameof(AuthController));
         }
 
-        // GET: /<controller>/
+        // GET /auth/signin
         [Route("signin", Name = "Auth:Signin")]
         public IActionResult Signin()
         {
-            if (!User.Identity.IsAuthenticated)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction(nameof(HomeController.Index));
-            }
+            return View();
         }
 
-        // External signin for Battlenet
+        // GET /auth/signin-with-battlenet External signin for Battlenet
         [HttpGet]
         [Route("signin-with-battlenet", Name = "Auth:SigninWithBattlenet")]
         public IActionResult SigninWithBattlenet(string returnUrl = null)
@@ -140,13 +133,13 @@ namespace SmashLeague.Controllers
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    result = await _userManager.AddLoginAsync(user, info);
-                    if (result.Succeeded)
+                    var innerResult = await _userManager.AddLoginAsync(user, info);
+                    if (innerResult.Succeeded)
                     {
                         await _signInManager.SignInAsync(user, false);
                         return RedirectToAction(nameof(ExternalSigninSuccess), new { ReturnUrl = returnUrl });
                     }
-                    AddErrors(result);
+                    AddErrors(innerResult);
                 }
                 AddErrors(result);
             }

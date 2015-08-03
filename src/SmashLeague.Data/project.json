@@ -10,18 +10,15 @@
   },
 
   "dependencies": {
-    "EntityFramework.Commands": "7.0.0-beta6",
-    "EntityFramework.SqlServer": "7.0.0-beta6",
     "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta6",
     "Microsoft.Framework.Configuration.Json": "1.0.0-beta5"
   },
 
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
-  },
-
-  "commands": {
-    "ef": "EntityFramework.Commands"
+    "dnx451": {
+      "dependencies": {
+        "EntityFramework": "6.1.3"
+      }
+    }
   }
 }
