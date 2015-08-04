@@ -27,9 +27,18 @@ namespace SmashLeague.Controllers
         }
 
         // GET /auth/signin
-        [Route("signin", Name = "Auth:Signin")]
+        [Route("signin", Name = "Auth:SignIn")]
         public IActionResult Signin()
         {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("signout", Name = "Auth:SignOut")]
+        public async Task<IActionResult> SignOut()
+        {
+            await _signInManager.SignOutAsync();
+
             return View();
         }
 

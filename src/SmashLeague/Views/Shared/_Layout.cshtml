@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <title>@ViewBag.Title</title>
+
+  <environment names="Development">
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+  </environment>
+</head>
+<body style="padding-top: 50px">
+  <div class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a asp-controller="Home" asp-action="Index" class="navbar-brand"><strong>SMASH</strong>League</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        @await Html.PartialAsync("_LoginPartial")
+      </div>
+    </div>
+  </div>
+
+  <div>
+    @RenderBody()
+  </div>
+
+  <environment names="Development">
+    <script src="~/lib/jquery/js/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+  </environment>
+</body>
+</html>

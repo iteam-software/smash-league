@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.StaticFiles;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
@@ -58,6 +59,8 @@ namespace SmashLeague
         {
             // Setup logging
             loggerFactory.AddConsole();
+
+            app.UseStaticFiles();
 
             // Using Identity
             app.UseIdentity();

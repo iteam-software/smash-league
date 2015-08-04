@@ -14,6 +14,7 @@
     "Microsoft.Framework.Configuration.UserSecrets": "1.0.0-beta6",
     "Microsoft.Framework.Logging": "1.0.0-beta6",
     "Microsoft.Framework.Logging.Console": "1.0.0-beta6",
+    "Microsoft.AspNet.StaticFiles": "1.0.0-beta6",
     "SmashLeague.Authentication": "1.0.0-*"
   },
 
