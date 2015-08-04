@@ -6,10 +6,11 @@
     <TypeScriptNoImplicitAny>false</TypeScriptNoImplicitAny>
     <TypeScriptModuleKind>commonjs</TypeScriptModuleKind>
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
-    <TypeScriptOutFile>smash-league.js</TypeScriptOutFile>
-    <TypeScriptOutDir>.\wwwroot\js</TypeScriptOutDir>
+    <TypeScriptOutFile>wwwroot\js\smash-league.js</TypeScriptOutFile>
+    <TypeScriptOutDir></TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>false</TypeScriptGeneratesDeclarations>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptSourceRoot></TypeScriptSourceRoot>
     <TypeScriptNoEmitOnError>true</TypeScriptNoEmitOnError>
   </PropertyGroup>
   <PropertyGroup>

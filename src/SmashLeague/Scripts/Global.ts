@@ -2,8 +2,10 @@
 module SmashLeague {
   'use strict';
 
-  var smashLeague = angular.module('SmashLeague', []);
+  export class Application {
 
-  // Add directives
-  smashLeague.directive('dropdownKeepOpen', DropdownKeepOpen.Factory);
+    public static Module: ng.IModule;
+  }
+
+  Application.Module = angular.module('SmashLeague', []);
 }

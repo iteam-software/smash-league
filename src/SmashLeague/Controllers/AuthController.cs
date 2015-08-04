@@ -6,6 +6,7 @@ using SmashLeague.Data;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using SmashLeague.Models;
+using Microsoft.AspNet.Authorization;
 
 namespace SmashLeague.Controllers
 {
@@ -155,6 +156,14 @@ namespace SmashLeague.Controllers
 
             ViewData["ReturnUrl"] = returnUrl;
             return View(model);
+        }
+
+        [HttpGet]
+        [Route("validate", Name = "Auth:Validate")]
+        [Authorize]
+        public IActionResult Validate()
+        {
+            return Content(string.Empty);
         }
 
         private void AddErrors(IdentityResult result)

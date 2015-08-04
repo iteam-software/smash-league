@@ -9,11 +9,6 @@ namespace SmashLeague.Controllers
         [Route("", Name = "Home:Index")]
         public IActionResult Index()
         {
-            if (User.IsSignedIn())
-            {
-                ViewData["Username"] = User.Identity.Name;
-            }
-
             return View();
         }
     }

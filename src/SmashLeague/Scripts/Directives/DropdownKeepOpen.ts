@@ -45,4 +45,6 @@ module SmashLeague {
       return directive;
     }
   }
+
+  Application.Module.directive('dropdownKeepOpen', DropdownKeepOpen.Factory);
 }
