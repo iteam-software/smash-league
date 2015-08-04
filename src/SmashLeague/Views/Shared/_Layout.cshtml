@@ -2,11 +2,14 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width" />
-  <title>@ViewBag.Title</title>
+  <title>SMASH League</title>
 
   <environment names="Development">
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/css/smash-league.css" />
   </environment>
+  
 </head>
 <body style="padding-top: 50px">
   <div class="navbar navbar-default navbar-fixed-top">
@@ -20,7 +23,21 @@
         <a asp-controller="Home" asp-action="Index" class="navbar-brand"><strong>SMASH</strong>League</a>
       </div>
       <div class="navbar-collapse collapse">
-        @await Html.PartialAsync("_LoginPartial")
+        <ul class="nav navbar-right navbar-nav">
+          <li class="dropdown keep-open">
+            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sign In <span class="caret"></span></a>
+            <ul class="dropdown-menu dropdown-auth">
+              <li class="help-block center-block">
+                <h3>Sign In</h3>
+                <p>Please select an authentication method below.</p>
+              </li>
+              <li><button class="btn navbar-btn btn-lg btn-auth btn-auth-bnet"><strong>Battle.net</strong></button></li>
+              <li>
+                <button class="btn navbar-btn btn-lg btn-auth btn-auth-twitch" disabled><strong>Twitch</strong></button>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -32,6 +49,13 @@
   <environment names="Development">
     <script src="~/lib/jquery/js/jquery.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/angular/js/angular.js"></script>
   </environment>
+
+  <script>
+    $('.dropdown.keep-open').on({
+
+    });
+  </script>
 </body>
 </html>

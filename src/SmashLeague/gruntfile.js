@@ -7,34 +7,53 @@ module.exports = function (grunt) {
     copy: {
       dev: {
         files: [
-          {
+          { // bootstrap css
             src: 'node_modules/bootstrap/dist/css/bootstrap.css',
             dest: 'wwwroot/lib/bootstrap/css/bootstrap.css',
-            options: {
-              expand: true,
-              flatten: true
-            }
           },
-          {
+          { // bootstrap js
             src: 'node_modules/bootstrap/dist/js/bootstrap.js',
             dest: 'wwwroot/lib/bootstrap/js/bootstrap.js',
-            options: {
-              expand: true,
-              flatten: true
-            }
           },
-          {
+          { // jquery
             src: 'node_modules/jquery/dist/jquery.js',
             dest: 'wwwroot/lib/jquery/js/jquery.js',
-            options: {
-              expand: true,
-              flatten: true
-            }
+          },
+          { // font-awesome css
+            expand: true,
+            flatten: true,
+            src: ['node_modules/font-awesome/css/*'],
+            dest: 'wwwroot/lib/font-awesome/css/',
+          },
+          { // font-awesome fonts
+            expand: true,
+            flatten: true,
+            src: ['node_modules/font-awesome/fonts/*'],
+            dest: 'wwwroot/lib/font-awesome/fonts/'
+          },
+          { // angular
+            expand: true,
+            flatten: true,
+            src: [
+              'node_modules/angular/angular.js',
+              'node_modules/angular/angular.min.js',
+              'node_modules/angular/angular.min.js.map',
+            ],
+            dest: 'wwwroot/lib/angular/js/'
           }
         ]
+      }
+    },
+    
+    less: {
+      dev: {
+        files: {
+          'wwwroot/css/smash-league.css': 'Less/smash-league.less'
+        }
       }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-less');
 };

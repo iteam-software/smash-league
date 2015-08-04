@@ -1,0 +1,28 @@
+﻿
+.btn-auth-variant(@bg-base, @gradient) when (@gradient) {
+  background: @bg-base;
+  background-image: linear-gradient(to bottom, lighten(@bg-base, 5%), darken(@bg-base, 5%));
+  color: #fff;
+
+  &:hover {
+    color: #fff;
+  }
+
+  &:hover:not([disabled]) {
+    background: lighten(@bg-base, 10%);
+    background-image: linear-gradient(to bottom, lighten(@bg-base, 15%), lighten(@bg-base, 5%));
+  }
+}
+
+.btn-auth-variant(@bg-base, @gradient) when (default()) {
+  background: @bg-base;
+  color: #fff;
+
+  &:hover {
+    color: #fff;
+  }
+
+  &:hover:not([disabled]) {
+    background: lighten(@bg-base, 10%);
+  }
+}

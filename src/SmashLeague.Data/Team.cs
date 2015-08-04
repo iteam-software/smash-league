@@ -10,9 +10,11 @@ namespace SmashLeague.Data
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TeamId { get; set; }
 
-        [Required]
+        [Required, MaxLength(50)]
         public string Name { get; set; }
 
-        public ICollection<TeamUser> Members { get; set; }
+        public ICollection<Rank> Rankings { get; set; }
+        public ICollection<Player> Members { get; set; }
+        public ICollection<Match> Matches { get; set; }
     }
 }

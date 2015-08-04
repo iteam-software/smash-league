@@ -8,10 +8,16 @@ namespace SmashLeague.Data
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RankId { get; set; }
 
-        [Required, Range(1, int.MaxValue)]
-        public int Position { get; set; }
+        [Required]
+        public RankBracket RankBracket { get; set; }
+
+        [Required]
+        public Rating Rating { get; set; }
 
         [Required, Range(0, int.MaxValue)]
-        public int MatchMakingRating { get; set; }
+        public int Position { get; set; }
+
+        public Player Player { get; set; }
+        public Team Team { get; set; }
     }
 }

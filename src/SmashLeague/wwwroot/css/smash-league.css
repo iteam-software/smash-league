@@ -1,0 +1,34 @@
+html,
+button {
+  /*font-family: Verdana, Geneva, Tahoma, sans-serif*/
+}
+.dropdown-auth {
+  padding: 30px;
+  width: 380px;
+}
+.btn-auth {
+  padding: 11.66666667px 35px;
+  border-radius: 2px;
+  font-size: 17px;
+  width: 100%;
+}
+.btn-auth-bnet {
+  background: #098cc8;
+  background-image: linear-gradient(to bottom, #0f9ada, #0076ad);
+  color: #fff;
+}
+.btn-auth-bnet:hover {
+  background: #10acf4;
+  background-image: linear-gradient(to bottom, #2cb2f0, #0099e0);
+  color: #fff;
+}
+.btn-auth-twitch {
+  background: #6441a5;
+  color: #fff;
+}
+.btn-auth-twitch:hover {
+  color: #fff;
+}
+.btn-auth-twitch:hover:not([disabled]) {
+  background: #7e5bbe;
+}

@@ -15,5 +15,7 @@ namespace SmashLeague.Data
         public Team Team2 { get; set; }
 
         public Team Winner { get; set; }
+
+        public Series Series { get; set; }
     }
 }

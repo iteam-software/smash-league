@@ -1,0 +1,30 @@
+﻿
+@import "variables.less";
+@import "mixins/buttons.less";
+
+.btn-auth {
+  padding: @btn-auth-lg-padding / 3 @btn-auth-lg-padding;
+  border-radius: @btn-border-radius;
+  font-size: 17px;
+  width: 100%;
+}
+
+.btn-auth-bnet {
+  background: @btn-auth-bnet-bg;
+  background-image: linear-gradient(to bottom, @btn-auth-bnet-bg-top, @btn-auth-bnet-bg-bottom);
+  color: #fff;
+
+  &:hover {
+    @hover-bg: lighten(@btn-auth-bnet-bg, 10%);
+    @hover-top-bg: lighten(@btn-auth-bnet-bg-top, 10%);
+    @hover-bottom-bg: lighten(@btn-auth-bnet-bg-bottom, 10%);
+
+    background: @hover-bg;
+    background-image: linear-gradient(to bottom, @hover-top-bg, @hover-bottom-bg);
+    color: #fff;
+  }
+}
+
+.btn-auth-twitch {
+  .btn-auth-variant(@btn-auth-twitch-bg, false);
+}
