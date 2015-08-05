@@ -1,10 +1,13 @@
-html,
-button {
-  /*font-family: Verdana, Geneva, Tahoma, sans-serif*/
-}
 .dropdown-auth {
   padding: 30px;
   width: 380px;
+}
+.navbar-full {
+  padding: 0 25px;
+}
+.nav-profile a p {
+  font-size: 80%;
+  margin-bottom: 0;
 }
 .btn-auth {
   padding: 11.66666667px 35px;
@@ -31,4 +34,23 @@ button {
 }
 .btn-auth-twitch:hover:not([disabled]) {
   background: #7e5bbe;
+}
+.btn-auth-profile {
+  width: 32px;
+  height: 32px;
+}
+.btn-auth-profile-placeholder {
+  margin: 9px;
+  background-color: #dddddd;
+}
+.navbar-default .navbar-nav > li > a.btn-auth-profile-placeholder:hover,
+.navbar-default .navbar-nav > li > a.btn-auth-profile-placeholder:active {
+  background-color: #d0d0d0;
+}
+.btn-auth-profile-placeholder:after {
+  font-family: FontAwesome;
+  content: "\f007";
+  position: absolute;
+  left: 10.5px;
+  top: 7px;
 }

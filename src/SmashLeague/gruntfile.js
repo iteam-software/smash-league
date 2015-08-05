@@ -40,11 +40,28 @@ module.exports = function (grunt) {
               'node_modules/angular/angular.min.js.map',
             ],
             dest: 'wwwroot/lib/angular/js/'
+          },
+          { // angular-ui-router
+            expand: true,
+            flatten: true,
+            src: ['node_modules/angular-ui-router/release/*'],
+            dest: 'wwwroot/lib/angular-ui-router/js/'
+          },
+          { // octicons
+            expand: true,
+            flatten: true,
+            src: [
+              'node_modules/octicons/octicons/*',
+              '!node_modules/octicons/octicons/*.md',
+              '!node_modules/octicons/octicons/*.scss',
+              '!node_modules/octicons/octicons/*.less',
+            ],
+            dest: 'wwwroot/lib/octicons/'
           }
         ]
       }
     },
-    
+
     less: {
       dev: {
         files: {

@@ -44,6 +44,12 @@ namespace SmashLeague
                 options.ClientSecret = Configuration["Battlenet:ClientSecret"];
             });
 
+            // Configure cookie authentication
+            services.ConfigureCookieAuthentication(options =>
+            {
+                options.LoginPath = null;
+            });
+
             // Configure identity authentication
             services.ConfigureIdentity(options =>
             {

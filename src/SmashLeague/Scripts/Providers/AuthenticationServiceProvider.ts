@@ -27,7 +27,7 @@ module SmashLeague {
 
       var interceptor = () => {
         return {
-          'response': $.proxy(this.HandleUnauthorized, this)
+          response: $.proxy(this.HandleUnauthorized, this)
         }
       };
 
@@ -40,6 +40,8 @@ module SmashLeague {
       if (this._service !== undefined && response.status == 401) {
         this._service.UnauthorizedResponseCallback();
       }
+
+      return response;
     }
 
     public $get(http) {

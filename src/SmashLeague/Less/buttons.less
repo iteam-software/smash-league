@@ -28,3 +28,28 @@
 .btn-auth-twitch {
   .btn-auth-variant(@btn-auth-twitch-bg, false);
 }
+
+.btn-auth-profile {
+  width: 32px;
+  height: 32px;
+}
+.btn-auth-profile-placeholder {
+  @bg: #ddd;
+
+  margin: 9px;
+  background-color: @bg;
+
+  // override bootstrap behavior
+  .navbar-default .navbar-nav > li > a&:hover,
+  .navbar-default .navbar-nav > li > a&:active {
+    background-color: darken(@bg, 5%);
+  }
+
+  &:after {
+    font-family: FontAwesome;
+    content: "\f007";
+    position: absolute;
+    left: 10.5px;
+    top: 7px;
+  }
+}

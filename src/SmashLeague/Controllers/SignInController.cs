@@ -27,20 +27,13 @@ namespace SmashLeague.Controllers
             _logger = loggerFactory.CreateLogger(nameof(AuthController));
         }
 
-        // GET /auth/signin
-        [Route("signin", Name = "Auth:SignIn")]
-        public IActionResult Signin()
-        {
-            return View();
-        }
-
         [HttpPost]
         [Route("signout", Name = "Auth:SignOut")]
         public async Task<IActionResult> SignOut()
         {
             await _signInManager.SignOutAsync();
 
-            return View();
+            return Content(string.Empty);
         }
 
         // GET /auth/signin-with-battlenet External signin for Battlenet
@@ -62,7 +55,7 @@ namespace SmashLeague.Controllers
             if (info == null)
             {
                 _logger.LogWarning("Failed to get external login info.");
-                return RedirectToAction(nameof(Signin), new { ReturnUrl = returnUrl });
+                return HttpBadRequest();
             }
 
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
@@ -163,7 +156,7 @@ namespace SmashLeague.Controllers
         [Authorize]
         public IActionResult Validate()
         {
-            return Content(string.Empty);
+            return Content(User.GetBattletag());
         }
 
         private void AddErrors(IdentityResult result)

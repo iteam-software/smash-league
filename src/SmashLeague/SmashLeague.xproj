@@ -9,7 +9,7 @@
     <TypeScriptOutFile>wwwroot\js\smash-league.js</TypeScriptOutFile>
     <TypeScriptOutDir></TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>false</TypeScriptGeneratesDeclarations>
-    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
     <TypeScriptSourceRoot></TypeScriptSourceRoot>
     <TypeScriptNoEmitOnError>true</TypeScriptNoEmitOnError>
   </PropertyGroup>

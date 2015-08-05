@@ -7,40 +7,12 @@
   <environment names="Development">
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/lib/octicons/octicons.css" />
     <link rel="stylesheet" href="~/css/smash-league.css" />
   </environment>
-  
+
 </head>
 <body style="padding-top: 50px">
-  <div class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a asp-controller="Home" asp-action="Index" class="navbar-brand"><strong>SMASH</strong>League</a>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-right navbar-nav" ng-controller="AuthController">
-          <li class="dropdown" dropdown-keep-open>
-            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sign In <span class="fa fa-chevron-down"></span></a>
-            <ul class="dropdown-menu dropdown-auth">
-              <li class="help-block center-block">
-                <h3>Sign In</h3>
-                <p>Please select an authentication method below.</p>
-              </li>
-              <li><button class="btn navbar-btn btn-lg btn-auth btn-auth-bnet" ng-click="SignIn('battlenet')"><strong>Battle.net</strong></button></li>
-              <li>
-                <button class="btn navbar-btn btn-lg btn-auth btn-auth-twitch" disabled><strong>Twitch</strong></button>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
 
   <div>
     @RenderBody()
@@ -50,8 +22,8 @@
     <script src="~/lib/jquery/js/jquery.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <script src="~/lib/angular/js/angular.js"></script>
+    <script src="~/lib/angular-ui-router/js/angular-ui-router.js"></script>
     <script src="~/js/smash-league.js"></script>
-    <script src="~/js/smash-league-config.js"></script>
   </environment>
 </body>
 </html>

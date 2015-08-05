@@ -1,13 +1,19 @@
-﻿using Microsoft.AspNet.Mvc;
-using System.Security.Claims;
+﻿using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Mvc;
 
 namespace SmashLeague.Controllers
 {
     [Route("")]
     public class HomeController : Controller
     {
-        [Route("", Name = "Home:Index")]
+        [Route("")]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [Route("root")]
+        public IActionResult Root()
         {
             return View();
         }

@@ -1,2 +1,15 @@
-﻿
-<h1>You have been signed in!</h1>
+﻿@using SmashLeague.Authentication.Battlenet
+
+<div class="container">
+  <h1 class="text-center"><span class="text-success fa fa-check-circle"></span> You have been signed in!</h1>
+  <h3 class="text-center text-info">Welcome, @User.GetBattletag()</h3>
+</div>
+
+<script>
+  var timeout = setTimeout(function () {
+
+    // Set complete to signal pareent
+    window['SmashLeague:OAuth:Complete'] = true;
+    clearTimeout(timeout);
+  }, 1200);
+</script>

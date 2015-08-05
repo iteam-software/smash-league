@@ -1,0 +1,21 @@
+﻿@using SmashLeague.Authentication.Battlenet
+
+@{
+    // Anonymous Navigation
+
+    Layout = null;
+}
+
+<li class="dropdown" dropdown-keep-open>
+  <a href="javascript:undefined;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    <strong>Sign In</strong>
+  </a>
+  <ul class="dropdown-menu dropdown-auth" ng-if="!Service.IsAuthenticated">
+    <li class="help-block center-block">
+      <h3><i class="fa fa-sign-in"></i> Sign In</h3>
+      <p>Please select an authentication method below.</p>
+    </li>
+    <li><button class="btn navbar-btn btn-lg btn-auth btn-auth-bnet" ng-click="SignIn('battlenet')"><strong>Battle.net</strong></button></li>
+    <li><button class="btn navbar-btn btn-lg btn-auth btn-auth-twitch" disabled><strong>Twitch</strong></button></li>
+  </ul>
+</li>
