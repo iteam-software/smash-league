@@ -1,0 +1,40 @@
+﻿@using SmashLeague.Authentication.Battlenet
+
+@{ 
+    // Authenticated Navigation
+
+    Layout = null;
+}
+
+<li data-toggle="tooltip" data-placement="bottom" title="Upload a replay">
+  <a href="/#/"><span class="octicon octicon-cloud-upload text-success"></span> <span class="visible-xs-inline">Upload Replay</span></a>
+</li>
+<li data-toggle="tooltip" data-placement="bottom" title="Notifications">
+  <a href="/#/"><span class="octicon octicon-inbox"></span> <span class="visible-xs-inline">Notifications</span></a>
+</li>
+<li class="dropdown">
+  <a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="btn-auth-profile btn-auth-profile-placeholder img-rounded">
+    <span class="visible-xs-inline" style="margin-left: 32px">@User.GetBattletag()</span>
+  </a>
+  <ul class="dropdown-menu">
+    <li class="nav-profile text-center">
+      <a href="/#/">
+        @User.GetBattletag()
+        <p>My Profile</p>
+      </a>
+    </li>
+    <li class="divider"></li>
+    <li class="text-center">
+      <a href="/#/" ng-click="SignOut()"><i class="fa fa-sign-out"></i> Sign Out</a>
+    </li>
+  </ul>
+</li>
+<li class="navbar-text visible-sm visible-md visible-lg">
+  @User.GetBattletag()
+</li>
+
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
