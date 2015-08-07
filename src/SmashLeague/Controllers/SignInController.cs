@@ -152,9 +152,9 @@ namespace SmashLeague.Controllers
         }
 
         [HttpGet]
-        [Route("validate", Name = "Auth:Validate")]
+        [Route("authenticate", Name = "Auth:Authenticate")]
         [Authorize]
-        public IActionResult Validate()
+        public IActionResult Authenticate()
         {
             return Content(User.GetBattletag());
         }

@@ -6,34 +6,43 @@ var SmashLeague;
         }
         Application.Config = function (auth, stateProvider) {
             auth.AddUnauthorizedResponseCallback();
-            stateProvider.state('Anonymous', {
+            stateProvider.state('!', {
+                url: '/',
+                abstract: true,
+                templateUrl: '/root'
+            });
+            stateProvider.state('!.Anonymous', {
+                abstract: true,
                 views: {
-                    '': {
-                        templateUrl: '/root'
-                    },
-                    'Navigation@Anonymous': {
+                    'Navigation': {
                         templateUrl: '/anonymous/navigation',
                         controller: 'AuthController'
+                    },
+                    'Content': {
+                        templateUrl: '/content'
                     }
                 }
             });
-            stateProvider.state('Authenticated', {
+            stateProvider.state('!.Authenticated', {
+                abstract: true,
                 views: {
-                    '': {
-                        templateUrl: '/root'
-                    },
-                    'Navigation@Authenticated': {
+                    'Navigation': {
                         templateUrl: '/authenticated/navigation',
                         controller: 'AuthController'
+                    },
+                    'Content': {
+                        templateUrl: '/content'
                     }
                 }
             });
         };
-        Application.Run = function (scope, authService, stateService) {
+        Application.Run = function (scope, authService, stateService, location) {
             scope.Service = authService;
+            scope.State = stateService;
             scope.$watch('Service.IsAuthenticated', function (newValue) {
-                stateService.go(newValue ? 'Authenticated' : 'Anonymous');
+                stateService.go(newValue ? '!.Authenticated.Home' : '!.Anonymous.Home');
             });
+            location.path('/home');
         };
         return Application;
     })();
@@ -45,9 +54,16 @@ var SmashLeague;
     Application.Run.$inject = [
         '$rootScope',
         '!AuthenticationService',
-        '$state'
+        '$state',
+        '$location'
     ];
-    Application.Module = angular.module('SmashLeague', ['ui.router']);
+    Application.Module = angular.module('SmashLeague', [
+        'ui.router',
+        'SmashLeague.Home',
+        'SmashLeague.Players',
+        'SmashLeague.Teams',
+        'SmashLeague.Seasons',
+    ]);
     Application.Module.config(Application.Config);
     Application.Module.run(Application.Run);
 })(SmashLeague || (SmashLeague = {}));
@@ -136,6 +152,110 @@ var SmashLeague;
 })(SmashLeague || (SmashLeague = {}));
 var SmashLeague;
 (function (SmashLeague) {
+    var Home;
+    (function (Home) {
+        'use strict';
+        var Application = (function () {
+            function Application() {
+            }
+            Application.Config = function (stateProvider) {
+                stateProvider.state('!.Anonymous.Home', {
+                    url: 'home',
+                    views: {
+                        'Banner': {
+                            template: '<div class="banner banner-default"></div>'
+                        }
+                    }
+                });
+            };
+            return Application;
+        })();
+        Home.Application = Application;
+        Application.Config.$inject = ['$stateProvider'];
+        Application.Module = angular.module('SmashLeague.Home', ['ui.router']);
+        Application.Module.config(Application.Config);
+    })(Home = SmashLeague.Home || (SmashLeague.Home = {}));
+})(SmashLeague || (SmashLeague = {}));
+var SmashLeague;
+(function (SmashLeague) {
+    var Players;
+    (function (Players) {
+        'use strict';
+        var Application = (function () {
+            function Application() {
+            }
+            Application.Config = function (stateProvider) {
+                stateProvider.state('!.Anonymous.Players', {
+                    url: 'players',
+                    views: {
+                        'Banner': {
+                            template: '<div class="banner banner-red"></div>'
+                        }
+                    }
+                });
+            };
+            return Application;
+        })();
+        Players.Application = Application;
+        Application.Config.$inject = ['$stateProvider'];
+        Application.Module = angular.module('SmashLeague.Players', ['ui.router']);
+        Application.Module.config(Application.Config);
+    })(Players = SmashLeague.Players || (SmashLeague.Players = {}));
+})(SmashLeague || (SmashLeague = {}));
+var SmashLeague;
+(function (SmashLeague) {
+    var Seasons;
+    (function (Seasons) {
+        'use strict';
+        var Application = (function () {
+            function Application() {
+            }
+            Application.Config = function (stateProvider) {
+                stateProvider.state('!.Anonymous.Seasons', {
+                    url: 'seasons',
+                    views: {
+                        'Banner': {
+                            template: '<div class="banner banner-gold"></div>'
+                        }
+                    }
+                });
+            };
+            return Application;
+        })();
+        Seasons.Application = Application;
+        Application.Config.$inject = ['$stateProvider'];
+        Application.Module = angular.module('SmashLeague.Seasons', ['ui.router']);
+        Application.Module.config(Application.Config);
+    })(Seasons = SmashLeague.Seasons || (SmashLeague.Seasons = {}));
+})(SmashLeague || (SmashLeague = {}));
+var SmashLeague;
+(function (SmashLeague) {
+    var Teams;
+    (function (Teams) {
+        'use strict';
+        var Application = (function () {
+            function Application() {
+            }
+            Application.Config = function (stateProvider) {
+                stateProvider.state('!.Anonymous.Teams', {
+                    url: 'teams',
+                    views: {
+                        'Banner': {
+                            template: '<div class="banner banner-blue"></div>'
+                        }
+                    }
+                });
+            };
+            return Application;
+        })();
+        Teams.Application = Application;
+        Application.Config.$inject = ['$stateProvider'];
+        Application.Module = angular.module('SmashLeague.Teams', ['ui.router']);
+        Application.Module.config(Application.Config);
+    })(Teams = SmashLeague.Teams || (SmashLeague.Teams = {}));
+})(SmashLeague || (SmashLeague = {}));
+var SmashLeague;
+(function (SmashLeague) {
     'use strict';
     var AuthenticationServiceProvider = (function () {
         function AuthenticationServiceProvider(httpProvider) {
@@ -196,7 +316,7 @@ var SmashLeague;
         };
         AuthenticationService.prototype.ValidateAuthState = function () {
             var _this = this;
-            this._http.get('/auth/validate')
+            this._http.get('/auth/authenticate')
                 .success(function (data) { return _this.SetAuthState(true, data); })
                 .error(function () { return _this.SetAuthState(false); });
         };

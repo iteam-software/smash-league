@@ -1,0 +1,17 @@
+﻿
+.nav-color-variant(@color, @border) {
+
+  li&:hover,
+  li&.active > a {
+    box-shadow: 0 -@border @color inset;
+  }
+
+  li&:hover > a:hover {
+    color: @color;
+  }
+}
+
+.banner-variant(@color) {
+  border-bottom: 1px solid darken(@color, 5%);
+  background-color: @color;
+}

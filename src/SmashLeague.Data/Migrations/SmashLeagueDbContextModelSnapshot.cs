@@ -163,7 +163,18 @@ namespace SmashLeagueDataMigrations
 
                     b.Property<int?>("SeriesSeriesId");
 
+                    b.Property<int?>("WinnerTeamId");
+
                     b.Key("MatchId");
+                });
+
+            builder.Entity("SmashLeague.Data.Matchup", b =>
+                {
+                    b.Property<int>("MatchId");
+
+                    b.Property<int>("TeamId");
+
+                    b.Key("MatchId", "TeamId");
                 });
 
             builder.Entity("SmashLeague.Data.Player", b =>
@@ -188,6 +199,8 @@ namespace SmashLeagueDataMigrations
                     b.Property<int?>("RankBracketRankingBracketId");
 
                     b.Property<int?>("RatingRatingId");
+
+                    b.Property<int?>("TeamTeamId");
 
                     b.Key("RankId");
                 });
@@ -303,6 +316,21 @@ namespace SmashLeagueDataMigrations
                     b.Reference("SmashLeague.Data.Series")
                         .InverseCollection()
                         .ForeignKey("SeriesSeriesId");
+
+                    b.Reference("SmashLeague.Data.Team")
+                        .InverseCollection()
+                        .ForeignKey("WinnerTeamId");
+                });
+
+            builder.Entity("SmashLeague.Data.Matchup", b =>
+                {
+                    b.Reference("SmashLeague.Data.Match")
+                        .InverseCollection()
+                        .ForeignKey("MatchId");
+
+                    b.Reference("SmashLeague.Data.Team")
+                        .InverseCollection()
+                        .ForeignKey("TeamId");
                 });
 
             builder.Entity("SmashLeague.Data.Player", b =>
@@ -325,6 +353,10 @@ namespace SmashLeagueDataMigrations
                     b.Reference("SmashLeague.Data.Rating")
                         .InverseCollection()
                         .ForeignKey("RatingRatingId");
+
+                    b.Reference("SmashLeague.Data.Team")
+                        .InverseCollection()
+                        .ForeignKey("TeamTeamId");
                 });
 
             builder.Entity("SmashLeague.Data.RankBracket", b =>

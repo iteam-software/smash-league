@@ -6,5 +6,6 @@ module SmashLeague {
     SignIn(provider: string): void;
     SignOut(): void;
     Service: IAuthenticationService;
+    State: ng.ui.IStateService;
   }
 }

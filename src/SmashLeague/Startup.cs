@@ -8,6 +8,7 @@ using Microsoft.Framework.Logging;
 using Microsoft.Framework.Runtime;
 using SmashLeague.Authentication.Battlenet;
 using SmashLeague.Data;
+using SmashLeague.Services;
 
 namespace SmashLeague
 {
@@ -59,6 +60,9 @@ namespace SmashLeague
 
             // Add Mvc services
             services.AddMvc();
+
+            // Add application services
+            services.AddSmashLeagueServices();
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)

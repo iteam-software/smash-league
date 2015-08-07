@@ -7,9 +7,17 @@ module.exports = function (grunt) {
     copy: {
       dev: {
         files: [
-          { // bootstrap css
-            src: 'node_modules/bootstrap/dist/css/bootstrap.css',
-            dest: 'wwwroot/lib/bootstrap/css/bootstrap.css',
+          { // bootstrap less
+            expand: true,
+            flatten: true,
+            src: 'node_modules/bootstrap/less/*.less',
+            dest: 'Less/bootstrap/',
+          },
+          { // bootstrap less mixins
+            expand: true,
+            flatten: true,
+            src: 'node_modules/bootstrap/less/mixins/*.less',
+            dest: 'Less/bootstrap/mixins/',
           },
           { // bootstrap js
             src: 'node_modules/bootstrap/dist/js/bootstrap.js',

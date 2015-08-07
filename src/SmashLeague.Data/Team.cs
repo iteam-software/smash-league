@@ -15,6 +15,7 @@ namespace SmashLeague.Data
 
         public ICollection<Rank> Rankings { get; set; }
         public ICollection<Player> Members { get; set; }
-        public ICollection<Match> Matches { get; set; }
+        public ICollection<Matchup> Matchups { get; set; }
+        public ICollection<Match> Wins { get; set; }
     }
 }

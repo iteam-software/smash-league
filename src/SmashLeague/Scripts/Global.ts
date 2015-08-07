@@ -13,26 +13,34 @@ module SmashLeague {
       // Enable auth state checking
       auth.AddUnauthorizedResponseCallback();
 
-      stateProvider.state('Anonymous', {
+      stateProvider.state('!', {
+        url: '/',
+        abstract: true,
+        templateUrl: '/root'
+      });
+
+      stateProvider.state('!.Anonymous', {
+        abstract: true,
         views: {
-          '': {
-            templateUrl: '/root'
-          },
-          'Navigation@Anonymous': {
+          'Navigation': {
             templateUrl: '/anonymous/navigation',
             controller: 'AuthController'
+          },
+          'Content': {
+            templateUrl: '/content'
           }
         }
       });
 
-      stateProvider.state('Authenticated', {
+      stateProvider.state('!.Authenticated', {
+        abstract: true,
         views: {
-          '': {
-            templateUrl: '/root'
-          },
-          'Navigation@Authenticated': {
+          'Navigation': {
             templateUrl: '/authenticated/navigation',
             controller: 'AuthController'
+          },
+          'Content': {
+            templateUrl: '/content'
           }
         }
       });
@@ -41,13 +49,17 @@ module SmashLeague {
     public static Run(
       scope: IAuthenticationScope,
       authService: IAuthenticationService,
-      stateService: ng.ui.IStateService) {
+      stateService: ng.ui.IStateService,
+      location: ng.ILocationService) {
 
       scope.Service = authService;
+      scope.State = stateService;
 
       scope.$watch('Service.IsAuthenticated', (newValue: boolean) => {
-        stateService.go(newValue ? 'Authenticated' : 'Anonymous');
+        stateService.go(newValue ? '!.Authenticated.Home' : '!.Anonymous.Home');
       });
+
+      location.path('/home');
     }
   }
 
@@ -59,11 +71,18 @@ module SmashLeague {
   Application.Run.$inject = [
     '$rootScope',
     '!AuthenticationService',
-    '$state'
+    '$state',
+    '$location'
   ];
   
   // Create the angular module
-  Application.Module = angular.module('SmashLeague', ['ui.router']);
+  Application.Module = angular.module('SmashLeague', [
+    'ui.router',
+    'SmashLeague.Home',
+    'SmashLeague.Players',
+    'SmashLeague.Teams',
+    'SmashLeague.Seasons',
+  ]);
 
   // Configure and run the application
   Application.Module.config(Application.Config);

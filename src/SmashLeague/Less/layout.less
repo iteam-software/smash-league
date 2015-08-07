@@ -1,5 +1,6 @@
 ﻿
 @import "variables.less";
+@import "mixins/layout.less";
 
 .dropdown-auth {
   padding: @dropdown-auth-padding;
@@ -17,4 +18,37 @@
       margin-bottom: 0;
     }
   }
+}
+
+.nav-red {
+  .nav-color-variant(@brand-red, @nav-item-border);
+}
+
+.nav-blue {
+  .nav-color-variant(@brand-blue, @nav-item-border);
+}
+
+.nav-gold {
+  .nav-color-variant(@brand-gold, @nav-item-border);
+}
+
+.banner {
+  width: 100%;
+  min-height: 25px;
+}
+
+.banner-default {
+  .banner-variant(@navbar-default-bg);
+}
+
+.banner-red {
+  .banner-variant(@brand-red);
+}
+
+.banner-blue {
+  .banner-variant(@brand-blue);
+}
+
+.banner-gold {
+  .banner-variant(@brand-gold);
 }

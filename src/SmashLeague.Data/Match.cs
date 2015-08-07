@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmashLeague.Data
@@ -7,15 +8,8 @@ namespace SmashLeague.Data
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MatchId { get; set; }
-
-        [Required]
-        public Team Team1 { get; set; }
-
-        [Required]
-        public Team Team2 { get; set; }
-
         public Team Winner { get; set; }
-
         public Series Series { get; set; }
+        public ICollection<Matchup> Matchups { get; set; }
     }
 }

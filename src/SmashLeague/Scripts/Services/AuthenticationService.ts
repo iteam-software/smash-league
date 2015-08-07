@@ -37,7 +37,7 @@ module SmashLeague {
     public ValidateAuthState(
       ) {
 
-      this._http.get('/auth/validate')
+      this._http.get('/auth/authenticate')
         .success((data: string) => this.SetAuthState(true, data))
         .error(() => this.SetAuthState(false));
     }
