@@ -9,13 +9,20 @@ module SmashLeague.Home {
     public static Config(
       stateProvider: ng.ui.IStateProvider) {
 
-      stateProvider.state('!.Anonymous.Home', {
-        url: 'home',
+      stateProvider.state('Home', {
+        url: '/home',
         views: {
           'Banner': {
             template: '<div class="banner banner-default"></div>'
+          },
+          'Main': {
+            templateUrl: '/home/main',
+            controller: 'MainController'
           }
         }
+      });
+
+      stateProvider.state('!.Authenticated.Home', {
       });
     }
   }

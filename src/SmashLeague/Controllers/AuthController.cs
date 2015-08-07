@@ -153,10 +153,14 @@ namespace SmashLeague.Controllers
 
         [HttpGet]
         [Route("authenticate", Name = "Auth:Authenticate")]
-        [Authorize]
         public IActionResult Authenticate()
         {
-            return Content(User.GetBattletag());
+            var payload = new {
+                Authenticated = User.IsSignedIn(),
+                Battletag = User.GetBattletag()
+            };
+
+            return Json(payload);
         }
 
         private void AddErrors(IdentityResult result)

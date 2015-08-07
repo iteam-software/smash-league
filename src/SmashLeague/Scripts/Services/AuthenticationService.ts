@@ -38,19 +38,22 @@ module SmashLeague {
       ) {
 
       this._http.get('/auth/authenticate')
-        .success((data: string) => this.SetAuthState(true, data))
+        .success((data: any) => this.SetAuthState(true, data))
         .error(() => this.SetAuthState(false));
     }
 
     private SetAuthState(
-      authenticated: boolean,
-      battletag: string = undefined) {
+      success: boolean,
+      data: any = undefined) {
 
-      if (authenticated) {
-        this._http.get('/api/profile');
+      if (success) {
+        this._isAuthenticated = data.Authenticated;
+        this._battletag = data.Battletag;
       }
-      this._isAuthenticated = authenticated;
-      this._battletag = battletag;
+      else {
+        this._isAuthenticated = false;
+        this._battletag = undefined;
+      }
     }
   }
 }

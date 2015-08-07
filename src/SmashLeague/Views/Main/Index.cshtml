@@ -1,0 +1,74 @@
+﻿<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid" ng-controller="AuthController">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="/#/home" class="navbar-brand"><strong>SMASH</strong>League</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="nav-red" ng-class="{active:State && State.current.name.indexOf('Players') >= 0}"><a href="/#/players"><span class="fa fa-user"></span> Players</a></li>
+        <li class="nav-blue" ng-class="{active:State && State.current.name.indexOf('Teams') >= 0}"><a href="/#/teams"><span class="fa fa-users"></span> Teams</a></li>
+        <li class="nav-gold" ng-class="{active:State && State.current.name.indexOf('Seasons') >= 0}"><a href="/#/seasons"><span class="fa fa-calendar"></span> Seasons</a></li>
+      </ul>
+
+      <ul class="nav navbar-right navbar-nav" ng-if="!Service.IsAuthenticated">
+        <li class="dropdown" dropdown-keep-open>
+          <a href="javascript:undefined;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-sign-in"></i> Sign In
+          </a>
+          <ul class="dropdown-menu dropdown-auth">
+            <li class="help-block center-block">
+              <p>Please select an authentication method below.</p>
+            </li>
+            <li><button class="btn navbar-btn btn-lg btn-auth btn-auth-bnet text-uppercase" ng-click="SignIn('battlenet')">Battle.net</button></li>
+            <li><button class="btn navbar-btn btn-lg btn-auth btn-auth-twitch" disabled>Twitch</button></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right" ng-if="Service.IsAuthenticated">
+        <li data-toggle="tooltip" data-placement="bottom" title="Upload a replay">
+          <a href="/#/"><span class="octicon octicon-cloud-upload text-success"></span> <span class="visible-xs-inline">Upload Replay</span></a>
+        </li>
+        <li data-toggle="tooltip" data-placement="bottom" title="Notifications">
+          <a href="/#/"><span class="octicon octicon-inbox"></span> <span class="visible-xs-inline">Notifications</span></a>
+        </li>
+        <li class="dropdown">
+          <a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="btn-auth-profile btn-auth-profile-placeholder img-rounded">
+            <span class="visible-xs-inline" style="margin-left: 32px">{{Service.Battletag}}</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="nav-profile text-center">
+              <a href="/#/">
+                {{Service.Battletag}}
+                <p>My Profile</p>
+              </a>
+            </li>
+            <li class="divider"></li>
+            <li class="text-center">
+              <a href="/#/" ng-click="SignOut()"><i class="fa fa-sign-out"></i> Sign Out</a>
+            </li>
+          </ul>
+        </li>
+        <li class="navbar-text visible-sm visible-md visible-lg">
+          {{Service.Battletag}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<ui-view name="Banner"></ui-view>
+<ui-view name="Content"></ui-view>
+
+@section scripts {
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
+}

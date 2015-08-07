@@ -6,42 +6,10 @@ var SmashLeague;
         }
         Application.Config = function (auth, stateProvider) {
             auth.AddUnauthorizedResponseCallback();
-            stateProvider.state('!', {
-                url: '/',
-                abstract: true,
-                templateUrl: '/root'
-            });
-            stateProvider.state('!.Anonymous', {
-                abstract: true,
-                views: {
-                    'Navigation': {
-                        templateUrl: '/anonymous/navigation',
-                        controller: 'AuthController'
-                    },
-                    'Content': {
-                        templateUrl: '/content'
-                    }
-                }
-            });
-            stateProvider.state('!.Authenticated', {
-                abstract: true,
-                views: {
-                    'Navigation': {
-                        templateUrl: '/authenticated/navigation',
-                        controller: 'AuthController'
-                    },
-                    'Content': {
-                        templateUrl: '/content'
-                    }
-                }
-            });
         };
         Application.Run = function (scope, authService, stateService, location) {
             scope.Service = authService;
             scope.State = stateService;
-            scope.$watch('Service.IsAuthenticated', function (newValue) {
-                stateService.go(newValue ? '!.Authenticated.Home' : '!.Anonymous.Home');
-            });
             location.path('/home');
         };
         return Application;
@@ -159,14 +127,19 @@ var SmashLeague;
             function Application() {
             }
             Application.Config = function (stateProvider) {
-                stateProvider.state('!.Anonymous.Home', {
-                    url: 'home',
+                stateProvider.state('Home', {
+                    url: '/home',
                     views: {
                         'Banner': {
                             template: '<div class="banner banner-default"></div>'
+                        },
+                        'Main': {
+                            templateUrl: '/home/main',
+                            controller: 'MainController'
                         }
                     }
                 });
+                stateProvider.state('!.Authenticated.Home', {});
             };
             return Application;
         })();
@@ -185,8 +158,8 @@ var SmashLeague;
             function Application() {
             }
             Application.Config = function (stateProvider) {
-                stateProvider.state('!.Anonymous.Players', {
-                    url: 'players',
+                stateProvider.state('Players', {
+                    url: '/players',
                     views: {
                         'Banner': {
                             template: '<div class="banner banner-red"></div>'
@@ -211,8 +184,8 @@ var SmashLeague;
             function Application() {
             }
             Application.Config = function (stateProvider) {
-                stateProvider.state('!.Anonymous.Seasons', {
-                    url: 'seasons',
+                stateProvider.state('Seasons', {
+                    url: '/seasons',
                     views: {
                         'Banner': {
                             template: '<div class="banner banner-gold"></div>'
@@ -237,8 +210,8 @@ var SmashLeague;
             function Application() {
             }
             Application.Config = function (stateProvider) {
-                stateProvider.state('!.Anonymous.Teams', {
-                    url: 'teams',
+                stateProvider.state('Teams', {
+                    url: '/teams',
                     views: {
                         'Banner': {
                             template: '<div class="banner banner-blue"></div>'
@@ -320,13 +293,16 @@ var SmashLeague;
                 .success(function (data) { return _this.SetAuthState(true, data); })
                 .error(function () { return _this.SetAuthState(false); });
         };
-        AuthenticationService.prototype.SetAuthState = function (authenticated, battletag) {
-            if (battletag === void 0) { battletag = undefined; }
-            if (authenticated) {
-                this._http.get('/api/profile');
+        AuthenticationService.prototype.SetAuthState = function (success, data) {
+            if (data === void 0) { data = undefined; }
+            if (success) {
+                this._isAuthenticated = data.Authenticated;
+                this._battletag = data.Battletag;
             }
-            this._isAuthenticated = authenticated;
-            this._battletag = battletag;
+            else {
+                this._isAuthenticated = false;
+                this._battletag = undefined;
+            }
         };
         AuthenticationService.$inject = [
             '$http'

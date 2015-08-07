@@ -9,8 +9,8 @@ module SmashLeague.Seasons {
     public static Config(
       stateProvider: ng.ui.IStateProvider) {
 
-      stateProvider.state('!.Anonymous.Seasons', {
-        url: 'seasons',
+      stateProvider.state('Seasons', {
+        url: '/seasons',
         views: {
           'Banner': {
             template: '<div class="banner banner-gold"></div>'

@@ -9,8 +9,8 @@ module SmashLeague.Players {
     public static Config(
       stateProvider: ng.ui.IStateProvider) {
 
-      stateProvider.state('!.Anonymous.Players', {
-        url: 'players',
+      stateProvider.state('Players', {
+        url: '/players',
         views: {
           'Banner': {
             template: '<div class="banner banner-red"></div>'

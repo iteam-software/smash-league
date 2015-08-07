@@ -1,5 +1,9 @@
 ﻿@model ExternalLoginConfirmationViewModel
 
+@{ 
+    Layout = null;
+}
+
 <h1>Associate your @ViewData["LoginProvider"] account.</h1>
 
 <form asp-controller="Auth" asp-action="ExternalLoginConfirmation" method="post" role="form">

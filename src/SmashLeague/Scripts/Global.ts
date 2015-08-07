@@ -12,38 +12,6 @@ module SmashLeague {
 
       // Enable auth state checking
       auth.AddUnauthorizedResponseCallback();
-
-      stateProvider.state('!', {
-        url: '/',
-        abstract: true,
-        templateUrl: '/root'
-      });
-
-      stateProvider.state('!.Anonymous', {
-        abstract: true,
-        views: {
-          'Navigation': {
-            templateUrl: '/anonymous/navigation',
-            controller: 'AuthController'
-          },
-          'Content': {
-            templateUrl: '/content'
-          }
-        }
-      });
-
-      stateProvider.state('!.Authenticated', {
-        abstract: true,
-        views: {
-          'Navigation': {
-            templateUrl: '/authenticated/navigation',
-            controller: 'AuthController'
-          },
-          'Content': {
-            templateUrl: '/content'
-          }
-        }
-      });
     }
 
     public static Run(
@@ -54,10 +22,6 @@ module SmashLeague {
 
       scope.Service = authService;
       scope.State = stateService;
-
-      scope.$watch('Service.IsAuthenticated', (newValue: boolean) => {
-        stateService.go(newValue ? '!.Authenticated.Home' : '!.Anonymous.Home');
-      });
 
       location.path('/home');
     }
