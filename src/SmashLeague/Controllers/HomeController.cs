@@ -8,7 +8,7 @@ namespace SmashLeague.Controllers
         [Route("banner")]
         public IActionResult Banner()
         {
-
+            return View();
         }
 
         [Route("content")]
