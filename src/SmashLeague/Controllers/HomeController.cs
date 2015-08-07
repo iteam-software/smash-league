@@ -2,17 +2,16 @@
 
 namespace SmashLeague.Controllers
 {
-    [Route("home")]
+    [Route("Home")]
     public class HomeController : Controller
     {
-        [Route("banner")]
         public IActionResult Banner()
         {
             return View();
         }
 
-        [Route("content")]
-        public IActionResult Index()
+        [Route("Content")]
+        public IActionResult Content()
         {
             return View();
         }

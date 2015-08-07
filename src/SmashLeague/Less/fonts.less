@@ -1,1 +1,11 @@
 ﻿
+@import "variables.less";
+
+h1,
+h2,
+h3,
+h4 {
+  .panel-default .panel-heading & {
+    color: darken(@panel-default-heading-bg, 20%);
+  }
+}

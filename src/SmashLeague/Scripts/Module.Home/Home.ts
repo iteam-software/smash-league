@@ -15,14 +15,11 @@ module SmashLeague.Home {
           'Banner': {
             template: '<div class="banner banner-default"></div>'
           },
-          'Main': {
-            templateUrl: '/home/main',
-            controller: 'MainController'
+          'Content': {
+            templateUrl: '/home/content',
+            controller: 'HomeController'
           }
         }
-      });
-
-      stateProvider.state('!.Authenticated.Home', {
       });
     }
   }

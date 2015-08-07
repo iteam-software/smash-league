@@ -133,13 +133,12 @@ var SmashLeague;
                         'Banner': {
                             template: '<div class="banner banner-default"></div>'
                         },
-                        'Main': {
-                            templateUrl: '/home/main',
-                            controller: 'MainController'
+                        'Content': {
+                            templateUrl: '/home/content',
+                            controller: 'HomeController'
                         }
                     }
                 });
-                stateProvider.state('!.Authenticated.Home', {});
             };
             return Application;
         })();
@@ -147,6 +146,39 @@ var SmashLeague;
         Application.Config.$inject = ['$stateProvider'];
         Application.Module = angular.module('SmashLeague.Home', ['ui.router']);
         Application.Module.config(Application.Config);
+    })(Home = SmashLeague.Home || (SmashLeague.Home = {}));
+})(SmashLeague || (SmashLeague = {}));
+var SmashLeague;
+(function (SmashLeague) {
+    var Home;
+    (function (Home) {
+        'use strict';
+        var HomeController = (function () {
+            function HomeController(http, scope) {
+                this._http = http;
+                this._scope = scope;
+                this.LoadMatches(0, 10);
+            }
+            HomeController.prototype.LoadMatches = function (start, top) {
+                var _this = this;
+                this._http.get('/api/match?' + $.param({ start: start, top: top }))
+                    .success(function (matches) { return _this._scope.Matches = matches; });
+            };
+            HomeController.$inject = [
+                '$http',
+                '$scope'
+            ];
+            return HomeController;
+        })();
+        Home.HomeController = HomeController;
+        Home.Application.Module.controller('HomeController', HomeController);
+    })(Home = SmashLeague.Home || (SmashLeague.Home = {}));
+})(SmashLeague || (SmashLeague = {}));
+var SmashLeague;
+(function (SmashLeague) {
+    var Home;
+    (function (Home) {
+        'use strict';
     })(Home = SmashLeague.Home || (SmashLeague.Home = {}));
 })(SmashLeague || (SmashLeague = {}));
 var SmashLeague;

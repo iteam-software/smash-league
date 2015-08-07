@@ -2,6 +2,10 @@
 @import "variables.less";
 @import "mixins/layout.less";
 
+body {
+  background-color: lighten(@navbar-inverse-bg, 20%);
+}
+
 .dropdown-auth {
   padding: @dropdown-auth-padding;
   width: @dropdown-auth-width;
@@ -51,4 +55,47 @@
 
 .banner-gold {
   .banner-variant(@brand-gold);
+}
+
+.content {
+  padding-top: 20px;
+}
+
+.content-home {
+  background-color: darken(@navbar-default-bg, 10%);
+}
+
+.panel-empty {
+  @lighten-factor: 60%;
+
+  min-height: 220px;
+  position: relative;
+
+  .panel-default &:before {
+    color: lighten(@panel-default-text, @lighten-factor);
+    position: absolute;
+    bottom: 0;
+    font-family: FontAwesome;
+    content: "\f259";
+  }
+
+  & .caption {
+    color: lighten(@panel-default-text, @lighten-factor);
+    position: absolute;
+    bottom: 0;
+    left: 22px;
+  }
+}
+
+.footer {
+  padding-top: 50px;
+
+  a {
+    color: @navbar-inverse-bg;
+  }
+
+  a:hover {
+    text-decoration: none;
+    color: darken(@navbar-inverse-bg, 10%);
+  }
 }
