@@ -40,6 +40,7 @@ namespace SmashLeague.Data
             builder.Entity<Match>()
                 .Reference(x => x.Winner)
                 .InverseCollection(x => x.Wins);
+
         }
     }
 }

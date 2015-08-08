@@ -1,5 +1,6 @@
 ﻿using SmashLeague.Data;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SmashLeague.Models
 {
@@ -7,6 +8,7 @@ namespace SmashLeague.Models
     {
         public string Username { get; set; }
         public string Location { get; set; }
+
         public byte[] ProfileImage { get; set; }
         public byte[] HeaderImage { get; set; }
         public string First { get; set; }

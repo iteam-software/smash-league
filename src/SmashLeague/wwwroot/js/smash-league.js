@@ -10,7 +10,9 @@ var SmashLeague;
         Application.Run = function (scope, authService, stateService, location) {
             scope.Service = authService;
             scope.State = stateService;
-            location.path('/home');
+            if (location.path() === '' || location.path() === '/') {
+                location.path('/home');
+            }
         };
         return Application;
     })();
@@ -56,7 +58,7 @@ var SmashLeague;
         };
         AuthController.prototype.SignIn = function (provider) {
             var _this = this;
-            var oauth = this._windowService.open('/auth/signin-with-' + provider, '', 'top=50,left=50,status=0,width=800,height=600');
+            var oauth = this._windowService.open('/auth/signin-with-' + provider, '', 'top=50,left=50,status=0,width=800,height=680');
             var checkPopup = this._interval(function () {
                 try {
                     if (!oauth || oauth.closed || oauth['SmashLeague:OAuth:Complete']) {
@@ -117,6 +119,31 @@ var SmashLeague;
     })();
     SmashLeague.DropdownKeepOpen = DropdownKeepOpen;
     SmashLeague.Application.Module.directive('dropdownKeepOpen', DropdownKeepOpen.Factory);
+})(SmashLeague || (SmashLeague = {}));
+var SmashLeague;
+(function (SmashLeague) {
+    'use strict';
+    var SearchNav = (function () {
+        function SearchNav() {
+            this.restrict = 'E';
+            this.scope = { entity: '=entity' };
+            this.templateUrl = '/partial/search-nav';
+        }
+        Object.defineProperty(SearchNav, "Factory", {
+            get: function () {
+                var directive = function () {
+                    return new SearchNav();
+                };
+                directive.$inject = SearchNav.$inject;
+                return directive;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return SearchNav;
+    })();
+    SmashLeague.SearchNav = SearchNav;
+    SmashLeague.Application.Module.directive('searchNav', SearchNav.Factory);
 })(SmashLeague || (SmashLeague = {}));
 var SmashLeague;
 (function (SmashLeague) {
@@ -247,6 +274,9 @@ var SmashLeague;
                     views: {
                         'Banner': {
                             template: '<div class="banner banner-blue"></div>'
+                        },
+                        'Content': {
+                            templateUrl: '/teams/content'
                         }
                     }
                 });

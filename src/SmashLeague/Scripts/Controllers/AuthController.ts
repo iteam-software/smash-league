@@ -44,7 +44,7 @@ module SmashLeague {
     public SignIn(
       provider: string) {
 
-      var oauth = this._windowService.open('/auth/signin-with-' + provider, '', 'top=50,left=50,status=0,width=800,height=600');
+      var oauth = this._windowService.open('/auth/signin-with-' + provider, '', 'top=50,left=50,status=0,width=800,height=680');
 
       var checkPopup = this._interval(() => {
         try {

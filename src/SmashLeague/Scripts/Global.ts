@@ -23,7 +23,9 @@ module SmashLeague {
       scope.Service = authService;
       scope.State = stateService;
 
-      location.path('/home');
+      if (location.path() === '' || location.path() === '/') {
+        location.path('/home');
+      }
     }
   }
 

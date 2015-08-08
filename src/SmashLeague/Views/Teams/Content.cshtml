@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="container-fluid content content-home">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="text-center"><span class="fa fa-users"></span> Teams</h2>
+        </div>
+        <div class="panel-body">
+          <div class="navbar">
+            <form class="navbar-form navbar-left">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Find a team" autofocus />
+                <span class="input-group-btn">
+                  <button class="btn btn-primary">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </span>
+              </div>
+            </form>
+            <ul class="nav navbar-nav" ng-controller="AuthController">
+              <li ng-show="Service.IsAuthenticated"><button class="btn navbar-btn btn-success" data-toggle="modal" data-target="#new-team"><span class="fa fa-plus"></span> Create Team</button></li>
+            </ul>
+          </div>
+          <div class="panel-empty">
+            <span class="caption">There are no teams.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="new-team">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Create a team</h1>
+      </div>
+      <div class="modal-body">
+      </div>
+    </div>
+  </div>
+</div>

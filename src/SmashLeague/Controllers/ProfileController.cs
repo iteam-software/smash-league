@@ -25,8 +25,8 @@ namespace SmashLeague.Controllers
         // MVC Actions
 
 
-        [Authorize]
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             Profile user = await _userManager.FindByNameAsync(User.GetBattletag());
@@ -35,5 +35,7 @@ namespace SmashLeague.Controllers
     }
 
     [Route("profile")]
-    public class ProfileMvcController : Controller { }
+    public class ProfileMvcController : Controller
+    {
+    }
 }

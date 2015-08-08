@@ -6780,6 +6780,12 @@ body {
 .navbar-full {
   padding: 0 25px;
 }
+.navbar-form {
+  padding: 0;
+}
+.navbar-form + .navbar-nav {
+  padding: 0 15px;
+}
 .nav-profile a p {
   font-size: 80%;
   margin-bottom: 0;
@@ -6873,6 +6879,66 @@ li.nav-gold:hover > a:hover {
   background: #10acf4;
   background-image: linear-gradient(to bottom, #2cb2f0, #0099e0);
   color: #fff;
+}
+.btn-success {
+  background: #5cb85c;
+  background-image: linear-gradient(to bottom, #6ec06e, #4cae4c);
+  color: #fff;
+}
+.btn-success:hover {
+  color: #fff;
+}
+.btn-success:hover:not([disabled]) {
+  background: #449d44;
+  background-image: linear-gradient(to bottom, #4cae4c, #3d8b3d);
+}
+.btn-primary {
+  background: #337ab7;
+  background-image: linear-gradient(to bottom, #3c87c8, #2e6da4);
+  color: #fff;
+}
+.btn-primary:hover {
+  color: #fff;
+}
+.btn-primary:hover:not([disabled]) {
+  background: #286090;
+  background-image: linear-gradient(to bottom, #2e6da4, #23527c);
+}
+.btn-danger {
+  background: #d9534f;
+  background-image: linear-gradient(to bottom, #de6764, #d43f3a);
+  color: #fff;
+}
+.btn-danger:hover {
+  color: #fff;
+}
+.btn-danger:hover:not([disabled]) {
+  background: #c9302c;
+  background-image: linear-gradient(to bottom, #d43f3a, #b52b27);
+}
+.btn-warning {
+  background: #f0ad4e;
+  background-image: linear-gradient(to bottom, #f2b866, #eea236);
+  color: #fff;
+}
+.btn-warning:hover {
+  color: #fff;
+}
+.btn-warning:hover:not([disabled]) {
+  background: #ec971f;
+  background-image: linear-gradient(to bottom, #eea236, #df8a13);
+}
+.btn-info {
+  background: #5bc0de;
+  background-image: linear-gradient(to bottom, #70c8e2, #46b8da);
+  color: #fff;
+}
+.btn-info:hover {
+  color: #fff;
+}
+.btn-info:hover:not([disabled]) {
+  background: #31b0d5;
+  background-image: linear-gradient(to bottom, #46b8da, #28a1c5);
 }
 .btn-auth-twitch {
   background: #6441a5;

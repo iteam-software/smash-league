@@ -22,23 +22,30 @@
         <div class="panel-heading">
           <h2 class="text-center">
             <span class="fa fa-users"></span> | <span class="fa fa-users"></span> Matches
-            <button class="btn btn-success pull-left" ng-if="Service.IsAuthenticated"><span class="fa fa-plus"></span> New Match</button>
           </h2>
         </div>
         <div class="panel-body">
-          <div class="panel-empty" ng-show="!Matches || Matches.length == 0"></div>
-          <div class="table-responsive" ng-show="Matches && Matches.length > 0">
-            <table class="table table-hover table-matches">
-              <tr ng-repeat="match in Matches">
-                <td class="h4 text-center"><strong>{{match.Teams[0].Name}}</strong></td>
-                <td class="h4 text-center">VS</td>
-                <td class="h4 text-center"><strong>{{match.Teams[1].Name}}</strong></td>
-                <td class="text-center">
-                  <button class="btn btn-primary" ng-if="Service.IsAuthenticated">Hype!</button>
-                </td>
-              </tr>
-            </table>
+          <div class="navbar">
+            <form class="navbar-form navbar-left">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Find a Match" autofocus />
+                <span class="input-group-btn">
+                  <button class="btn btn-primary">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </span>
+              </div>
+            </form>
+            <ul class="nav navbar-nav" ng-controller="AuthController">
+              <li ng-show="Service.IsAuthenticated"><button class="btn navbar-btn btn-success"><span class="fa fa-plus"></span> Create Match</button></li>
+            </ul>
           </div>
+          <div class="panel-empty" ng-show="!Matches || Matches.length == 0">
+            <span class="caption">There are no matches</span>
+          </div>
+          <p ng-show="Matches && Matches.length > 0">
+            There are some matches, but we aren't showing you them yet.
+          </p>
         </div>
       </div>
     </div>

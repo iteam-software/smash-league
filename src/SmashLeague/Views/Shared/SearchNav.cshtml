@@ -1,0 +1,15 @@
+﻿<div class="navbar">
+  <form class="navbar-form navbar-left">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Find a {{entity}}" autofocus />
+      <span class="input-group-btn">
+        <button class="btn btn-primary">
+          <i class="fa fa-search"></i>
+        </button>
+      </span>
+    </div>
+  </form>
+  <ul class="nav navbar-nav" ng-controller="AuthController">
+    <li ng-show="Service.IsAuthenticated"><button class="btn navbar-btn btn-success" data-toggle="modal" data-target="#new-{{entity.toLower()}}"><span class="fa fa-plus"></span> Create {{entity}}</button></li>
+  </ul>
+</div>

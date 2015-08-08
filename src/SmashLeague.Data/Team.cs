@@ -13,6 +13,9 @@ namespace SmashLeague.Data
         [Required, MaxLength(50)]
         public string Name { get; set; }
 
+        [Required]
+        public Player Owner { get; set; }
+
         public ICollection<Rank> Rankings { get; set; }
         public ICollection<Player> Members { get; set; }
         public ICollection<Matchup> Matchups { get; set; }

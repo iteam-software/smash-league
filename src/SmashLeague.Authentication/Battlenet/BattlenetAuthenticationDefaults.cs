@@ -13,6 +13,6 @@ namespace SmashLeague.Authentication.Battlenet
 
         public const string BattletagClaimType = "urn:battlenet:battletag";
 
-        public const string BattletagRegex = "^[a-z]{3,16}#[0-9]{4}$";
+        public const string BattletagRegex = "^[a-zA-Z]{3,16}#[0-9]{4}$";
     }
 }

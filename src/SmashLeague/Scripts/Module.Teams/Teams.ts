@@ -14,6 +14,9 @@ module SmashLeague.Teams {
         views: {
           'Banner': {
             template: '<div class="banner banner-blue"></div>'
+          },
+          'Content': {
+            templateUrl: '/teams/content'
           }
         }
       });
