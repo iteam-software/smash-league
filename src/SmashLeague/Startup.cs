@@ -5,7 +5,7 @@ using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.Runtime;
-using SmashLeague.Authentication.Battlenet;
+using SmashLeague.Security.Battlenet;
 using SmashLeague.Data;
 using SmashLeague.Services;
 

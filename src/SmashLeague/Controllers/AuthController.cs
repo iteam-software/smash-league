@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.Logging;
-using SmashLeague.Authentication.Battlenet;
+using SmashLeague.Security.Battlenet;
 using SmashLeague.Data;
 using System.Threading.Tasks;
 using System.Security.Claims;

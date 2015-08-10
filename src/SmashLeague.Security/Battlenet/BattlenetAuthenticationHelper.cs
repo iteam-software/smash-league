@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace SmashLeague.Authentication.Battlenet
+namespace SmashLeague.Security.Battlenet
 {
     public static class BattlenetAuthenticationHelper
     {

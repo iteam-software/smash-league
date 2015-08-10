@@ -7,7 +7,7 @@
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>32933406-30ea-4b58-b49d-91e6de4d8db5</ProjectGuid>
-    <RootNamespace>SmashLeague.Authentication</RootNamespace>
+    <RootNamespace>SmashLeague.Security</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\SmashLeague\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">..\SmashLeague\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
   </PropertyGroup>
