@@ -20,6 +20,15 @@ module SmashLeague.Teams {
           }
         }
       });
+
+      stateProvider.state('Teams.New', {
+        url: '/new',
+        views: {
+          'Content@Teams': {
+            templateUrl: '/teams/new'
+          }
+        }
+      });
     }
   }
 

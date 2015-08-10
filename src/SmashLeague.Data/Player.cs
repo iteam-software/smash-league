@@ -14,5 +14,6 @@ namespace SmashLeague.Data
 
         public ICollection<Rank> Rankings { get; set; }
         public ICollection<Team> Teams { get; set; }
+        public ICollection<TeamOwner> OwnedTeams { get; set; }
     }
 }

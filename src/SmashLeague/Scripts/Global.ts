@@ -12,6 +12,8 @@ module SmashLeague {
 
       // Enable auth state checking
       auth.AddUnauthorizedResponseCallback();
+
+      // TODO: global not found page
     }
 
     public static Run(
