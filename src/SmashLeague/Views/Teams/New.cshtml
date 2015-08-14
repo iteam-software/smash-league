@@ -1,6 +1,43 @@
 ﻿
-@{ 
+@{
     Layout = null;
 }
 
-Teams New Page
+<div class="content content-home">
+  <div class="container">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h2 class="text-center"><span class="fa fa-users"></span> New Team</h2>
+      </div>
+      <div class="panel-body">
+        <form class="form-horizontal col-md-6 col-md-offset-3" novalidate>
+          <div class="form-group">
+            <label class="h3" for="name">Name</label>
+            <p class="help-block"><strong>/#/teams/</strong>{{(Name && Name.toLowerCase().split(' ').join('-')) || 'team-name'}}</p>
+            <input class="form-control" id="name" type="text" placeholder="Team Name" ng-model="Name" required />
+          </div>
+          <hr class="form-group" />
+          <h3 class="form-group">
+            Members
+          </h3>
+          <div class="form-group">
+            <label class="help-block">Captain</label>
+            <input ng-controller="AuthController" class="form-control" disabled value="{{Service.Battletag}}" />
+          </div>
+          <div ng-repeat="member in Members" class="form-group">
+            <label class="help-block" for="{{member.Id}}">{{member.Label}}</label>
+            <div ng-class="{'input-group': !member.Complete}">
+              <input id="{{member.Id}}" class="form-control" ng-model="member.Model" type="text" placeholder="{{member.Placeholder}}" ng-disabled="member.Complete" />
+              <span class="input-group-btn" ng-show="!member.Complete">
+                <button class="btn btn-default" type="button" ng-click="AddMember(member)">Add</button>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success">Create team</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -21,11 +21,15 @@ module SmashLeague.Teams {
         }
       });
 
-      stateProvider.state('Teams.New', {
-        url: '/new',
+      stateProvider.state('Teams-New', {
+        url: '/teams/new',
         views: {
-          'Content@Teams': {
-            templateUrl: '/teams/new'
+          'Banner': {
+            template: '<div class="banner banner-blue"></div>'
+          },
+          'Content': {
+            templateUrl: '/teams/new',
+            controller: 'NewTeamController'
           }
         }
       });
