@@ -44,6 +44,7 @@ namespace SmashLeague.Security.Battlenet
             var battletag = BattlenetAuthenticationHelper.GetBattletag(payload);
             if (!string.IsNullOrEmpty(battletag))
             {
+                identity.AddClaim(new Claim(ClaimTypes.Name, battletag, ClaimValueTypes.String, Options.ClaimsIssuer));
                 identity.AddClaim(new Claim(BattlenetAuthenticationDefaults.BattletagClaimType, battletag, ClaimValueTypes.String, Options.ClaimsIssuer));
             }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 using Microsoft.Framework.DependencyInjection;
+using SmashLeague.Data.Extensions;
 using System;
 
 namespace SmashLeague.Data
@@ -34,6 +35,8 @@ namespace SmashLeague.Data
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<SmashLeagueDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddTransient<ApplicationUserManager>();
 
             return services;
         }

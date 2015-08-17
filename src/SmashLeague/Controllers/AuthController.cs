@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using SmashLeague.Models;
 using Microsoft.AspNet.Authorization;
+using SmashLeague.Services;
 
 namespace SmashLeague.Controllers
 {
@@ -16,12 +17,18 @@ namespace SmashLeague.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger _logger;
+        private readonly IPlayerManager _playerManager;
+        private readonly IImageManager _imageManager;
 
         public AuthController(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
+            IPlayerManager playerManager,
+            IImageManager imageManager,
             ILoggerFactory loggerFactory)
         {
+            _playerManager = playerManager;
+            _imageManager = imageManager;
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = loggerFactory.CreateLogger(nameof(AuthController));
@@ -129,13 +136,19 @@ namespace SmashLeague.Controllers
 
                 var user = new ApplicationUser
                 {
-                    UserName = info.ExternalPrincipal.FindFirstValue(BattlenetAuthenticationDefaults.BattletagClaimType),
-                    Email = model.Email
+                    UserName = model.Username,
+                    Battletag = info.ExternalPrincipal.GetBattletag(),
+                    Email = model.Email,
+                    ProfileImage = await _imageManager.GetDefaultImageAsync(Defaults.ProfileImage),
+                    HeaderImage = await _imageManager.GetDefaultImageAsync(Defaults.HeaderImage)
                 };
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    // Create a player for this user
+                    var player = await _playerManager.CreatePlayerForUserAsync(user);
+
                     var innerResult = await _userManager.AddLoginAsync(user, info);
                     if (innerResult.Succeeded)
                     {
@@ -157,7 +170,7 @@ namespace SmashLeague.Controllers
         {
             var payload = new {
                 Authenticated = User.IsSignedIn(),
-                Battletag = User.GetBattletag()
+                Username = User.GetUserName()
             };
 
             return Json(payload);

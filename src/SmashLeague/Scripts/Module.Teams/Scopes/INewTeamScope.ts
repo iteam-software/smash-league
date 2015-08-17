@@ -4,7 +4,10 @@ module SmashLeague.Teams {
 
   export interface INewTeamScope extends ng.IScope {
     Name: string;
-    Members: any[];
-    AddMember: (member: any) => void;
+    Member1: any;
+    Member2: any;
+    Member3: any;
+    Member4: any;
+    Players: any[];
   }
 }

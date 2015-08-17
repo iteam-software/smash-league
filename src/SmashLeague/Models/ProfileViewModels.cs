@@ -1,6 +1,5 @@
-﻿using SmashLeague.Data;
+﻿using SmashLeague.DataTransferObjects;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace SmashLeague.Models
 {
@@ -8,25 +7,45 @@ namespace SmashLeague.Models
     {
         public string Username { get; set; }
         public string Location { get; set; }
-
-        public byte[] ProfileImage { get; set; }
-        public byte[] HeaderImage { get; set; }
         public string First { get; set; }
         public string Last { get; set; }
         public DateTime? Birthday { get; set; }
+        public Image Image { get; set; }
+        public Image Banner { get; set; }
 
-        public static implicit operator Profile(ApplicationUser user)
+        public static implicit operator Profile(Data.ApplicationUser user)
         {
-            return new Profile
+            var profile = new Profile
             {
                 Username = user.UserName,
                 Location = user.Location,
-                ProfileImage = user.ProfileImage,
-                HeaderImage = user.HeaderImage,
                 Birthday = user.Birthday,
                 First = user.First,
                 Last = user.Last
             };
+
+            if (user.ProfileImage != null)
+            {
+
+                profile.Image = new Image
+                {
+                    Src = user.ProfileImage.MimeType == "text/url"
+                        ? user.ProfileImage.Data
+                        : $"data:{user.ProfileImage.MimeType};base64,{user.ProfileImage.Data}"
+                };
+            }
+
+            if (user.HeaderImage != null)
+            {
+                profile.Banner = new Image
+                {
+                    Src = user.HeaderImage.MimeType == "text/url"
+                        ? user.HeaderImage.Data
+                        : $"data:{user.HeaderImage.MimeType};base64,{user.HeaderImage.Data}"
+                };
+            }
+
+            return profile;
         }
     }
 }

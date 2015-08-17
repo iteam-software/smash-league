@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SmashLeague.Data
 {
     public class ApplicationUser : IdentityUser
     {
-        public byte[] HeaderImage { get; set; }
-        public byte[] ProfileImage { get; set; }
+        public Image ProfileImage { get; set; }
+        public Image HeaderImage { get; set; }
+
+        [Required]
+        public string Battletag { get; set; }
+
         public string First { get; set; }
         public string Last { get; set; }
         public string Location { get; set; }

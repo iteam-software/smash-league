@@ -38,7 +38,7 @@ module SmashLeague.Teams {
 
   Application.Config.$inject = ['$stateProvider'];
 
-  Application.Module = angular.module('SmashLeague.Teams', ['ui.router']);
+  Application.Module = angular.module('SmashLeague.Teams', ['ui.router', 'ngDragDrop']);
   
   Application.Module.config(Application.Config);
 }

@@ -5,7 +5,7 @@ module SmashLeague.Teams {
   export class NewTeamController {
 
     private _scope: INewTeamScope;
-    private _members: any[];
+    private _players: any[];
 
     public static $inject = [
       '$scope'
@@ -14,34 +14,19 @@ module SmashLeague.Teams {
     constructor(
       scope) {
 
-      this._members = [{
-        Id: 'member-1',
-        Label: 'Member 1',
-        Placeholder: 'Member 1'
-      }];
+      this._players = [
+        { Name: 'retrofunk' },
+        { Name: 'Nats' },
+        { Name: 'Randy' },
+        { Name: 'Archer' },
+        { Name: 'Cheesechips' }
+      ];
 
       this._scope = scope;
-      this._scope.Members = this._members;
-      this._scope.AddMember = $.proxy(this.AddMember, this);
+      this._scope.Players = this.Players;
     }
 
-    public get Members() { return this._members }
-
-    public AddMember(
-      member: any) {
-
-      var count = this._members.length;
-
-      if (count < 4) {
-        this._members.push({
-          Id: 'member-' + count + 1,
-          Label: 'Member ' + count + 1,
-          Placeholder: 'Member ' + count + 1
-        });
-      }
-
-      member.Complete = true;
-    }
+    public get Players() { return this._players }
   }
 
   Application.Module.controller('NewTeamController', NewTeamController);

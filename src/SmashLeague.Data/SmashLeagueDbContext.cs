@@ -15,6 +15,8 @@ namespace SmashLeague.Data
         public DbSet<Matchup> Matchups { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<TeamOwner> TeamOwners { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<DefaultImages> DefaultImages { get; set; }
 
         public SmashLeagueDbContext()
         {

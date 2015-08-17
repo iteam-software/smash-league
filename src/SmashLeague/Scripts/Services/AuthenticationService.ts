@@ -4,7 +4,7 @@ module SmashLeague {
 
   export interface IAuthenticationService {
     IsAuthenticated: boolean;
-    Battletag: string;
+    Username: string;
     UnauthorizedResponseCallback(): void;
     ValidateAuthState(): void;
   }
@@ -12,20 +12,34 @@ module SmashLeague {
   export class AuthenticationService implements IAuthenticationService {
 
     private _isAuthenticated: boolean;
-    private _battletag: string;
+    private _username: string;
     private _http: ng.IHttpService;
+    private _profileService: ProfileService;
 
     public get IsAuthenticated() { return this._isAuthenticated; }
-    public get Battletag() { return this._battletag; }
+    public set IsAuthenticated(value: boolean) {
+      if (value) {
+        this._profileService.LoadProfile();
+      }
+      else {
+        this._profileService.DestroyProfile();
+      }
+
+      this._isAuthenticated = value;
+    }
+    public get Username() { return this._username; }
 
     public static $inject = [
-      '$http'
+      '$http',
+      'ProfileService'
     ];
 
     constructor(
-      http) {
+      http,
+      profileService) {
 
       this._http = http;
+      this._profileService = profileService;
       this.ValidateAuthState();
     }
 
@@ -47,12 +61,12 @@ module SmashLeague {
       data: any = undefined) {
 
       if (success) {
-        this._isAuthenticated = data.Authenticated;
-        this._battletag = data.Battletag;
+        this.IsAuthenticated = data.Authenticated;
+        this._username = data.Username;
       }
       else {
-        this._isAuthenticated = false;
-        this._battletag = undefined;
+        this.IsAuthenticated = false;
+        this._username = undefined;
       }
     }
   }

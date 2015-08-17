@@ -7,6 +7,8 @@ namespace SmashLeague.Services
         public static IServiceCollection AddSmashLeagueServices(this IServiceCollection collection)
         {
             collection.AddTransient<IMatchManager, MatchManager>();
+            collection.AddTransient<IPlayerManager, PlayerManager>();
+            collection.AddTransient<IImageManager, ImageManager>();
 
             return collection;
         }

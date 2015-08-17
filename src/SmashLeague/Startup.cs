@@ -5,9 +5,10 @@ using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.Runtime;
-using SmashLeague.Security.Battlenet;
 using SmashLeague.Data;
+using SmashLeague.Security.Battlenet;
 using SmashLeague.Services;
+using System.Linq;
 
 namespace SmashLeague
 {
@@ -17,6 +18,7 @@ namespace SmashLeague
         {
             var builder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
                 .AddJsonFile("config.json")
+                .AddJsonFile("initial-data.json")
                 .AddUserSecrets()
                 .AddEnvironmentVariables();
 
@@ -44,17 +46,16 @@ namespace SmashLeague
                 options.ClientSecret = Configuration["Battlenet:ClientSecret"];
             });
 
+            // Configure identity
+            services.ConfigureIdentity(options =>
+            {
+                options.User.UserNameValidationRegex = Security.AuthenticationDefaults.UsernameRegex;
+            });
+
             // Configure cookie authentication
             services.ConfigureCookieAuthentication(options =>
             {
                 options.LoginPath = null;
-            });
-
-            // Configure identity authentication
-            services.ConfigureIdentity(options =>
-            {
-                options.ClaimsIdentity.UserNameClaimType = BattlenetAuthenticationDefaults.BattletagClaimType;
-                options.User.UserNameValidationRegex = BattlenetAuthenticationDefaults.BattletagRegex;
             });
 
             // Add Mvc services
@@ -64,7 +65,7 @@ namespace SmashLeague
             services.AddSmashLeagueServices();
         }
 
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, SmashLeagueDbContext database)
         {
             // Setup logging
             loggerFactory.AddConsole();
@@ -78,6 +79,23 @@ namespace SmashLeague
             app.UseBattlenetAuthentication();
 
             app.UseMvc();
+
+            // Data initialization
+            //
+            // Check default profile image and create if it is missing
+            if (!database.DefaultImages.Any(x => x.Name == Defaults.ProfileImage))
+            {
+                var image = new Image
+                {
+                    MimeType = Configuration["Defaults:Images:Profile:MimeType"],
+                    Data = Configuration["Defaults:Images:Profile:Data"]
+                };
+
+                database.Add(image);
+                database.DefaultImages.Add(new DefaultImages { Image = image, Name = Defaults.ProfileImage });
+
+                database.SaveChanges();
+            }
         }
     }
 }

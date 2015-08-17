@@ -7,9 +7,19 @@ using SmashLeague.Data;
 namespace SmashLeagueDataMigrations
 {
     [ContextType(typeof(SmashLeagueDbContext))]
-    partial class SmashLeagueDbContextModelSnapshot : ModelSnapshot
+    partial class ApplicationUserAndImage
     {
-        public override void BuildModel(ModelBuilder builder)
+        public override string Id
+        {
+            get { return "20150817202819_ApplicationUserAndImage"; }
+        }
+
+        public override string ProductVersion
+        {
+            get { return "7.0.0-beta6-13815"; }
+        }
+
+        public override void BuildTargetModel(ModelBuilder builder)
         {
             builder
                 .Annotation("ProductVersion", "7.0.0-beta6-13815")
@@ -157,22 +167,12 @@ namespace SmashLeagueDataMigrations
                     b.Annotation("Relational:TableName", "AspNetUsers");
                 });
 
-            builder.Entity("SmashLeague.Data.DefaultImages", b =>
-                {
-                    b.Property<string>("Name");
-
-                    b.Property<int?>("ImageProfileImageId");
-
-                    b.Key("Name");
-                });
-
             builder.Entity("SmashLeague.Data.Image", b =>
                 {
                     b.Property<int>("ProfileImageId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Data")
-                        .Required();
+                    b.Property<byte[]>("Bytes");
 
                     b.Property<string>("MimeType")
                         .Required();
@@ -351,13 +351,6 @@ namespace SmashLeagueDataMigrations
                     b.Reference("SmashLeague.Data.Image")
                         .InverseCollection()
                         .ForeignKey("ProfileImageProfileImageId");
-                });
-
-            builder.Entity("SmashLeague.Data.DefaultImages", b =>
-                {
-                    b.Reference("SmashLeague.Data.Image")
-                        .InverseCollection()
-                        .ForeignKey("ImageProfileImageId");
                 });
 
             builder.Entity("SmashLeague.Data.Match", b =>

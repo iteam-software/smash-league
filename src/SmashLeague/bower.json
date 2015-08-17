@@ -1,0 +1,7 @@
+{
+  "name": "SmashLeague",
+  "private": true,
+  "dependencies": {
+    "angular-dragdrop": "1.0.11"
+  }
+}

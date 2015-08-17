@@ -44,9 +44,9 @@ module SmashLeague {
       return response;
     }
 
-    public $get(http) {
+    public $get(http, profile) {
 
-      this._service = new AuthenticationService(http);
+      this._service = new AuthenticationService(http, profile);
 
       return this._service;
     }
