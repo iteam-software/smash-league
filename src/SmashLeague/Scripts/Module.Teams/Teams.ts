@@ -20,12 +20,25 @@ module SmashLeague.Teams {
           }
         }
       });
+
+      stateProvider.state('Teams-New', {
+        url: '/teams/new',
+        views: {
+          'Banner': {
+            template: '<div class="banner banner-blue"></div>'
+          },
+          'Content': {
+            templateUrl: '/teams/new',
+            controller: 'NewTeamController'
+          }
+        }
+      });
     }
   }
 
   Application.Config.$inject = ['$stateProvider'];
 
-  Application.Module = angular.module('SmashLeague.Teams', ['ui.router']);
+  Application.Module = angular.module('SmashLeague.Teams', ['ui.router', 'ngDragDrop']);
   
   Application.Module.config(Application.Config);
 }

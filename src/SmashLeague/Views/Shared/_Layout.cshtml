@@ -6,7 +6,6 @@
 
   <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
   <link rel="stylesheet" href="~/lib/octicons/octicons.css" />
-  <link rel="stylesheet" href="~/lib/icon-battlenet/icon-battlenet.css" />
   <link rel="stylesheet" href="~/css/smash-league.css" />
 
 </head>
@@ -16,12 +15,18 @@
     @RenderBody()
   </div>
 
-  <script src="~/lib/jquery/js/jquery.js"></script>
+  <div class="footer">
+    <p class="text-center">Made with <span class="fa fa-heart-o"></span> by <a href="https://github.com/iteam-software">iteam-software</a></p>
+  </div>
+
+  <script src="~/lib/jquery/dist/jquery.js"></script>
+  <script src="~/lib/jquery-ui/jquery-ui.js"></script>
   <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-  <script src="~/lib/angular/js/angular.js"></script>
+  <script src="~/lib/angular/angular.js"></script>
+  <script src="~/lib/angular-dragdrop/src/angular-dragdrop.js"></script>
   <script src="~/lib/angular-ui-router/js/angular-ui-router.js"></script>
   <script src="~/js/smash-league.js"></script>
 
-  @RenderSection("scripts")
+  @RenderSection("scripts", false)
 </body>
 </html>

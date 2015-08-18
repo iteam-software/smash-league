@@ -7,9 +7,19 @@ using SmashLeague.Data;
 namespace SmashLeagueDataMigrations
 {
     [ContextType(typeof(SmashLeagueDbContext))]
-    partial class SmashLeagueDbContextModelSnapshot : ModelSnapshot
+    partial class TeamOwners
     {
-        public override void BuildModel(ModelBuilder builder)
+        public override string Id
+        {
+            get { return "20150810153812_TeamOwners"; }
+        }
+
+        public override string ProductVersion
+        {
+            get { return "7.0.0-beta6-13815"; }
+        }
+
+        public override void BuildTargetModel(ModelBuilder builder)
         {
             builder
                 .Annotation("ProductVersion", "7.0.0-beta6-13815")
@@ -100,9 +110,6 @@ namespace SmashLeagueDataMigrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("Battletag")
-                        .Required();
-
                     b.Property<DateTime?>("Birthday");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -115,7 +122,7 @@ namespace SmashLeagueDataMigrations
 
                     b.Property<string>("First");
 
-                    b.Property<int?>("HeaderImageProfileImageId");
+                    b.Property<byte[]>("HeaderImage");
 
                     b.Property<string>("Last");
 
@@ -137,7 +144,7 @@ namespace SmashLeagueDataMigrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<int?>("ProfileImageProfileImageId");
+                    b.Property<byte[]>("ProfileImage");
 
                     b.Property<string>("SecurityStamp");
 
@@ -155,29 +162,6 @@ namespace SmashLeagueDataMigrations
                         .Annotation("Relational:Name", "UserNameIndex");
 
                     b.Annotation("Relational:TableName", "AspNetUsers");
-                });
-
-            builder.Entity("SmashLeague.Data.DefaultImages", b =>
-                {
-                    b.Property<string>("Name");
-
-                    b.Property<int?>("ImageProfileImageId");
-
-                    b.Key("Name");
-                });
-
-            builder.Entity("SmashLeague.Data.Image", b =>
-                {
-                    b.Property<int>("ProfileImageId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Data")
-                        .Required();
-
-                    b.Property<string>("MimeType")
-                        .Required();
-
-                    b.Key("ProfileImageId");
                 });
 
             builder.Entity("SmashLeague.Data.Match", b =>
@@ -340,24 +324,6 @@ namespace SmashLeagueDataMigrations
                     b.Reference("SmashLeague.Data.ApplicationUser")
                         .InverseCollection()
                         .ForeignKey("UserId");
-                });
-
-            builder.Entity("SmashLeague.Data.ApplicationUser", b =>
-                {
-                    b.Reference("SmashLeague.Data.Image")
-                        .InverseCollection()
-                        .ForeignKey("HeaderImageProfileImageId");
-
-                    b.Reference("SmashLeague.Data.Image")
-                        .InverseCollection()
-                        .ForeignKey("ProfileImageProfileImageId");
-                });
-
-            builder.Entity("SmashLeague.Data.DefaultImages", b =>
-                {
-                    b.Reference("SmashLeague.Data.Image")
-                        .InverseCollection()
-                        .ForeignKey("ImageProfileImageId");
                 });
 
             builder.Entity("SmashLeague.Data.Match", b =>

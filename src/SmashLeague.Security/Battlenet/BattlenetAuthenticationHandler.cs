@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http.Features.Authentication;
 
-namespace SmashLeague.Authentication.Battlenet
+namespace SmashLeague.Security.Battlenet
 {
     internal class BattlenetAuthenticationHandler : OAuthAuthenticationHandler<BattlenetAuthenticationOptions>
     {
@@ -44,6 +44,7 @@ namespace SmashLeague.Authentication.Battlenet
             var battletag = BattlenetAuthenticationHelper.GetBattletag(payload);
             if (!string.IsNullOrEmpty(battletag))
             {
+                identity.AddClaim(new Claim(ClaimTypes.Name, battletag, ClaimValueTypes.String, Options.ClaimsIssuer));
                 identity.AddClaim(new Claim(BattlenetAuthenticationDefaults.BattletagClaimType, battletag, ClaimValueTypes.String, Options.ClaimsIssuer));
             }
 

@@ -14,6 +14,9 @@ namespace SmashLeague.Data
         public DbSet<Match> Matches { get; set; }
         public DbSet<Matchup> Matchups { get; set; }
         public DbSet<Player> Players { get; set; }
+        public DbSet<TeamOwner> TeamOwners { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<DefaultImages> DefaultImages { get; set; }
 
         public SmashLeagueDbContext()
         {
@@ -41,6 +44,14 @@ namespace SmashLeague.Data
                 .Reference(x => x.Winner)
                 .InverseCollection(x => x.Wins);
 
+            builder.Entity<TeamOwner>()
+                .Key(x => new { x.TeamId, x.PlayerId });
+            builder.Entity<TeamOwner>()
+                .Reference(x => x.Team)
+                .InverseReference(x => x.Owner);
+            builder.Entity<TeamOwner>()
+                .Reference(x => x.Player)
+                .InverseCollection(x => x.OwnedTeams);
         }
     }
 }

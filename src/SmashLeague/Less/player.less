@@ -1,0 +1,53 @@
+﻿
+@import "variables.less";
+
+.roster-player {
+  position: relative;
+  padding: 7px 60px;
+  height: 65px;
+  margin-bottom: 20px;
+  border-radius: 2px;
+  background-color: darken(@roster-player-bg, 10%);
+  border: 2px dashed transparent;
+
+  &.ui-draggable-dragging {
+    opacity: 0.6;
+    width: 45%;
+  }
+
+  &.roster-player-empty {
+    border-color: darken(@roster-player-bg, 20%);
+    background-color: @roster-player-bg;
+  }
+
+  & .help-block {
+    margin: 0;
+  }
+
+  .profile-img {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+  }
+}
+
+
+
+.navbar-player-filter {
+  margin-bottom: 5px;
+}
+
+.well-players {
+  height: 370px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  .roster-player {
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+
+    &:hover {
+      background-color: darken(@roster-player-bg, 20%);
+    }
+  }
+}

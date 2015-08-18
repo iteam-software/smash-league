@@ -1,9 +1,9 @@
-﻿@using SmashLeague.Authentication.Battlenet
-
+﻿
 @{ 
     Layout = null;
 }
 
 <script>
   window['SmashLeague:OAuth:Complete'] = true;
+  window['SmashLeague:OAuth:ReturnUrl'] = @ViewData["ReturlUrl"];
 </script>

@@ -1,7 +1,7 @@
 using Microsoft.AspNet.Authentication.OAuth;
 using Microsoft.AspNet.Http;
 
-namespace SmashLeague.Authentication.Battlenet
+namespace SmashLeague.Security.Battlenet
 {
 	public class BattlenetAuthenticationOptions : OAuthAuthenticationOptions
 	{

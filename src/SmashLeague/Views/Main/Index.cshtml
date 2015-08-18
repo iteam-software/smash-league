@@ -37,14 +37,16 @@
         <li data-toggle="tooltip" data-placement="bottom" title="Notifications">
           <a href="/#/"><span class="octicon octicon-inbox"></span> <span class="visible-xs-inline">Notifications</span></a>
         </li>
-        <li class="dropdown">
-          <a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="btn-auth-profile btn-auth-profile-placeholder img-rounded">
-            <span class="visible-xs-inline" style="margin-left: 32px">{{Service.Battletag}}</span>
+        <li class="dropdown" ng-controller="ProfileController">
+          <a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" 
+             ng-class="{'btn-auth-profile-link':Service.Profile.Image,'btn-auth-profile':!Service.Profile.Image, 'btn-auth-profile-placeholder':!Service.Profile.Image}">
+            <img ng-src="{{Service.Profile.Image.Src}}" ng-if="Service.Profile.Image" class="btn-auth-profile img-rounded"/>
+            <span class="visible-xs-inline" style="margin-left: 32px">{{Service.Profile.Username}}</span>
           </a>
           <ul class="dropdown-menu">
             <li class="nav-profile text-center">
               <a href="/#/">
-                {{Service.Battletag}}
+                {{Service.Profile.Username}}
                 <p>My Profile</p>
               </a>
             </li>
@@ -54,8 +56,8 @@
             </li>
           </ul>
         </li>
-        <li class="navbar-text visible-sm visible-md visible-lg">
-          {{Service.Battletag}}
+        <li class="navbar-text visible-sm visible-md visible-lg" ng-controller="ProfileController">
+          {{Service.Profile.Username}}
         </li>
       </ul>
     </div>
@@ -64,10 +66,6 @@
 
 <ui-view name="Banner"></ui-view>
 <ui-view name="Content"></ui-view>
-
-<div class="footer">
-  <p class="text-center">Made with <span class="fa fa-heart-o"></span> by <a href="https://github.com/iteam-software">iteam-software</a></p>
-</div>
 
 @section scripts {
   <script>

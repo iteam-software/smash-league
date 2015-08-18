@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace SmashLeague.Authentication.Battlenet
+namespace SmashLeague.Security.Battlenet
 {
     public static class BattlenetClaimsPrincipalExtensions
     {

@@ -49,9 +49,22 @@
   .btn-auth-variant(@btn-auth-twitch-bg, false);
 }
 
+.btn-auth-profile-link {
+  .navbar-nav > li > a& {
+    padding: 9px;
+  }
+
+}
+
 .btn-auth-profile {
   width: 32px;
   height: 32px;
+  background-color: @profile-img-background;
+  border: 1px solid #ccc;
+
+  .navbar-nav > li:not(.open) > a.btn-auth-profile-link:hover > & {
+    background-color: darken(@profile-img-background, 5%);
+  }
 }
 
 .btn-auth-profile-placeholder {
@@ -59,7 +72,6 @@
 
   margin: 9px;
   background-color: @bg;
-
   // override bootstrap behavior
   .navbar-default .navbar-nav > li > a&:hover,
   .navbar-default .navbar-nav > li > a&:active {
@@ -74,4 +86,3 @@
     top: 7px;
   }
 }
-

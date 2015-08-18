@@ -14,7 +14,7 @@ namespace SmashLeague.Data
         public string Name { get; set; }
 
         [Required]
-        public Player Owner { get; set; }
+        public TeamOwner Owner { get; set; }
 
         public ICollection<Rank> Rankings { get; set; }
         public ICollection<Player> Members { get; set; }

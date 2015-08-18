@@ -10,8 +10,7 @@ namespace SmashLeague.Services
     {
         private readonly SmashLeagueDbContext _db;
 
-        public MatchManager(
-            SmashLeagueDbContext db)
+        public MatchManager(SmashLeagueDbContext db)
         {
             _db = db;
         }

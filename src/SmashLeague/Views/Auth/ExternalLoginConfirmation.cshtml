@@ -1,25 +1,43 @@
 ﻿@model ExternalLoginConfirmationViewModel
 
-@{ 
-    Layout = null;
-}
+<div class="content content-home">
+  <div class="container">
 
-<h1>Associate your @ViewData["LoginProvider"] account.</h1>
+    <h1>Associate your @ViewData["LoginProvider"] account</h1>
 
-<form asp-controller="Auth" asp-action="ExternalLoginConfirmation" method="post" role="form">
-  <h4>Associate Form</h4>
-  <hr />
-  <div asp-validation-summary="ValidationSummary.All"></div>
+    <form asp-controller="Auth" asp-action="ExternalLoginConfirmation" method="post" role="form" class="form">
+      <h4>Complete the following</h4>
+      <hr />
+      <div asp-validation-summary="ValidationSummary.All"></div>
 
-  <div>
-    <label asp-for="Email"></label>
-    <div>
-      <input asp-for="Email" />
-      <span asp-validation-for="Email"></span>
-    </div>
+      <div class="form-group">
+        <label asp-for="Username" class="control-label"></label>
+        <div>
+          <input asp-for="Username" class="form-control" />
+          <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <div>
+          <input asp-for="Email" class="form-control" />
+          <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label asp-for="ConfirmEmail" class="control-label"></label>
+        <div>
+          <input asp-for="ConfirmEmail" class="form-control" />
+          <span asp-validation-for="ConfirmEmail" class="text-danger"></span>
+        </div>
+      </div>
+
+      <div>
+        <button class="btn btn-success" type="submit">Register</button>
+      </div>
+    </form>
+
   </div>
-
-  <div>
-    <button type="submit">Register</button>
-  </div>
-</form>
+</div>
