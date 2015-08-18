@@ -17,9 +17,9 @@
 
       <ul class="nav navbar-right navbar-nav" ng-if="!Service.IsAuthenticated">
         <li class="dropdown" dropdown-keep-open>
-          <a href="javascript:undefined;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-primary navbar-btn" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-sign-in"></i> Sign In
-          </a>
+          </button>
           <ul class="dropdown-menu dropdown-auth">
             <li class="help-block center-block">
               <p>Please select an authentication method below.</p>
@@ -31,12 +31,6 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right" ng-if="Service.IsAuthenticated">
-        <li data-toggle="tooltip" data-placement="bottom" title="Upload a replay">
-          <a href="/#/"><span class="octicon octicon-cloud-upload text-success"></span> <span class="visible-xs-inline">Upload Replay</span></a>
-        </li>
-        <li data-toggle="tooltip" data-placement="bottom" title="Notifications">
-          <a href="/#/"><span class="octicon octicon-inbox"></span> <span class="visible-xs-inline">Notifications</span></a>
-        </li>
         <li class="dropdown" ng-controller="ProfileController">
           <a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" 
              ng-class="{'btn-auth-profile-link':Service.Profile.Image,'btn-auth-profile':!Service.Profile.Image, 'btn-auth-profile-placeholder':!Service.Profile.Image}">
@@ -50,14 +44,17 @@
                 <p>My Profile</p>
               </a>
             </li>
+            <li class="text-center">
+              <a href="/#/">Notifications</a>
+            </li>
             <li class="divider"></li>
             <li class="text-center">
               <a href="/#/" ng-click="SignOut()"><i class="fa fa-sign-out"></i> Sign Out</a>
             </li>
           </ul>
         </li>
-        <li class="navbar-text visible-sm visible-md visible-lg" ng-controller="ProfileController">
-          {{Service.Profile.Username}}
+        <li data-toggle="tooltip" data-placement="bottom" title="Upload a replay">
+          <button class="btn btn-success navbar-btn"><span class="octicon octicon-cloud-upload"></span> Upload Replay</button>
         </li>
       </ul>
     </div>

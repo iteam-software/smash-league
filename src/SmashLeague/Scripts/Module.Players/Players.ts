@@ -3,7 +3,7 @@ module SmashLeague.Players {
   'use strict';
 
   export class Application {
-    
+
     public static Module: ng.IModule;
 
     public static Config(
@@ -18,11 +18,19 @@ module SmashLeague.Players {
         }
       });
     }
+
+    public static Run(
+      playersService: PlayersService) {
+
+      playersService.LoadPlayers();
+    }
   }
 
   Application.Config.$inject = ['$stateProvider'];
+  Application.Run.$inject = ['PlayersService'];
 
   Application.Module = angular.module('SmashLeague.Players', ['ui.router']);
-  
+
   Application.Module.config(Application.Config);
+  Application.Module.run(Application.Run);
 }

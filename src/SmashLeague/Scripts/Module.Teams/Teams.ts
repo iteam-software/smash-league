@@ -23,6 +23,9 @@ module SmashLeague.Teams {
 
       stateProvider.state('Teams-New', {
         url: '/teams/new',
+        resolve: {
+          captain: ['ProfileService', (service) => { return service.Profile }]
+        },
         views: {
           'Banner': {
             template: '<div class="banner banner-blue"></div>'
@@ -38,7 +41,12 @@ module SmashLeague.Teams {
 
   Application.Config.$inject = ['$stateProvider'];
 
-  Application.Module = angular.module('SmashLeague.Teams', ['ui.router', 'ngDragDrop']);
+  Application.Module = angular.module('SmashLeague.Teams', [
+    'ui.router',
+    'ngDragDrop',
+    'SmashLeague.Players',
+    'SmashLeague.Profile'
+  ]);
   
   Application.Module.config(Application.Config);
 }

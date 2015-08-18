@@ -1,6 +1,13 @@
 ﻿
 @import "variables.less";
 
+roster-player {
+  &.ui-draggable-dragging {
+    opacity: 0.6;
+    width: 45%;
+  }
+}
+
 .roster-player {
   position: relative;
   padding: 7px 60px;
@@ -9,11 +16,6 @@
   border-radius: 2px;
   background-color: darken(@roster-player-bg, 10%);
   border: 2px dashed transparent;
-
-  &.ui-draggable-dragging {
-    opacity: 0.6;
-    width: 45%;
-  }
 
   &.roster-player-empty {
     border-color: darken(@roster-player-bg, 20%);
@@ -28,17 +30,29 @@
     position: absolute;
     left: 5px;
     bottom: 5px;
+    border: 3px solid darken(@roster-player-bg, 10%);
+    z-index: 1020;
+  }
+
+  .profile-banner {
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    height: 30px;
+    z-index: @zindex-dropdown;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    padding-left: 60px;
   }
 }
-
-
 
 .navbar-player-filter {
   margin-bottom: 5px;
 }
 
 .well-players {
-  height: 370px;
+  height: 295px;
   overflow-y: auto;
   overflow-x: hidden;
 

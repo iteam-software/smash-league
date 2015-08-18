@@ -1,0 +1,15 @@
+﻿@*
+    Template view for the roster-player directive
+*@
+@{
+    Layout = null;
+}
+
+<div class="roster-player" ng-class="{'roster-player-empty':!Player}">
+
+  <img class="profile-img" ng-if="Player && Player.Image" ng-src="{{Player.Image.Src}}" />
+  <h3 class="help-block" ng-if="Player">{{Player.Username}}</h3>
+  <div class="profile-banner" ng-if="Player" ng-style="{'background-image':Player.Banner && Player.Banner.Src}"></div>
+
+  <ng-transclude></ng-transclude>
+</div>

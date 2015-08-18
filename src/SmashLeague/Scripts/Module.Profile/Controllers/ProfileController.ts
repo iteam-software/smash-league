@@ -1,5 +1,5 @@
 ﻿
-module SmashLeague {
+module SmashLeague.Profile {
   'use strict';
 
   export class ProfileController {

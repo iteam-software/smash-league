@@ -20,9 +20,6 @@ namespace SmashLeague.Controllers
             _userManager = userManager;
         }
 
-        // MVC Actions
-
-
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Get()
@@ -35,5 +32,6 @@ namespace SmashLeague.Controllers
     [Route("profile")]
     public class ProfileMvcController : Controller
     {
+
     }
 }

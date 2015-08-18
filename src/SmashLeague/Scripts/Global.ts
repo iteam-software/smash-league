@@ -48,6 +48,7 @@ module SmashLeague {
     'ui.router',
     'SmashLeague.Home',
     'SmashLeague.Players',
+    'SmashLeague.Profile',
     'SmashLeague.Teams',
     'SmashLeague.Seasons',
   ]);

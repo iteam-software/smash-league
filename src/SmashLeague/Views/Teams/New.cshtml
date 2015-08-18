@@ -6,23 +6,17 @@
 <div class="content content-home">
   <div class="container-fluid">
     <div class="panel panel-success">
-      <div class="panel-heading">
-        <h2 class="text-center"><span class="fa fa-users"></span> New Team</h2>
-      </div>
       <div class="panel-body">
         <form class="form" novalidate>
           <div class="row">
             <div class="form-group col-md-6">
+              <label class="h3">Captain</label>
+              <roster-player ng-model="Captain"></roster-player>
+            </div>
+            <div class="form-group col-md-6">
               <label class="h3" for="name">Name</label>
               <p class="help-block"><strong>/#/teams/</strong>{{(Name && Name.toLowerCase().split(' ').join('-')) || 'team-name'}}</p>
               <input class="form-control" id="name" type="text" placeholder="Team Name" ng-model="Name" required />
-            </div>
-            <div class="form-group col-md-6">
-              <label class="h3">Captain</label>
-              <div ng-controller="ProfileController" class="roster-player">
-                <img class="profile-img" ng-if="Service.Profile.Image" ng-src="{{Service.Profile.Image.Src}}" />
-                <h3 class="help-block">{{Service.Profile.Username}}</h3>
-              </div>
             </div>
           </div>
           <hr class="form-group" />
@@ -33,21 +27,25 @@
             <div class="col-md-6">
               <h4>Roster</h4>
               <p class="help-block">Drag and drop from <strong>Players</strong> to build your roster.</p>
-              <div class="roster-player" ng-class="{'roster-player-empty':!Member1}" jqyoui-droppable data-drop="{{!Member1}}" ng-model="Member1">
-                <p class="help-block text-center" ng-if="!Member1"><span class="fa fa-user-plus"></span> Add a member</p>
-                <p class="help-block text-center" ng-if="Member1">{{Member1.Name}}</p>
+              <div jqyoui-droppable data-drop="{{!Member1}}" ng-model="Member1">
+                <roster-player ng-model="Member1">
+                  <p class="help-block text-center" ng-if="!Member1"><span class="fa fa-user-plus"></span> Add a member</p>
+                </roster-player>
               </div>
-              <div class="roster-player" ng-class="{'roster-player-empty':!Member2}" jqyoui-droppable data-drop="{{!Member2}}" ng-model="Member2">
-                <p class="help-block text-center" ng-if="!Member2"><span class="fa fa-user-plus"></span> Add a member</p>
-                <p class="help-block text-center" ng-if="Member2">{{Member2.Name}}</p>
+              <div jqyoui-droppable data-drop="{{!Member2}}" ng-model="Member2">
+                <roster-player ng-model="Member2">
+                  <p class="help-block text-center" ng-if="!Member2"><span class="fa fa-user-plus"></span> Add a member</p>
+                </roster-player>
               </div>
-              <div class="roster-player" ng-class="{'roster-player-empty':!Member3}" jqyoui-droppable data-drop="{{!Member3}}" ng-model="Member3">
-                <p class="help-block text-center" ng-if="!Member3"><span class="fa fa-user-plus"></span> Add a member</p>
-                <p class="help-block text-center" ng-if="Member3">{{Member3.Name}}</p>
+              <div jqyoui-droppable data-drop="{{!Member3}}" ng-model="Member3">
+                <roster-player ng-model="Member3">
+                  <p class="help-block text-center" ng-if="!Member3"><span class="fa fa-user-plus"></span> Add a member</p>
+                </roster-player>
               </div>
-              <div class="roster-player" ng-class="{'roster-player-empty':!Member4}" jqyoui-droppable data-drop="{{!Member4}}" ng-model="Member4">
-                <p class="help-block text-center" ng-if="!Member4"><span class="fa fa-user-plus"></span> Add a member</p>
-                <p class="help-block text-center" ng-if="Member4">{{Member4.Name}}</p>
+              <div jqyoui-droppable data-drop="{{!Member4}}" ng-model="Member4">
+                <roster-player ng-model="Member4">
+                  <p class="help-block text-center" ng-if="!Member4"><span class="fa fa-user-plus"></span> Add a member</p>
+                </roster-player>
               </div>
             </div>
             <div class="col-md-6">
@@ -69,17 +67,14 @@
                   </li>
                 </ul>
               </div>
-              <div class="well well-sm well-players">
-                <div class="roster-player" ng-model="player" ng-repeat="player in Players" ng-if="player" data-drag="true" jqyoui-draggable data-jqyoui-options="{appendTo:'#build-your-roster', helper:'clone', revert:'invalid', cursor:'-webkit-grabbing'}">
-                  <p class="help-block text-center">
-                    {{player.Name}}
-                  </p>
-                </div>
+              <div class="well well-sm well-players" ng-controller="PlayersController">
+                <roster-player ng-model="player" ng-repeat="player in Service.Players | unselected:[Captain,Member1,Member2,Member3,Member4]" ng-if="player" data-drag="true" jqyoui-draggable="{placeholder:'keep'}" data-jqyoui-options="{appendTo:'#build-your-roster', helper:'clone', revert:'invalid', cursor:'-webkit-grabbing'}">
+                </roster-player>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <button class="btn btn-success">Create team</button>
+            <button class="btn btn-success"><span class="fa fa-plus"></span> Create team</button>
           </div>
         </form>
       </div>

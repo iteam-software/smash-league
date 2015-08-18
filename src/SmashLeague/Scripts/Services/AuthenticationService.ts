@@ -14,7 +14,8 @@ module SmashLeague {
     private _isAuthenticated: boolean;
     private _username: string;
     private _http: ng.IHttpService;
-    private _profileService: ProfileService;
+    private _root: ng.IRootScopeService;
+    private _profileService: Profile.ProfileService;
 
     public get IsAuthenticated() { return this._isAuthenticated; }
     public set IsAuthenticated(value: boolean) {
@@ -31,15 +32,18 @@ module SmashLeague {
 
     public static $inject = [
       '$http',
+      '$rootScope',
       'ProfileService'
     ];
 
     constructor(
       http,
+      rootScope,
       profileService) {
 
       this._http = http;
       this._profileService = profileService;
+      this._root = rootScope;
       this.ValidateAuthState();
     }
 
@@ -68,6 +72,8 @@ module SmashLeague {
         this.IsAuthenticated = false;
         this._username = undefined;
       }
+
+      this._root.$broadcast('SmashLeague:Event:AuthStateChange', this.IsAuthenticated, this.Username);
     }
   }
 }
