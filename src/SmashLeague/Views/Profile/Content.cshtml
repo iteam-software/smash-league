@@ -1,0 +1,31 @@
+﻿@*
+    /profile/content
+*@
+@{
+    Layout = null;
+}
+
+<div class="profile">
+  <div class="profile-banner" ng-class="{editing:IsEditing}" ng-style="{'background-image': (IsEditing && Edit.Banner.Src) || (Service.Profile.Banner && Service.Profile.Banner.Src)}">
+    <div class="profile-banner-edit" ng-show="IsEditing">
+      <h3><span class="fa fa-camera"></span> Upload a new banner</h3>
+    </div>
+    <img class="profile-img" ng-class="{editing:IsEditing}" ng-src="{{(IsEditing && Edit.Image.Src) || Service.Profile.Image.Src}}" />
+    <div class="profile-img profile-img-edit" ng-show="IsEditing">
+      <h1><span class="fa fa-camera"></span></h1>
+    </div>
+    <div class="profile-header">
+      <h1 class="profile-username">{{Service.Profile.Username}}</h1>
+      <ul class="nav-profile-edit">
+        <li ng-show="!IsEditing"><button class="btn btn-info" ng-click="BeginEdit()"><span class="fa fa-pencil"></span> Edit</button></li>
+        <li ng-show="IsEditing"><button class="btn btn-default" ng-click="Cancel()">Cancel</button></li>
+        <li ng-show="IsEditing"><button class="btn btn-success" ng-click="Save()"><span class="fa fa-save"></span> Save</button></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid profile-content">
+    <section style="height: 500px">
+      Some text
+    </section>
+  </div>
+</div>

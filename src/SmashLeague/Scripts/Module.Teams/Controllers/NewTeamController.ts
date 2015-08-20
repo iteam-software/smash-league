@@ -35,7 +35,12 @@ module SmashLeague.Teams {
       }
 
       this._scope.$watch('ProfileService.Profile', () => {
-        this.SetCaptain(profileService.Profile.Username, playersService);
+        if (profileService.Profile) {
+          this.SetCaptain(profileService.Profile.Username, playersService);
+        }
+        else {
+          this._scope.Captain = undefined;
+        }
       });
 
       this._scope.$on('SmashLeague:Event:AuthStateChange', (event, authenticated: boolean, username: string) => {

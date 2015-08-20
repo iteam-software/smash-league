@@ -11,11 +11,11 @@ namespace SmashLeague.Controllers
 {
     // API Actions
     [Route("api/profile")]
-    public class ProfileController : Controller
+    public class ProfileApiController : Controller
     {
         private readonly ApplicationUserManager _userManager;
 
-        public ProfileController(ApplicationUserManager userManager)
+        public ProfileApiController(ApplicationUserManager userManager)
         {
             _userManager = userManager;
         }
@@ -29,9 +29,14 @@ namespace SmashLeague.Controllers
         }
     }
 
+    [Authorize]
     [Route("profile")]
-    public class ProfileMvcController : Controller
+    public class ProfileController : Controller
     {
-
+        [Route("content")]
+        public IActionResult Content()
+        {
+            return View();
+        }
     }
 }

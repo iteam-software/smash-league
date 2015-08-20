@@ -6,6 +6,55 @@ body {
   background-color: lighten(@navbar-inverse-bg, 20%);
 }
 
+.profile {
+  background: #fff;
+
+  .profile-banner {
+    width: 100%;
+    position: relative;
+    padding-left: @profile-banner-padding-left + 150px /* 150px is the profile-img size */;
+
+    .profile-img {
+      position: absolute;
+      left: @profile-banner-padding-left / 2;
+      bottom: -50px;
+      border-color: #fff;
+      border-width: 5px;
+      z-index: 990;
+    }
+
+    .profile-header {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 5px 0 5px @profile-banner-padding-left + 150px;
+      background-color: rgba(10, 10, 10, 0.25);
+      z-index: 980;
+
+      ul.nav-profile-edit {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+
+        li {
+          display: inline-block;
+
+          + li {
+            padding-left: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.profile-content {
+  padding-top: 60px;
+}
+
+
 .dropdown-auth {
   padding: @dropdown-auth-padding;
   width: @dropdown-auth-width;
