@@ -26,7 +26,7 @@ module SmashLeague.Profile {
 
   Application.Config.$inject = ['$stateProvider'];
 
-  Application.Module = angular.module('SmashLeague.Profile', ['ui.router']);
+  Application.Module = angular.module('SmashLeague.Profile', ['ui.router', 'SmashLeague.Common']);
 
   Application.Module.config(Application.Config);
 }

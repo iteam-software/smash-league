@@ -36,7 +36,7 @@ namespace SmashLeague.Data.Extensions
                 throw new ArgumentNullException("userName");
             }
 
-            return await _db.Users.Include(x => x.ProfileImage).FirstOrDefaultAsync(x => x.UserName == userName);
+            return await _db.Users.Include(x => x.ProfileImage).Include(x => x.HeaderImage).FirstOrDefaultAsync(x => x.UserName == userName);
         }
     }
 }

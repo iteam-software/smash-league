@@ -21,6 +21,7 @@ module SmashLeague.Profile {
 
       this._scope.Service = profileService;
       this._scope.IsEditing = false;
+      this._scope.Edit = this.InitializeEditObject({});
       this._scope.BeginEdit = $.proxy(this.BeginEdit, this);
       this._scope.Save = $.proxy(this.Save, this);
       this._scope.Cancel = $.proxy(this.Cancel, this);
@@ -31,11 +32,27 @@ module SmashLeague.Profile {
     }
 
     public Save() {
+
+      this._scope.Service.UpdateProfile($.extend(this._scope.Service.Profile, this._scope.Edit));
       this._scope.IsEditing = false;
     }
 
     public Cancel() {
+
+      this._scope.Edit = this.InitializeEditObject(this._scope.Edit);
       this._scope.IsEditing = false;
+    }
+
+    private InitializeEditObject(
+      edit: any) {
+
+      if (edit.Banner) { delete edit.Banner }
+      if (edit.Image) { delete edit.Image }
+
+      edit.Banner = {};
+      edit.Image = {};
+
+      return edit;
     }
   }
 

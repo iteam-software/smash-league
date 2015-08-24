@@ -12,6 +12,15 @@ module SmashLeague.Players {
     ];
 
     public get Players() { return this._players }
+    public set Players(value: any[]) {
+      value.forEach(player => {
+        if (player.Banner) {
+          player.Banner.SrcUrl = 'url(' + player.Banner.Src + ')';
+        }
+      });
+
+      this._players = value;
+    }
 
     constructor(
       http) {
@@ -22,7 +31,7 @@ module SmashLeague.Players {
     public LoadPlayers() {
 
       this._http.get('/api/player')
-        .success((players: any[]) => this._players = players);
+        .success((players: any[]) => this.Players = players);
     }
 
     public static get Factory() {

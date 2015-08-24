@@ -6,14 +6,14 @@
 }
 
 <div class="profile">
-  <div class="profile-banner" ng-class="{editing:IsEditing}" ng-style="{'background-image': (IsEditing && Edit.Banner.Src) || (Service.Profile.Banner && Service.Profile.Banner.Src)}">
-    <div class="profile-banner-edit" ng-show="IsEditing">
+  <div class="profile-banner" ng-class="{editing:IsEditing}" ng-style="{'background-image': (IsEditing && Edit.Banner.Src) || (Service.Profile.Banner && Service.Profile.Banner.SrcUrl)}">
+    <file-selector class="profile-banner-edit" ng-if="IsEditing" selector-file="Edit.Banner" selector-wrap-url="true">
       <h3><span class="fa fa-camera"></span> Upload a new banner</h3>
-    </div>
-    <img class="profile-img" ng-class="{editing:IsEditing}" ng-src="{{(IsEditing && Edit.Image.Src) || Service.Profile.Image.Src}}" />
-    <div class="profile-img profile-img-edit" ng-show="IsEditing">
+    </file-selector>
+    <img class="profile-img" ng-if="Service.Profile" ng-class="{editing:IsEditing}" ng-src="{{(IsEditing && Edit.Image.Src) || '/api/image/' + Service.Profile.Username}}" />
+    <file-selector class="profile-img profile-img-edit" ng-if="IsEditing" selector-file="Edit.Image" selector-wrap-url="false">
       <h1><span class="fa fa-camera"></span></h1>
-    </div>
+    </file-selector>
     <div class="profile-header">
       <h1 class="profile-username">{{Service.Profile.Username}}</h1>
       <ul class="nav-profile-edit">

@@ -13,6 +13,14 @@ namespace SmashLeague.Services
             _db = db;
         }
 
+        public async Task<Image> CreateImage(Image image)
+        {
+            _db.Images.Add(image);
+            await _db.SaveChangesAsync();
+
+            return image;
+        }
+
         public async Task<Image> GetDefaultImageAsync(string image)
         {
             var defaultImage = await _db.DefaultImages

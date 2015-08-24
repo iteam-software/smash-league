@@ -27,7 +27,8 @@ namespace SmashLeague.Services
         public async Task<Player> GetPlayerByUserNameAsync(string username)
         {
             var player = await _db.Players
-                .Include(x => x.User)
+                .Include(x => x.User).ThenInclude(y => y.HeaderImage)
+                .Include(x => x.User).ThenInclude(y => y.ProfileImage)
                 .FirstOrDefaultAsync(x => x.User.UserName == username);
 
             return player;
