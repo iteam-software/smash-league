@@ -28,14 +28,20 @@ module SmashLeague.Players {
       this._http = http;
     }
 
-    public LoadPlayers() {
+    public LoadPlayers(
+      callback?: (Players: any[]) => void) {
 
       this._http.get('/api/player')
-        .success((players: any[]) => this.Players = players);
+        .success((players: any[]) => {
+          this.Players = players;
+          if (callback !== undefined) {
+            callback(players);
+          }
+        });
     }
 
     public static get Factory() {
-      
+
       var factory = (http) => {
         return new PlayersService(http);
       }

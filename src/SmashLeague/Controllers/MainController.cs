@@ -11,5 +11,11 @@ namespace SmashLeague.Controllers
         {
             return View();
         }
+
+        [Route("Initializing")]
+        public IActionResult Initialize()
+        {
+            return View();
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿
-module SmashLeague {
+module SmashLeague.Common {
   'use strict';
 
   export class AuthController {
@@ -15,7 +15,7 @@ module SmashLeague {
       '$scope',
       '$interval',
       '$http',
-      '!AuthenticationService'
+      'AuthenticationService'
     ];
 
     constructor(
@@ -34,6 +34,7 @@ module SmashLeague {
       this._scope.SignIn = $.proxy(this.SignIn, this);
       this._scope.SignOut = $.proxy(this.SignOut, this);
       this._scope.Service = this._authenticationService;
+      this._scope.$on(Common.Events.AuthStateChange, () => { });
     }
 
     public SignOut() {

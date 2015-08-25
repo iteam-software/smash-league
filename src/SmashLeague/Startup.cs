@@ -23,9 +23,11 @@ namespace SmashLeague
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
+            Environment = env;
         }
 
         public IConfiguration Configuration { get; set; }
+        public IHostingEnvironment Environment { get; set; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -62,7 +64,7 @@ namespace SmashLeague
             services.AddMvc();
 
             // Add application services
-            services.AddSmashLeagueServices();
+            services.AddSmashLeagueServices(Environment);
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, SmashLeagueDbContext database)
@@ -87,8 +89,7 @@ namespace SmashLeague
             {
                 var image = new Image
                 {
-                    MimeType = Configuration["Defaults:Images:Profile:MimeType"],
-                    Data = Configuration["Defaults:Images:Profile:Data"]
+                    Source = Configuration["Defaults:Images:Profile:Source"]
                 };
 
                 database.Add(image);

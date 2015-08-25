@@ -6,11 +6,11 @@
 }
 
 <div class="profile">
-  <div class="profile-banner" ng-class="{editing:IsEditing}" ng-style="{'background-image': (IsEditing && Edit.Banner.Src) || (Service.Profile.Banner && Service.Profile.Banner.SrcUrl)}">
+  <div class="profile-banner" ng-class="{editing:IsEditing}" ng-style="{'background-image': (IsEditing && Edit.Banner.Src && 'url(' + Edit.Banner.Src +')') || (Service.Profile.BannerImageSrc && 'url(' + Service.Profile.BannerImageSrc +')')}">
     <file-selector class="profile-banner-edit" ng-if="IsEditing" selector-file="Edit.Banner" selector-wrap-url="true">
       <h3><span class="fa fa-camera"></span> Upload a new banner</h3>
     </file-selector>
-    <img class="profile-img" ng-if="Service.Profile" ng-class="{editing:IsEditing}" ng-src="{{(IsEditing && Edit.Image.Src) || '/api/image/' + Service.Profile.Username}}" />
+    <img class="profile-img" ng-if="Service.Profile" ng-class="{editing:IsEditing}" ng-src="{{(IsEditing && Edit.Image.Src) || Service.Profile.ProfileImageSrc}}" />
     <file-selector class="profile-img profile-img-edit" ng-if="IsEditing" selector-file="Edit.Image" selector-wrap-url="false">
       <h1><span class="fa fa-camera"></span></h1>
     </file-selector>

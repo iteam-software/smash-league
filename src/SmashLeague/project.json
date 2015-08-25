@@ -25,7 +25,11 @@
 
   "frameworks": {
     "dnx451": { },
-    "dnxcore50": { }
+    "dnxcore50": {
+      "dependencies": {
+        "System.Text.Encoding": "4.0.10-beta-23109"
+      }
+    }
   },
 
   "publishExclude": [

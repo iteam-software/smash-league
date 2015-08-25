@@ -64,6 +64,23 @@ body {
   padding: 0 @navbar-full-padding;
 }
 
+.navbar-fixed-top {
+  -o-transition: top ease .3s;
+  -webkit-transition: top ease .3s;
+  -moz-transition: top ease .3s;
+  transition: top ease .3s;
+}
+
+.initializing {
+  &.navbar-fixed-top {
+    top: -@navbar-height;
+  }
+
+  > .row {
+    margin-top: 200px;
+  }
+}
+
 .navbar-form {
   padding: 0;
 
@@ -115,7 +132,7 @@ body {
 }
 
 .content {
-  padding: 20px 0;
+  padding: 15px;
 }
 
 .content-home {

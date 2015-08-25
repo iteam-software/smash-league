@@ -7,9 +7,19 @@ using SmashLeague.Data;
 namespace SmashLeagueDataMigrations
 {
     [ContextType(typeof(SmashLeagueDbContext))]
-    partial class SmashLeagueDbContextModelSnapshot : ModelSnapshot
+    partial class ImageRefactor
     {
-        public override void BuildModel(ModelBuilder builder)
+        public override string Id
+        {
+            get { return "20150825192709_ImageRefactor"; }
+        }
+
+        public override string ProductVersion
+        {
+            get { return "7.0.0-beta6-13815"; }
+        }
+
+        public override void BuildTargetModel(ModelBuilder builder)
         {
             builder
                 .Annotation("ProductVersion", "7.0.0-beta6-13815")
@@ -170,6 +180,9 @@ namespace SmashLeagueDataMigrations
                 {
                     b.Property<int>("ProfileImageId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MimeType")
+                        .Required();
 
                     b.Property<string>("Source")
                         .Required();

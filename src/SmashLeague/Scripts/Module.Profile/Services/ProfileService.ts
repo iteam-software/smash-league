@@ -6,6 +6,7 @@ module SmashLeague.Profile {
 
     private _profile: any;
     private _http: ng.IHttpService;
+    private _isLoading: boolean;
 
     public get Profile() { return this._profile }
     public set Profile(value) {
@@ -21,17 +22,25 @@ module SmashLeague.Profile {
     }
 
     public static $inject = [
-      '$http'
+      '$http',
     ];
 
     constructor(
       http) {
       this._http = http;
+      this._isLoading = false;
     }
 
     public LoadProfile() {
-      this._http.get('/api/profile')
-        .success(profile => this.Profile = profile);
+
+      if (!this._isLoading) {
+        this._isLoading = true;
+        this._http.get('/api/profile')
+          .success(profile => {
+            this.Profile = profile
+            this._isLoading = false;
+          });
+      }
     }
 
     public DestroyProfile() {
@@ -45,7 +54,7 @@ module SmashLeague.Profile {
     }
 
     public static get Factory() {
-      
+
       var factory = (http) => {
         return new ProfileService(http);
       }

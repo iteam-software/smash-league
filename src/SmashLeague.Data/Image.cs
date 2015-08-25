@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.RegularExpressions;
 
@@ -10,36 +11,42 @@ namespace SmashLeague.Data
         public int ProfileImageId { get; set; }
 
         [Required]
-        public string MimeType { get; set; }
-
-        [Required]
-        public string Data { get; set; }
+        public string Source { get; set; }
 
         // Helpers
-        public static Image FromDataUri(string uri)
+        private static readonly Regex PureDataUriRx = new Regex("^data:image/[a-z]{3,5};base64,.*$");
+
+        public static string GetTypeFromDataUri(string uri)
         {
-            // TODO: come up with a regex for base64 string
-            var pureDataUriRx = new Regex("^data:image/[a-z]{3,5};base64,.*$");
-            var urlWrappedDateUriRx = new Regex(@"^url\(data:image/[a-z]{3,5};base64,.*\)$");
+            uri = StripDataColon(uri);
 
-            if (pureDataUriRx.IsMatch(uri))
-            {
-                // should give us ["data:image/{type};base64","{data}"]
-                var parts = uri.Split(',');
+            var parts = uri.Split(';');
+            var mimeType = parts[0];
 
-                return BuildImageFromDataUriParts(parts); ;
-            }
-            else if (urlWrappedDateUriRx.IsMatch(uri))
-            {
-                var start = uri.IndexOf('(') + 1;
-                var data = uri.Substring(start, uri.Length - 1 - start);
-                var parts = data.Split(',');
+            return mimeType.Split('/')[1];
+        }
 
-                return BuildImageFromDataUriParts(parts);
-            }
-            else
+        public static string GetBase64StringFromDataUri(string uri)
+        {
+            uri = StripDataColon(uri);
+
+            var parts = uri.Split(';');
+
+            return parts[1].Split(',')[1];
+        }
+
+        private static string StripDataColon(string uri)
+        {
+            EnsureValidDataUri(uri);
+
+            return uri.Substring(uri.IndexOf(':') + 1, uri.Length - 5);
+        }
+
+        private static void EnsureValidDataUri(string uri)
+        {
+            if (!PureDataUriRx.IsMatch(uri))
             {
-                return null;
+                throw new InvalidOperationException("uri is not an image data uri");
             }
         }
 
@@ -51,8 +58,7 @@ namespace SmashLeague.Data
             var mimeBegin = parts[0].IndexOf("image");
 
             // Set image values
-            image.MimeType = parts[0].Substring(mimeBegin, parts[0].IndexOf(';') - mimeBegin);
-            image.Data = parts[1];
+            image.Source = parts[1];
 
             return image;
         }

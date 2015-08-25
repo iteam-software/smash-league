@@ -59,47 +59,15 @@ namespace SmashLeague.Controllers
             user.Last = updating.Last;
 
             // Update images
-            if (updating.Banner != null)
+            if (!string.IsNullOrEmpty(updating.ProfileImageEditData))
             {
-                if (!string.IsNullOrEmpty(updating.Banner.Src))
-                {
-                    if (user.HeaderImage == null)
-                    {
-                        user.HeaderImage = Data.Image.FromDataUri(updating.Banner.Src);
-                        await _imageManager.CreateImage(user.HeaderImage);
-                    }
-                    else
-                    {
-                        var image = Data.Image.FromDataUri(updating.Banner.Src);
-
-                        user.HeaderImage.Data = image.Data;
-                        user.HeaderImage.MimeType = image.MimeType;
-                    }
-                }
+                // TODO: image validation
+                await _imageManager.UpdateProfileImageAsync(user, updating.ProfileImageEditData);
             }
 
-            if (updating.Image != null)
+            if (!string.IsNullOrEmpty(updating.BannerImageEditData))
             {
-                if (!string.IsNullOrEmpty(updating.Image.Src))
-                {
-                    if (user.ProfileImage == null)
-                    {
-                        user.ProfileImage = Data.Image.FromDataUri(updating.Image.Src);
-                        await _imageManager.CreateImage(user.ProfileImage);
-                    }
-                    else if (user.ProfileImage.ProfileImageId == (await _imageManager.GetDefaultImageAsync(Data.Defaults.ProfileImage)).ProfileImageId)
-                    {
-                        user.ProfileImage = Data.Image.FromDataUri(updating.Image.Src);
-                        await _imageManager.CreateImage(user.ProfileImage);
-                    }
-                    else
-                    {
-                        var image = Data.Image.FromDataUri(updating.Image.Src);
-
-                        user.ProfileImage.Data = image.Data;
-                        user.ProfileImage.MimeType = image.MimeType;
-                    }
-                }
+                await _imageManager.UpdateBannerImageAsync(user, updating.BannerImageEditData);
             }
 
             var result = await _userManager.UpdateAsync(user);

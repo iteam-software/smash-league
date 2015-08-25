@@ -1,5 +1,5 @@
 ﻿
-module SmashLeague {
+module SmashLeague.Common {
   'use strict';
 
   export interface IAuthenticationService {
@@ -19,32 +19,21 @@ module SmashLeague {
 
     public get IsAuthenticated() { return this._isAuthenticated; }
     public set IsAuthenticated(value: boolean) {
-      if (value) {
-        this._profileService.LoadProfile();
-      }
-      else {
-        this._profileService.DestroyProfile();
-      }
-
       this._isAuthenticated = value;
     }
     public get Username() { return this._username; }
 
     public static $inject = [
       '$http',
-      '$rootScope',
-      'ProfileService'
+      '$rootScope'
     ];
 
     constructor(
       http,
-      rootScope,
-      profileService) {
+      rootScope) {
 
       this._http = http;
-      this._profileService = profileService;
       this._root = rootScope;
-      this.ValidateAuthState();
     }
 
     public UnauthorizedResponseCallback() {
@@ -73,7 +62,7 @@ module SmashLeague {
         this._username = undefined;
       }
 
-      this._root.$broadcast('SmashLeague:Event:AuthStateChange', this.IsAuthenticated, this.Username);
+      this._root.$broadcast(Common.Events.AuthStateChange, this.IsAuthenticated, this.Username);
     }
   }
 }

@@ -1,5 +1,5 @@
 ﻿
-module SmashLeague {
+module SmashLeague.Common {
   'use strict';
 
   export interface IAuthenticationServiceProvider extends ng.IServiceProvider {
@@ -44,13 +44,13 @@ module SmashLeague {
       return response;
     }
 
-    public $get(http, root, profile) {
+    public $get(http, root) {
 
-      this._service = new AuthenticationService(http, root, profile);
+      this._service = new AuthenticationService(http, root);
 
       return this._service;
     }
   }
 
-  Application.Module.provider('!AuthenticationService', AuthenticationServiceProvider);
+  Application.Module.provider('AuthenticationService', AuthenticationServiceProvider);
 }

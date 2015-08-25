@@ -7,38 +7,60 @@ module SmashLeague {
     public static Module: ng.IModule;
 
     public static Config(
-      auth: IAuthenticationServiceProvider,
+      auth: Common.IAuthenticationServiceProvider,
       stateProvider: ng.ui.IStateProvider) {
 
       // Enable auth state checking
       auth.AddUnauthorizedResponseCallback();
 
       // TODO: global not found page
+
+      stateProvider.state('Initialize', {
+        url: '/initialize',
+        resolve: {
+          returnUrl: ['$location', (location: ng.ILocationService) => {
+            var returnUrl = location.search()['returnUrl'];
+            return returnUrl = returnUrl !== undefined ? returnUrl : '/home';
+          }]
+        },
+        views: {
+          'Content': {
+            templateUrl: '/initializing',
+            controller: 'InitializeController'
+          }
+        }
+      });
     }
 
     public static Run(
       scope: IAuthenticationScope,
-      authService: IAuthenticationService,
+      authService: Common.IAuthenticationService,
       stateService: ng.ui.IStateService,
       location: ng.ILocationService) {
 
       scope.Service = authService;
       scope.State = stateService;
 
-      if (location.path() === '' || location.path() === '/') {
-        location.path('/home');
+      // capture return url
+      var returnUrl = location.path();
+
+      // Initialize the application
+      location.url('initialize');
+
+      if (returnUrl !== '/initialize' && returnUrl !== '' && returnUrl !== '/') {
+        location.search('returnUrl', returnUrl);
       }
     }
   }
 
   Application.Config.$inject = [
-    '!AuthenticationServiceProvider',
+    'AuthenticationServiceProvider',
     '$stateProvider'
   ];
 
   Application.Run.$inject = [
     '$rootScope',
-    '!AuthenticationService',
+    'AuthenticationService',
     '$state',
     '$location'
   ];

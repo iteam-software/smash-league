@@ -18,19 +18,11 @@ module SmashLeague.Players {
         }
       });
     }
-
-    public static Run(
-      playersService: PlayersService) {
-
-      playersService.LoadPlayers();
-    }
   }
 
   Application.Config.$inject = ['$stateProvider'];
-  Application.Run.$inject = ['PlayersService'];
 
   Application.Module = angular.module('SmashLeague.Players', ['ui.router']);
 
   Application.Module.config(Application.Config);
-  Application.Module.run(Application.Run);
 }

@@ -1,5 +1,5 @@
-﻿<div class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid" ng-controller="AuthController">
+﻿<div class="navbar navbar-default navbar-fixed-top" ng-class="{initializing: !Initialized}">
+  <div class="container-fluid" ng-controller="AuthController" ng-if="Initialized">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="icon-bar"></span>
@@ -33,14 +33,14 @@
       <ul class="nav navbar-nav navbar-right" ng-if="Service.IsAuthenticated">
         <li class="dropdown" ng-controller="ProfileController">
           <a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" 
-             ng-class="{'btn-auth-profile-link':Service.Profile.Image,'btn-auth-profile':!Service.Profile.Image, 'btn-auth-profile-placeholder':!Service.Profile.Image}">
-            <img ng-src="{{Service.Profile.Image.Src}}" ng-if="Service.Profile.Image" class="btn-auth-profile img-rounded"/>
+             ng-class="{'btn-auth-profile-link':Service.Profile.ProfileImageSrc,'btn-auth-profile':!Service.Profile.ProfileImageSrc, 'btn-auth-profile-placeholder':!Service.Profile.ProfileImageSrc}">
+            <img ng-src="{{Service.Profile.ProfileImageSrc}}" ng-if="Service.Profile.ProfileImageSrc" class="btn-auth-profile img-rounded"/>
             <span class="visible-xs-inline" style="margin-left: 32px">{{Service.Profile.Username}}</span>
           </a>
           <ul class="dropdown-menu">
             <li class="nav-profile text-center">
               <a href="/#/profile">
-                {{Service.Profile.Username}}
+                <strong>{{Service.Profile.Username}}</strong>
                 <p>My Profile</p>
               </a>
             </li>
