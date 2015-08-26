@@ -3,49 +3,51 @@
     Layout = null;
 }
 
-<div class="container-fluid content content-home">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="text-center"><span class="fa fa-calendar-check-o"></span> Events</h2>
-        </div>
-        <div class="panel-body">
-          <div class="panel-empty" ng-show="!Events || Events.length == 0">
-            <span class="caption">There are no events</span>
+<div class="content content-home">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="text-center"><span class="fa fa-calendar-check-o"></span> News</h2>
+          </div>
+          <div class="panel-body">
+            <div class="panel-empty" ng-show="!News || News.length == 0">
+              <span class="caption">There is no news</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-8">
-      <div class="panel panel-default" controller="AuthController">
-        <div class="panel-heading">
-          <h2 class="text-center">
-            <span class="fa fa-users"></span> | <span class="fa fa-users"></span> Matches
-          </h2>
-        </div>
-        <div class="panel-body">
-          <div class="navbar">
-            <form class="navbar-form navbar-left">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Find a Match" autofocus />
-                <span class="input-group-btn">
-                  <button class="btn btn-primary">
-                    <i class="fa fa-search"></i>
-                  </button>
-                </span>
-              </div>
-            </form>
-            <ul class="nav navbar-nav" ng-controller="AuthController">
-              <li ng-show="Service.IsAuthenticated"><button class="btn navbar-btn btn-success"><span class="fa fa-plus"></span> Create Match</button></li>
-            </ul>
+      <div class="col-md-8">
+        <div class="panel panel-default" controller="AuthController">
+          <div class="panel-heading">
+            <h2 class="text-center">
+              <span class="fa fa-users"></span> | <span class="fa fa-users"></span> Matches
+            </h2>
           </div>
-          <div class="panel-empty" ng-show="!Matches || Matches.length == 0">
-            <span class="caption">There are no matches</span>
+          <div class="panel-body">
+            <div class="navbar">
+              <form class="navbar-form navbar-left">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Find a Match" autofocus />
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary">
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </span>
+                </div>
+              </form>
+              <ul class="nav navbar-nav" ng-controller="AuthController">
+                <li ng-show="Service.IsAuthenticated"><button class="btn navbar-btn btn-success"><span class="fa fa-plus"></span> Create Match</button></li>
+              </ul>
+            </div>
+            <div class="panel-empty" ng-show="!Matches || Matches.length == 0">
+              <span class="caption">There are no matches</span>
+            </div>
+            <p ng-show="Matches && Matches.length > 0">
+              There are some matches, but we aren't showing you them yet.
+            </p>
           </div>
-          <p ng-show="Matches && Matches.length > 0">
-            There are some matches, but we aren't showing you them yet.
-          </p>
         </div>
       </div>
     </div>

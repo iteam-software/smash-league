@@ -18,6 +18,36 @@ module SmashLeague.Profile {
           'Content': {
             templateUrl: '/profile/content',
             controller: 'ProfileController'
+          },
+          'ProfileContent@Profile': {
+            template: '<p>Feed</p>'
+          }
+        }
+      });
+
+      stateProvider.state('Profile.Teams', {
+        url: '/teams',
+        views: {
+          'ProfileContent': {
+            template: '<p>Teams</p>'
+          }
+        }
+      });
+
+      stateProvider.state('Profile.Stats', {
+        url: '/stats',
+        views: {
+          'ProfileContent': {
+            template: '<p>Stats</p>'
+          }
+        }
+      });
+
+      stateProvider.state('Profile.History', {
+        url: '/history',
+        views: {
+          'ProfileContent': {
+            template: '<p>History</p>'
           }
         }
       });

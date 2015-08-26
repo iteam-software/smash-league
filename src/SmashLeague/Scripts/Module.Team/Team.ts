@@ -9,8 +9,8 @@ module SmashLeague.Teams {
     public static Config(
       stateProvider: ng.ui.IStateProvider) {
 
-      stateProvider.state('Teams', {
-        url: '/teams',
+      stateProvider.state('Team', {
+        url: '/team',
         views: {
           'Banner': {
             template: '<div class="banner banner-blue"></div>'
@@ -21,8 +21,8 @@ module SmashLeague.Teams {
         }
       });
 
-      stateProvider.state('Teams-New', {
-        url: '/teams/new',
+      stateProvider.state('Team-New', {
+        url: '/team/new',
         resolve: {
           captain: ['ProfileService', (service) => { return service.Profile }]
         },
@@ -41,10 +41,10 @@ module SmashLeague.Teams {
 
   Application.Config.$inject = ['$stateProvider'];
 
-  Application.Module = angular.module('SmashLeague.Teams', [
+  Application.Module = angular.module('SmashLeague.Team', [
     'ui.router',
     'ngDragDrop',
-    'SmashLeague.Players',
+    'SmashLeague.Player',
     'SmashLeague.Profile'
   ]);
   

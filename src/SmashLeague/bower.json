@@ -2,6 +2,7 @@
   "name": "SmashLeague",
   "private": true,
   "dependencies": {
-    "angular-dragdrop": "1.0.11"
+    "angular-dragdrop": "1.0.11",
+    "signalr": "2.2.0"
   }
 }

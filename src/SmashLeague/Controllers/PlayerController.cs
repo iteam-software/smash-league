@@ -44,5 +44,11 @@ namespace SmashLeague.Controllers
         {
             return View();
         }
+
+        [Route("template/player")]
+        public IActionResult Player()
+        {
+            return View();
+        }
     }
 }

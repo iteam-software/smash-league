@@ -55,8 +55,7 @@ namespace SmashLeague.Controllers
             // Update fields
             user.Birthday = updating.Birthday;
             user.Location = updating.Location;
-            user.First = updating.First;
-            user.Last = updating.Last;
+            user.Name = updating.Name;
 
             // Update images
             if (!string.IsNullOrEmpty(updating.ProfileImageEditData))
@@ -67,6 +66,7 @@ namespace SmashLeague.Controllers
 
             if (!string.IsNullOrEmpty(updating.BannerImageEditData))
             {
+                // TODO: image validation
                 await _imageManager.UpdateBannerImageAsync(user, updating.BannerImageEditData);
             }
 

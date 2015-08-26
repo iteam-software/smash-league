@@ -34,6 +34,9 @@
     },
     "angular-ui-router/angular-ui-router.d.ts": {
       "commit": "983126e131a2b81739053d60e4bbdbb46d6577b7"
+    },
+    "signalr/signalr.d.ts": {
+      "commit": "fa8d9683f37d07ed79617a6e037916c6718aeb11"
     }
   }
 }

@@ -69,10 +69,10 @@ module SmashLeague {
   Application.Module = angular.module('SmashLeague', [
     'ui.router',
     'SmashLeague.Home',
-    'SmashLeague.Players',
+    'SmashLeague.Player',
     'SmashLeague.Profile',
-    'SmashLeague.Teams',
-    'SmashLeague.Seasons',
+    'SmashLeague.Team',
+    'SmashLeague.Tournament',
   ]);
 
   // Configure and run the application

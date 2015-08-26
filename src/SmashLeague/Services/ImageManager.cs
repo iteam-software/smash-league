@@ -61,7 +61,7 @@ namespace SmashLeague.Services
 
             if (user.HeaderImage != null)
             {
-                var oldRelativePath = user.ProfileImage.Source;
+                var oldRelativePath = user.HeaderImage.Source;
 
                 user.HeaderImage.Source = relativePath;
                 _db.Attach(user.HeaderImage);
@@ -107,7 +107,7 @@ namespace SmashLeague.Services
                 await fileStream.WriteAsync(bytes, 0, bytes.Length);
             }
 
-            if (user.ProfileImage != null)
+            if (user.ProfileImage != null && user.ProfileImage != await GetDefaultImageAsync(Defaults.ProfileImage))
             {
                 var oldRelativePath = user.ProfileImage.Source;
 

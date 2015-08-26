@@ -1,5 +1,5 @@
 ﻿@*
-    /profile/content
+  /profile/content
 *@
 @{
     Layout = null;
@@ -7,25 +7,63 @@
 
 <div class="profile">
   <div class="profile-banner" ng-class="{editing:IsEditing}" ng-style="{'background-image': (IsEditing && Edit.Banner.Src && 'url(' + Edit.Banner.Src +')') || (Service.Profile.BannerImageSrc && 'url(' + Service.Profile.BannerImageSrc +')')}">
-    <file-selector class="profile-banner-edit" ng-if="IsEditing" selector-file="Edit.Banner" selector-wrap-url="true">
-      <h3><span class="fa fa-camera"></span> Upload a new banner</h3>
-    </file-selector>
-    <img class="profile-img" ng-if="Service.Profile" ng-class="{editing:IsEditing}" ng-src="{{(IsEditing && Edit.Image.Src) || Service.Profile.ProfileImageSrc}}" />
-    <file-selector class="profile-img profile-img-edit" ng-if="IsEditing" selector-file="Edit.Image" selector-wrap-url="false">
-      <h1><span class="fa fa-camera"></span></h1>
-    </file-selector>
-    <div class="profile-header">
-      <h1 class="profile-username">{{Service.Profile.Username}}</h1>
-      <ul class="nav-profile-edit">
-        <li ng-show="!IsEditing"><button class="btn btn-info" ng-click="BeginEdit()"><span class="fa fa-pencil"></span> Edit</button></li>
-        <li ng-show="IsEditing"><button class="btn btn-default" ng-click="Cancel()">Cancel</button></li>
-        <li ng-show="IsEditing"><button class="btn btn-success" ng-click="Save()"><span class="fa fa-save"></span> Save</button></li>
-      </ul>
+    <div class="container" style="height:100%">
+      <file-selector class="profile-banner-edit" ng-if="IsEditing" selector-file="Edit.Banner" selector-wrap-url="true">
+        <h3><span class="fa fa-camera"></span> Upload a new banner</h3>
+      </file-selector>
+      <a ui-sref="Profile" class="profile-img">
+        <img ng-if="Service.Profile" ng-class="{editing:IsEditing}" ng-src="{{(IsEditing && Edit.Image.Src) || Service.Profile.ProfileImageSrc}}" />
+      </a>
+      <file-selector class="profile-img profile-img-edit" ng-if="IsEditing" selector-file="Edit.Image" selector-wrap-url="false">
+        <h1><span class="fa fa-camera"></span></h1>
+      </file-selector>
+      <div class="profile-header">
+        <h1 class="profile-username">{{Service.Profile.Username}}</h1>
+        <ul class="nav-profile-edit">
+          <li ng-show="!IsEditing"><button class="btn btn-info" ng-click="BeginEdit()"><span class="fa fa-pencil"></span> Edit</button></li>
+          <li ng-show="IsEditing"><button class="btn btn-default" ng-click="Cancel()">Cancel</button></li>
+          <li ng-show="IsEditing"><button class="btn btn-success" ng-click="Save()"><span class="fa fa-save"></span> Save</button></li>
+        </ul>
+      </div>
     </div>
   </div>
-  <div class="container-fluid profile-content">
-    <section style="height: 500px">
-      Some text
-    </section>
+  <div class="profile-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2">
+          <div ng-if="!IsEditing" class="profile-details">
+            <h4><strong>{{Service.Profile.Name}}</strong></h4>
+            <p><span class="fa fa-map-marker" ng-if="Service.Profile.Location"></span> {{Service.Profile.Location}}</p>
+            <p>{{Service.Profile.Birthday}}</p>
+          </div>
+          <div class="form" role="form" ng-if="IsEditing">
+            <div class="form-group">
+              <input class="form-control" ng-model="Service.Profile.Name" placeholder="Name" />
+            </div>
+            <div class="form-group">
+              <input class="form-control" ng-model="Service.Profile.Location" placeholder="Location" />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <div class="navbar navbar-profile-details">
+            <ul class="nav navbar-nav">
+              <li ng-class="{active:State.current.name.indexOf('Profile.Teams') == 0, disabled:IsEditing}">
+                <button ui-sref="Profile.Teams" class="btn btn-link navbar-btn" ng-disabled="IsEditing"><span class="fa fa-users"></span> My Teams</button>
+              </li>
+              <li ng-class="{active:State.current.name.indexOf('Profile.Stats') == 0}">
+                <button ui-sref="Profile.Stats" class="btn btn-link navbar-btn" ng-disabled="IsEditing"><span class="fa fa-line-chart"></span> My Stats</button>
+              </li>
+              <li ng-class="{active:State.current.name.indexOf('Profile.History') == 0}">
+                <button ui-sref="Profile.History" class="btn btn-link navbar-btn" ng-disabled="IsEditing"><span class="fa fa-history"></span> My Match History</button>
+              </li>
+            </ul>
+          </div>
+          <div class="profile-content-main">
+            <ui-view name="ProfileContent"></ui-view>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

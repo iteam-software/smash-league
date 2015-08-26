@@ -6,8 +6,7 @@ namespace SmashLeague.Models
     {
         public string Username { get; set; }
         public string Location { get; set; }
-        public string First { get; set; }
-        public string Last { get; set; }
+        public string Name { get; set; }
         public string ProfileImageSrc { get; set; }
         public string BannerImageSrc { get; set; }
         public string ProfileImageEditData { get; set; }
@@ -21,8 +20,7 @@ namespace SmashLeague.Models
                 Username = user.UserName,
                 Location = user.Location,
                 Birthday = user.Birthday,
-                First = user.First,
-                Last = user.Last
+                Name = user.Name
             };
 
             if (user.HeaderImage != null)

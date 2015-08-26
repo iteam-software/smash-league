@@ -56,10 +56,10 @@
 }
 
 .btn-auth-profile {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   background-color: @profile-img-background;
-  border: 1px solid #ccc;
+  border: 1px solid transparent;
 
   .navbar-nav > li:not(.open) > a.btn-auth-profile-link:hover > & {
     background-color: darken(@profile-img-background, 5%);
@@ -96,5 +96,13 @@
 ul.navbar-right {
   > li:last-child {
     margin-right: @navbar-padding-horizontal;
+  }
+
+  .dropdown-menu li {
+    margin-left: 0;
+  }
+
+  li {
+    margin-left: @navbar-padding-horizontal / 2;
   }
 }

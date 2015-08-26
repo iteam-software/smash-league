@@ -12,8 +12,7 @@ namespace SmashLeague.Data
         [Required]
         public string Battletag { get; set; }
 
-        public string First { get; set; }
-        public string Last { get; set; }
+        public string Name { get; set; }
         public string Location { get; set; }
         public DateTime? Birthday { get; set; }
     }

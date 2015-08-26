@@ -12,20 +12,18 @@ body {
   .profile-banner {
     width: 100%;
     position: relative;
-    padding-left: @profile-banner-padding-left + 150px /* 150px is the profile-img size */;
 
     .profile-img {
-      position: absolute;
-      left: @profile-banner-padding-left / 2;
-      bottom: -50px;
+      position: relative;
+      bottom: -205px;
       border-color: #fff;
       border-width: 5px;
       z-index: 990;
     }
 
     .profile-header {
-      position: absolute;
-      bottom: 0;
+      position: relative;
+      bottom: -70px;
       left: 0;
       right: 0;
       padding: 5px 0 5px @profile-banner-padding-left + 150px;
@@ -51,7 +49,72 @@ body {
 }
 
 .profile-content {
-  padding-top: 60px;
+  padding-top: 40px;
+  background-color: #d8d5cf;
+  border-top: 5px solid #fff;
+
+  .profile-details {
+    position: relative;
+    color: darken(#d8d5cf, 50%);
+    top: 10px;
+  }
+
+  .navbar-profile-details {
+    position: relative;
+    top: -40px;
+
+    &.navbar {
+      background-color: #fff;
+      border-radius: 0;
+      margin-bottom: 0;
+
+      li a {
+        color: @navbar-default-color;
+      }
+
+      li button {
+        color: @navbar-default-color;
+      }
+
+      li button:focus {
+        text-decoration: none;
+        border-color: transparent;
+        outline: none;
+      }
+
+      li:hover button {
+        text-decoration: none;
+        color: darken(@brand-blue, 5%);
+      }
+
+      li:hover button[disabled="disabled"] {
+        color: @navbar-default-color;
+      }
+
+      li.active:hover button[disabled="disabled"] {
+        color: @brand-blue;
+      }
+
+      li:hover a {
+        background-color: transparent;
+        color: darken(@brand-blue, 5%);
+      }
+
+      li.active a {
+        color: @brand-blue;
+        background-color: softlight(#fff, average(#fff, @brand-blue));
+      }
+
+      li.active button {
+        color: @brand-blue;
+      }
+    }
+  }
+  
+  .profile-content-main {
+    background-color: #fff;
+    padding: 30px 15px;
+  }
 }
 
 
@@ -69,6 +132,21 @@ body {
   -webkit-transition: top ease .3s;
   -moz-transition: top ease .3s;
   transition: top ease .3s;
+}
+
+.navbar-fixed-top {
+  .navbar-brand {
+    position: absolute;
+    left: 50%;
+
+    img {
+      width: 32px;
+      height: 32px;
+      position: relative;
+      top: -5px;
+      left: -15px;
+    }
+  }
 }
 
 .initializing {
@@ -110,6 +188,10 @@ body {
   .nav-color-variant(@brand-gold, @nav-item-border);
 }
 
+.nav-purple {
+  .nav-color-variant(@brand-purple, @nav-item-border);
+}
+
 .banner {
   width: 100%;
   min-height: 25px;
@@ -131,12 +213,16 @@ body {
   .banner-variant(@brand-gold);
 }
 
+.banner-purple {
+  .banner-variant(@brand-purple);
+}
+
 .content {
   padding: 15px;
 }
 
 .content-home {
-  background-color: darken(@navbar-default-bg, 10%);
+  background-color: #d8d5cf;
 }
 
 .panel-empty {

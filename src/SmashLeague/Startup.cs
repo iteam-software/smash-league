@@ -63,6 +63,9 @@ namespace SmashLeague
             // Add Mvc services
             services.AddMvc();
 
+            // Add SignalR services
+            //services.AddSignalR();
+
             // Add application services
             services.AddSmashLeagueServices(Environment);
         }
@@ -80,6 +83,10 @@ namespace SmashLeague
             // Using battlenet authentication
             app.UseBattlenetAuthentication();
 
+            // Use SignalR
+            //app.UseSignalR();
+
+            // Using Mvc
             app.UseMvc();
 
             // Data initialization
