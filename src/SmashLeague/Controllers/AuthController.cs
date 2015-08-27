@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.Logging;
-using SmashLeague.Security.Battlenet;
 using SmashLeague.Data;
-using System.Threading.Tasks;
-using System.Security.Claims;
 using SmashLeague.Models;
-using Microsoft.AspNet.Authorization;
+using SmashLeague.Security.Battlenet;
 using SmashLeague.Services;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace SmashLeague.Controllers
 {
