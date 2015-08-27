@@ -21,6 +21,10 @@ body {
       z-index: 990;
     }
 
+    .profile-img-edit {
+      bottom: -55px;
+    }
+
     .profile-header {
       position: relative;
       bottom: -70px;
@@ -29,21 +33,6 @@ body {
       padding: 5px 0 5px @profile-banner-padding-left + 150px;
       background-color: rgba(10, 10, 10, 0.25);
       z-index: 980;
-
-      ul.nav-profile-edit {
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-
-        li {
-          display: inline-block;
-
-          + li {
-            padding-left: 10px;
-          }
-        }
-      }
     }
   }
 }
@@ -53,10 +42,47 @@ body {
   background-color: #d8d5cf;
   border-top: 5px solid #fff;
 
+  ul.nav-profile-edit {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    li {
+      display: inline-block;
+      
+      button.btn-info,
+      button.btn-success {
+        color: #fff;
+      }
+
+      button:hover.btn-info,
+      button:hover.btn-success {
+        color: #fff;
+      }
+
+      button:hover.btn-default {
+        color: @btn-default-color;
+      }
+
+      + li {
+        padding-left: 10px;
+      }
+    }
+  }
+
   .profile-details {
     position: relative;
     color: darken(#d8d5cf, 50%);
     top: 10px;
+
+    .form-group {
+      margin-bottom: 2px;
+    }
+
+    .profile-username {
+      margin-bottom: 0;
+    }
   }
 
   .navbar-profile-details {
@@ -110,7 +136,7 @@ body {
       }
     }
   }
-  
+
   .profile-content-main {
     background-color: #fff;
     padding: 30px 15px;

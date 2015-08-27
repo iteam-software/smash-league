@@ -5,9 +5,6 @@
   "path": "typings",
   "bundle": "typings/tsd.d.ts",
   "installed": {
-    "angularjs/legacy/angular-scenario-1.2.d.ts": {
-      "commit": "070e3a5e095d2a2f043f999bd9fb36fe9d5f68ab"
-    },
     "angularjs/angular-animate.d.ts": {
       "commit": "070e3a5e095d2a2f043f999bd9fb36fe9d5f68ab"
     },
