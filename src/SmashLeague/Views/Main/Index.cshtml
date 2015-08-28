@@ -37,7 +37,7 @@
           <a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" 
              ng-class="{'btn-auth-profile-link':Service.Profile.ProfileImageSrc,'btn-auth-profile':!Service.Profile.ProfileImageSrc, 'btn-auth-profile-placeholder':!Service.Profile.ProfileImageSrc}">
             <img ng-src="{{Service.Profile.ProfileImageSrc}}" ng-if="Service.Profile.ProfileImageSrc" class="btn-auth-profile img-rounded"/>
-            <span class="visible-xs-inline" style="margin-left: 32px">{{Service.Profile.Username}}</span>
+            <span class="visible-xs-inline">{{Service.Profile.Username}}</span>
           </a>
           <ul class="dropdown-menu">
             <li class="nav-profile text-center">
