@@ -13,7 +13,10 @@ module SmashLeague.Players {
         url: '/player',
         views: {
           'Banner': {
-            template: '<div class="banner banner-red"></div>'
+            templateUrl: '/player/banner'
+          },
+          'Content': {
+            templateUrl: '/player/content'
           }
         }
       });

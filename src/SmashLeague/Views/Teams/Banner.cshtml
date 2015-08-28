@@ -1,0 +1,28 @@
+﻿@*
+    // /team/banner
+*@
+@{
+    Layout = null;
+}
+
+<div class="banner banner-blue">
+  <div class="container">
+    <div class="navbar">
+      <div>
+        <form class="navbar-form navbar-left">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Find a team" autofocus />
+            <span class="input-group-btn">
+              <button class="btn btn-default">
+                <i class="fa fa-search"></i>
+              </button>
+            </span>
+          </div>
+        </form>
+        <ul class="nav navbar-nav navbar-right" ng-controller="AuthController">
+          <li ng-show="Service.IsAuthenticated"><button class="btn navbar-btn btn-success" ui-sref="Team-New"><span class="fa fa-users"></span> Create Team</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

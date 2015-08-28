@@ -15,3 +15,11 @@
     left: 50%;
   }
 }
+
+.text-subtle-variant(@base-color, @darken) when (@darken) {
+  color: darken(@base-color, 30%);
+}
+
+.text-subtle-variant(@base-color, @darken) when not (@darken) {
+  color: lighten(@base-color, 30%);
+}

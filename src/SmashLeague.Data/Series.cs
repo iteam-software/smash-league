@@ -10,7 +10,7 @@ namespace SmashLeague.Data
         public int SeriesId { get; set; }
 
         public ICollection<Match> Matches { get; set; }
-        public Team Winner { get; set; }
+        public TeamPlayer Winner { get; set; }
 
         [Required]
         [Range(3, int.MaxValue)]

@@ -1,6 +1,15 @@
 ﻿
 @import "variables.less";
+@import "mixins/panel.less";
 
 .panel-success {
   border-color: #fff;
+}
+
+.panel {
+  border: none;
+
+  &.panel-team {
+    .panel-variant(@brand-blue);
+ }   
 }

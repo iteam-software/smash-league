@@ -6,80 +6,97 @@
 }
 
 <div class="content content-home">
-  <div class="container">
-    <div class="panel panel-success">
-      <div class="panel-body">
-        <form class="form" novalidate>
-          <div class="row">
-            <div class="form-group col-md-6">
-              <label class="h3">Captain</label>
-              <roster-player ng-model="Captain"></roster-player>
-            </div>
-            <div class="form-group col-md-6">
-              <label class="h3" for="name">Name</label>
-              <p class="help-block"><strong>/#/teams/</strong>{{(Name && Name.toLowerCase().split(' ').join('-')) || 'team-name'}}</p>
-              <input class="form-control" id="name" type="text" placeholder="Team Name" ng-model="Name" required />
-            </div>
-          </div>
-          <hr class="form-group" />
-          <h3 class="form-group">
+  <form class="container form" novalidate>
+    <div class="row">
+
+      <div class="col-md-6">
+        <section class="panel panel-team">
+          <header class="panel-heading">
+            Captain
+          </header>
+          <main class="panel-body">
+            <roster-player ng-model="Captain"></roster-player>
+          </main>
+        </section>
+      </div>
+
+      <div class="col-md-6">
+        <section class="panel panel-team">
+          <header class="panel-heading">
+            Team Name
+          </header>
+          <main class="panel-body form-group">
+            <p class="help-block text-subtle"><strong>/#/teams/</strong>{{(Name && Name.toLowerCase().split(' ').join('-')) || 'team-name'}}</p>
+            <input class="form-control" id="name" type="text" placeholder="Team Name" ng-model="Name" required />            
+          </main>
+        </section>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <section class="panel panel-team">
+          <header class="panel-heading">
             Build your Roster
-          </h3>
-          <div class="row" id="build-your-roster">
-            <div class="col-md-6">
-              <h4>Roster</h4>
-              <p class="help-block">Drag and drop from <strong>Players</strong> to build your roster.</p>
-              <div jqyoui-droppable data-drop="{{!Member1}}" ng-model="Member1">
-                <roster-player ng-model="Member1">
-                  <p class="help-block text-center" ng-if="!Member1"><span class="fa fa-user-plus"></span> Add a member</p>
-                </roster-player>
+          </header>
+          <main class="panel-body" id="build-your-roster">
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Roster</h4>
+                <p class="help-block text-subtle">Drag and drop from <strong>Players</strong> to build your roster.</p>
+                <div jqyoui-droppable data-drop="{{!Member1}}" ng-model="Member1">
+                  <roster-player ng-model="Member1">
+                    <p class="help-block text-center" ng-if="!Member1"><span class="fa fa-user-plus"></span> Add a player</p>
+                  </roster-player>
+                </div>
+                <div jqyoui-droppable data-drop="{{!Member2}}" ng-model="Member2">
+                  <roster-player ng-model="Member2">
+                    <p class="help-block text-center" ng-if="!Member2"><span class="fa fa-user-plus"></span> Add a player</p>
+                  </roster-player>
+                </div>
+                <div jqyoui-droppable data-drop="{{!Member3}}" ng-model="Member3">
+                  <roster-player ng-model="Member3">
+                    <p class="help-block text-center" ng-if="!Member3"><span class="fa fa-user-plus"></span> Add a player</p>
+                  </roster-player>
+                </div>
+                <div jqyoui-droppable data-drop="{{!Member4}}" ng-model="Member4">
+                  <roster-player ng-model="Member4">
+                    <p class="help-block text-center" ng-if="!Member4"><span class="fa fa-user-plus"></span> Add a player</p>
+                  </roster-player>
+                </div>
               </div>
-              <div jqyoui-droppable data-drop="{{!Member2}}" ng-model="Member2">
-                <roster-player ng-model="Member2">
-                  <p class="help-block text-center" ng-if="!Member2"><span class="fa fa-user-plus"></span> Add a member</p>
-                </roster-player>
-              </div>
-              <div jqyoui-droppable data-drop="{{!Member3}}" ng-model="Member3">
-                <roster-player ng-model="Member3">
-                  <p class="help-block text-center" ng-if="!Member3"><span class="fa fa-user-plus"></span> Add a member</p>
-                </roster-player>
-              </div>
-              <div jqyoui-droppable data-drop="{{!Member4}}" ng-model="Member4">
-                <roster-player ng-model="Member4">
-                  <p class="help-block text-center" ng-if="!Member4"><span class="fa fa-user-plus"></span> Add a member</p>
-                </roster-player>
+              <div class="col-md-6">
+                <h4>Players</h4>
+                <div class="navbar navbar-player-filter">
+                  <ul class="nav navbar-nav">
+                    <li class="form-group">
+                      <input class="form-control" placeholder="Player username" />
+                    </li>
+                    <li class="dropdown" dropdown-keep-open>
+                      <button class="btn btn-default" data-toggle="dropdown">
+                        <span class="fa fa-filter"></span> Filter
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a href="">Carry</a></li>
+                        <li><a href="">Tank</a></li>
+                        <li><a href="">Support</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <div class="well well-sm well-players" ng-controller="PlayersController">
+                  <roster-player ng-model="player" ng-repeat="player in Service.Players | unselected:[Captain,Member1,Member2,Member3,Member4]" ng-if="player" data-drag="true" jqyoui-draggable="{placeholder:'keep'}" data-jqyoui-options="{appendTo:'#build-your-roster', helper:'clone', revert:'invalid', cursor:'-webkit-grabbing'}">
+                  </roster-player>
+                </div>
               </div>
             </div>
-            <div class="col-md-6">
-              <h4>Players</h4>
-              <div class="navbar navbar-player-filter">
-                <ul class="nav navbar-nav">
-                  <li class="form-group">
-                    <input class="form-control" placeholder="Player username" />
-                  </li>
-                  <li class="dropdown" dropdown-keep-open>
-                    <button class="btn btn-default" data-toggle="dropdown">
-                      <span class="fa fa-filter"></span> Filter
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a href="">Carry</a></li>
-                      <li><a href="">Tank</a></li>
-                      <li><a href="">Support</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-              <div class="well well-sm well-players" ng-controller="PlayersController">
-                <roster-player ng-model="player" ng-repeat="player in Service.Players | unselected:[Captain,Member1,Member2,Member3,Member4]" ng-if="player" data-drag="true" jqyoui-draggable="{placeholder:'keep'}" data-jqyoui-options="{appendTo:'#build-your-roster', helper:'clone', revert:'invalid', cursor:'-webkit-grabbing'}">
-                </roster-player>
-              </div>
+            <div class="form-group">
+              <button class="btn btn-success"><span class="fa fa-plus"></span> Create Team</button>
             </div>
-          </div>
-          <div class="form-group">
-            <button class="btn btn-success"><span class="fa fa-plus"></span> Create team</button>
-          </div>
-        </form>
+          </main>
+        </section>
       </div>
     </div>
-  </div>
+  </form>
 </div>

@@ -13,7 +13,10 @@ module SmashLeague.Seasons {
         url: '/tournament',
         views: {
           'Banner': {
-            template: '<div class="banner banner-purple"></div>'
+            templateUrl: '/tournament/banner'
+          },
+          'Content': {
+            templateUrl: '/tournament/content'
           }
         }
       });

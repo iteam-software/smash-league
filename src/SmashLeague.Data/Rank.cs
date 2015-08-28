@@ -18,6 +18,6 @@ namespace SmashLeague.Data
         public int Position { get; set; }
 
         public Player Player { get; set; }
-        public Team Team { get; set; }
+        public TeamPlayer Team { get; set; }
     }
 }

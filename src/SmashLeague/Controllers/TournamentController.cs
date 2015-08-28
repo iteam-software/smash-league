@@ -1,28 +1,20 @@
-﻿using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNet.Mvc;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SmashLeague.Controllers
 {
-    [Route("Teams")]
-    public class TeamsController : Controller
+    [Route("tournament")]
+    public class TournamentController : Controller
     {
-        [Route("Content")]
+        [Route("content")]
         public IActionResult Content()
         {
             return View();
         }
 
-        [Route("Banner")]
+        [Route("banner")]
         public IActionResult Banner()
-        {
-            return View();
-        }
-
-        [Route("New")]
-        [Authorize]
-        public IActionResult New()
         {
             return View();
         }
