@@ -44,55 +44,29 @@
             <div class="row">
               <div class="col-md-6">
                 <h4>Roster</h4>
-                <p class="help-block text-subtle">Drag and drop from <strong>Players</strong> to build your roster.</p>
-                <div jqyoui-droppable data-drop="{{!Member1}}" ng-model="Member1">
-                  <roster-player ng-model="Member1">
-                    <p class="help-block text-center" ng-if="!Member1"><span class="fa fa-user-plus"></span> Add a player</p>
-                  </roster-player>
-                </div>
-                <div jqyoui-droppable data-drop="{{!Member2}}" ng-model="Member2">
-                  <roster-player ng-model="Member2">
-                    <p class="help-block text-center" ng-if="!Member2"><span class="fa fa-user-plus"></span> Add a player</p>
-                  </roster-player>
-                </div>
-                <div jqyoui-droppable data-drop="{{!Member3}}" ng-model="Member3">
-                  <roster-player ng-model="Member3">
-                    <p class="help-block text-center" ng-if="!Member3"><span class="fa fa-user-plus"></span> Add a player</p>
-                  </roster-player>
-                </div>
-                <div jqyoui-droppable data-drop="{{!Member4}}" ng-model="Member4">
-                  <roster-player ng-model="Member4">
-                    <p class="help-block text-center" ng-if="!Member4"><span class="fa fa-user-plus"></span> Add a player</p>
-                  </roster-player>
+                <p class="help-block text-subtle">You must add <strong>4</strong> more players.</p>
+                <div class="form-group">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="Player username" type="text" />
+                    <span class="input-group-btn">
+                      <button class="btn btn-success" disabled><span class="fa fa-plus"></span> Player</button>
+                    </span>
+                  </div>
+                  <p class="help-block text-subtle">If the player you want to add hasn't registered with SmashLeague, <a href="">invite them to the league!</a>.</p>
                 </div>
               </div>
               <div class="col-md-6">
-                <h4>Players</h4>
-                <div class="navbar navbar-player-filter">
-                  <ul class="nav navbar-nav">
-                    <li class="form-group">
-                      <input class="form-control" placeholder="Player username" />
-                    </li>
-                    <li class="dropdown" dropdown-keep-open>
-                      <button class="btn btn-default" data-toggle="dropdown">
-                        <span class="fa fa-filter"></span> Filter
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li><a href="">Carry</a></li>
-                        <li><a href="">Tank</a></li>
-                        <li><a href="">Support</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
+                <h4>Suggestions</h4>
+                <p class="help-block text-subtle">If available, <strong>player</strong> suggestions will be provided here.</p>
                 <div class="well well-sm well-players" ng-controller="PlayersController">
-                  <roster-player ng-model="player" ng-repeat="player in Service.Players | unselected:[Captain,Member1,Member2,Member3,Member4]" ng-if="player" data-drag="true" jqyoui-draggable="{placeholder:'keep'}" data-jqyoui-options="{appendTo:'#build-your-roster', helper:'clone', revert:'invalid', cursor:'-webkit-grabbing'}">
+                  <roster-player ng-model="player" ng-repeat="player in Service.Suggestions | unselected:[Captain,Member1,Member2,Member3,Member4]" ng-if="player" data-drag="true" jqyoui-draggable="{placeholder:'keep'}" data-jqyoui-options="{appendTo:'#build-your-roster', helper:'clone', revert:'invalid', cursor:'-webkit-grabbing'}">
                   </roster-player>
+                  <p class="help-block text-center text-subtle" ng-if="!Service.Suggestions | !Service.Suggestions.length">No suggestions found</p>
                 </div>
               </div>
             </div>
             <div class="form-group">
-              <button class="btn btn-success"><span class="fa fa-plus"></span> Create Team</button>
+              <button class="btn btn-success" disabled><span class="fa fa-plus"></span> Create Team</button>
             </div>
           </main>
         </section>
