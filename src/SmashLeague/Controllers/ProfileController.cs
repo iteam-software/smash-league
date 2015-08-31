@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 namespace SmashLeague.Controllers
 {
     // API Actions
+    [Authorize]
     [Route("api/profile")]
     public class ProfileApiController : Controller
     {
@@ -29,14 +30,12 @@ namespace SmashLeague.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<Profile> Get()
         {
             return await _userManager.FindByNameAsync(User.GetUserName());
         }
 
         [HttpPut]
-        [Authorize]
         public async Task<Profile> Put([FromBody] Profile updating)
         {
             if (updating == null)

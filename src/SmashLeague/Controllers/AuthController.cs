@@ -163,6 +163,12 @@ namespace SmashLeague.Controllers
             return View(model);
         }
 
+        [Route("login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
         [HttpGet]
         [Route("authenticate", Name = "Auth:Authenticate")]
         public IActionResult Authenticate()

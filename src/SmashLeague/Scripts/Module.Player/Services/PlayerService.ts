@@ -5,22 +5,10 @@ module SmashLeague.Players {
   export class PlayersService {
 
     private _http: ng.IHttpService;
-    private _players: any[];
 
     public static $inject = [
       '$http'
     ];
-
-    public get Players() { return this._players }
-    public set Players(value: any[]) {
-      value.forEach(player => {
-        if (player.Banner) {
-          player.Banner.SrcUrl = 'url(' + player.Banner.Src + ')';
-        }
-      });
-
-      this._players = value;
-    }
 
     constructor(
       http) {
@@ -28,16 +16,16 @@ module SmashLeague.Players {
       this._http = http;
     }
 
-    public LoadPlayers(
-      callback?: (Players: any[]) => void) {
+    public GetPlayersAsync(
+      ): ng.IHttpPromise<any[]> {
 
-      this._http.get('/api/player')
-        .success((players: any[]) => {
-          this.Players = players;
-          if (callback !== undefined) {
-            callback(players);
-          }
-        });
+      return this._http.get('/api/player');
+    }
+
+    public GetPlayerAsync(
+      username: string): ng.IPromise<any> {
+
+      return this._http.get('/api/player/' + username);
     }
 
     public static get Factory() {

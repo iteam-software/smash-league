@@ -8,6 +8,7 @@ module SmashLeague.Common {
     private _scope: IAuthenticationScope;
     private _interval: ng.IIntervalService;
     private _http: ng.IHttpService;
+    private _location: ng.ILocationService;
     private _authenticationService: IAuthenticationService;
 
     public static $inject = [
@@ -15,6 +16,7 @@ module SmashLeague.Common {
       '$scope',
       '$interval',
       '$http',
+      '$location',
       'AuthenticationService'
     ];
 
@@ -23,18 +25,19 @@ module SmashLeague.Common {
       scope,
       interval,
       http,
+      location,
       auth) {
 
       this._windowService = window;
       this._scope = scope;
       this._interval = interval;
       this._http = http;
+      this._location = location;
       this._authenticationService = auth;
 
       this._scope.SignIn = $.proxy(this.SignIn, this);
       this._scope.SignOut = $.proxy(this.SignOut, this);
       this._scope.Service = this._authenticationService;
-      this._scope.$on(Common.Events.AuthStateChange, () => { });
     }
 
     public SignOut() {
@@ -58,6 +61,16 @@ module SmashLeague.Common {
             // Close popup
             if (oauth && !oauth.closed) {
               oauth.close();
+            }
+
+            // Navigate to returnUrl or home
+            var returnUrl = this._location.search() && this._location.search().returnUrl;
+
+            if (returnUrl) {
+              this._location.url(returnUrl);
+            }
+            else {
+              this._location.url('/home');
             }
           }
         }

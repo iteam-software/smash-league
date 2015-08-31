@@ -5,7 +5,24 @@ module SmashLeague.Common {
   export class Application {
 
     public static Module: ng.IModule;
+
+    public static Config(
+      stateProvider: ng.ui.IStateProvider) {
+
+      stateProvider.state('Login', {
+        url: '/login',
+        views: {
+          'Content': {
+            templateUrl: '/auth/login',
+            controller: 'AuthController'
+          }
+        }
+      });
+    }
   }
 
-  Application.Module = angular.module('SmashLeague.Common', []);
+  Application.Config.$inject = ['$stateProvider'];
+
+  Application.Module = angular.module('SmashLeague.Common', ['ui.router']);
+  Application.Module.config(Application.Config);
 }

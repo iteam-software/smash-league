@@ -3,9 +3,11 @@ using SmashLeague.DataTransferObjects;
 using SmashLeague.Services;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.AspNet.Authorization;
 
 namespace SmashLeague.Controllers
 {
+    [Authorize]
     [Route("api/player")]
     public class PlayerApiController : Controller
     {
@@ -36,6 +38,7 @@ namespace SmashLeague.Controllers
         }
     }
 
+    [Authorize]
     [Route("player")]
     public class PlayerController : Controller
     {

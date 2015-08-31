@@ -44,9 +44,9 @@ module SmashLeague.Common {
       return response;
     }
 
-    public $get(http, root) {
+    public $get(http, root, location) {
 
-      this._service = new AuthenticationService(http, root);
+      this._service = new AuthenticationService(http, root, location);
 
       return this._service;
     }

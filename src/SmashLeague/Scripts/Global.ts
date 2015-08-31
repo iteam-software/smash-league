@@ -12,24 +12,6 @@ module SmashLeague {
 
       // Enable auth state checking
       auth.AddUnauthorizedResponseCallback();
-
-      // TODO: global not found page
-
-      stateProvider.state('Initialize', {
-        url: '/initialize',
-        resolve: {
-          returnUrl: ['$location', (location: ng.ILocationService) => {
-            var returnUrl = location.search()['returnUrl'];
-            return returnUrl = returnUrl !== undefined ? returnUrl : '/home';
-          }]
-        },
-        views: {
-          'Content': {
-            templateUrl: '/initializing',
-            controller: 'InitializeController'
-          }
-        }
-      });
     }
 
     public static Run(
@@ -40,16 +22,6 @@ module SmashLeague {
 
       scope.Service = authService;
       scope.State = stateService;
-
-      // capture return url
-      var returnUrl = location.path();
-
-      // Initialize the application
-      location.url('initialize');
-
-      if (returnUrl !== '/initialize' && returnUrl !== '' && returnUrl !== '/') {
-        location.search('returnUrl', returnUrl);
-      }
     }
   }
 

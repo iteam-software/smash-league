@@ -48,7 +48,6 @@ module SmashLeague {
       // begin load operations
 
       // load players
-      players.LoadPlayers($.proxy(this.LoadCompleteCallback, this));
     }
 
     private LoadCompleteCallback(

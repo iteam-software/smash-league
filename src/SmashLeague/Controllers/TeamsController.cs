@@ -5,6 +5,7 @@ using Microsoft.AspNet.Mvc;
 
 namespace SmashLeague.Controllers
 {
+    [Authorize]
     [Route("Teams")]
     public class TeamsController : Controller
     {

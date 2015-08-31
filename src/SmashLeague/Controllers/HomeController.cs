@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Mvc;
 
 namespace SmashLeague.Controllers
 {
+    [Authorize]
     [Route("Home")]
     public class HomeController : Controller
     {

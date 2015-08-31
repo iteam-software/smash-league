@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Mvc;
 using SmashLeague.DataTransferObjects;
 using SmashLeague.Services;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SmashLeague.Controllers
 {
+    [Authorize]
     [Route("api/match")]
     public class MatchController : Controller
     {

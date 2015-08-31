@@ -15,7 +15,7 @@ module SmashLeague.Common {
     private _username: string;
     private _http: ng.IHttpService;
     private _root: ng.IRootScopeService;
-    private _profileService: Profile.ProfileService;
+    private _location: ng.ILocationService;
 
     public get IsAuthenticated() { return this._isAuthenticated; }
     public set IsAuthenticated(value: boolean) {
@@ -25,15 +25,20 @@ module SmashLeague.Common {
 
     public static $inject = [
       '$http',
-      '$rootScope'
+      '$rootScope',
+      '$location'
     ];
 
     constructor(
       http,
-      rootScope) {
+      rootScope,
+      location) {
 
       this._http = http;
       this._root = rootScope;
+      this._location = location;
+
+      this.ValidateAuthState();
     }
 
     public UnauthorizedResponseCallback() {
@@ -56,6 +61,17 @@ module SmashLeague.Common {
       if (success) {
         this.IsAuthenticated = data.Authenticated;
         this._username = data.Username;
+
+        if (!data.Authenticated) {
+          var returnUrl = this._location.path();
+
+          if (returnUrl && returnUrl != '' && returnUrl != '/login') {
+            this._location.url('/login').search('returnUrl', returnUrl);
+          }
+          else {
+            this._location.url('/login');
+          }
+        }
       }
       else {
         this.IsAuthenticated = false;

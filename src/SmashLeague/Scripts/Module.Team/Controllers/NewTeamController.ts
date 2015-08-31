@@ -62,17 +62,6 @@ module SmashLeague.Teams {
       username: string,
       playersService: Players.PlayersService) {
 
-      if (playersService.Players) {
-
-        // Find the user
-        for (var j = 0; j < playersService.Players.length; ++j) {
-
-          if (username && playersService.Players[j].Username == username) {
-            this._scope.Captain = playersService.Players[j];
-            break;
-          }
-        }
-      }
     }
 
     public get Roster() { return this._roster }

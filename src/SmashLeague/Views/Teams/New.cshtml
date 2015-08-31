@@ -61,7 +61,7 @@
                 <div class="well well-sm well-players" ng-controller="PlayersController">
                   <roster-player ng-model="player" ng-repeat="player in Service.Suggestions | unselected:[Captain,Member1,Member2,Member3,Member4]" ng-if="player" data-drag="true" jqyoui-draggable="{placeholder:'keep'}" data-jqyoui-options="{appendTo:'#build-your-roster', helper:'clone', revert:'invalid', cursor:'-webkit-grabbing'}">
                   </roster-player>
-                  <p class="help-block text-center text-subtle" ng-if="!Service.Suggestions | !Service.Suggestions.length">No suggestions found</p>
+                  <p class="help-block text-center text-subtle" ng-if="!Service.Suggestions || !Service.Suggestions.length">No suggestions found</p>
                 </div>
               </div>
             </div>
