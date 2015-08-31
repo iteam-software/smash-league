@@ -11,6 +11,7 @@ namespace SmashLeague.Services
             collection.AddTransient<IMatchManager, MatchManager>();
             collection.AddTransient<IPlayerManager, PlayerManager>();
             collection.AddTransient<IImageManager, ImageManager>();
+            collection.AddTransient<ITeamManager, TeamManager>();
             collection.AddTransient<IFileProvider, PhysicalFileProvider>(x => new PhysicalFileProvider(env.WebRootPath));
 
             return collection;

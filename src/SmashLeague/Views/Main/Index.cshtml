@@ -33,7 +33,7 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right" ng-if="Service.IsAuthenticated">
-        <li class="dropdown" ng-controller="ProfileController" data-toggle="tooltip" title="Profile options" tooltip data-placement="bottom">
+        <li class="dropdown" ng-controller="ProfileController" title="Profile options">
           <a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" 
              ng-class="{'btn-auth-profile-link':Service.Profile.ProfileImageSrc,'btn-auth-profile':!Service.Profile.ProfileImageSrc, 'btn-auth-profile-placeholder':!Service.Profile.ProfileImageSrc}">
             <img ng-src="{{Service.Profile.ProfileImageSrc}}" ng-if="Service.Profile.ProfileImageSrc" class="btn-auth-profile img-rounded"/>

@@ -5,63 +5,74 @@ module SmashLeague.Teams {
   export class NewTeamController {
 
     private _scope: INewTeamScope;
-    private _players: any[];
-    private _roster: any[];
+    private _playersService: Players.PlayersService;
 
-    private _captain: any;
-    private _member1: any;
-    private _member2: any;
-    private _member3: any;
-    private _member4: any;
+    private _roster: any[];
 
     public static $inject = [
       '$scope',
-      'ProfileService',
-      'PlayersService'
+      'AuthenticationService',
+      'PlayersService',
+      'TeamService'
     ];
 
     constructor(
       scope,
-      profileService: Profile.ProfileService,
-      playersService: Players.PlayersService) {
+      authService: Common.IAuthenticationService,
+      playersService: Players.PlayersService,
+      teamService: TeamService) {
 
-
+      this._roster = [];
       this._scope = scope;
-      this._scope.ProfileService = profileService;
+      this._playersService = playersService;
 
-      if (profileService.Profile) {
+      this._scope.Roster = this.Roster;
+      this._scope.AddToRoster = $.proxy(this.AddToRoster, this);
+      this._scope.RemoveFromRoster = $.proxy(this.RemoveFromRoster, this);
 
-        this.SetCaptain(profileService.Profile.Username, playersService);
+      // Load suggestions
+      teamService.GetSuggestionsAsync()
+        .success(response => this._scope.Suggestions = response);
+
+      // Load captain
+      if (authService.IsAuthenticated) {
+        this.SetCaptain(authService.Username);
       }
 
-      this._scope.$watch('ProfileService.Profile', () => {
-        if (profileService.Profile) {
-          this.SetCaptain(profileService.Profile.Username, playersService);
+      this._scope.$on(Common.Events.AuthStateChange, (e, authenticated: boolean, username: string) => {
+        if (authenticated) {
+          this.SetCaptain(username);
         }
-        else {
-          this._scope.Captain = undefined;
-        }
-      });
-
-      this._scope.$on('SmashLeague:Event:AuthStateChange', (event, authenticated: boolean, username: string) => {
-
-          if (authenticated) {
-            this.SetCaptain(username, playersService);
-          }
-          else {
-            this._scope.Captain = undefined;
-            this._scope.Member1 = undefined;
-            this._scope.Member2 = undefined;
-            this._scope.Member3 = undefined;
-            this._scope.Member4 = undefined;
-          }
       });
     }
 
-    private SetCaptain(
-      username: string,
-      playersService: Players.PlayersService) {
+    public AddToRoster(
+      player: any) {
 
+      if (this._roster.indexOf(player) == -1) {
+        this._roster.push(player);
+      }
+    }
+
+    public RemoveFromRoster(
+      player: any) {
+
+      var playerIndex = this._roster.indexOf(player);
+      if (playerIndex> -1) {
+        this._roster.splice(playerIndex);
+      }
+    }
+
+    private SetCaptain(
+      username: string) {
+
+      this._playersService.GetPlayerAsync(username)
+        .success(player => {
+          this._scope.Captain = player;
+          if (this._roster.indexOf(player) == -1) {
+            this._roster.push(player);
+          }
+        });
     }
 
     public get Roster() { return this._roster }

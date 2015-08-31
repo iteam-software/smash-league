@@ -2,11 +2,21 @@
 @import "variables.less";
 
 roster-player {
+  display: block;
+
   &.ui-draggable-dragging {
     opacity: 0.6;
     
     // TODO: breakpoints
     width: 25%;
+  }
+
+  & + & {
+    margin-top: 15px;
+  }
+
+  & + .form-group {
+    margin-top: 15px;
   }
 }
 
@@ -17,10 +27,6 @@ roster-player {
   border-radius: 2px;
   background-color: darken(@roster-player-bg, 10%);
   border: 2px dashed transparent;
-
-  & + & {
-    margin-top: 15px;
-  }
 
   &.roster-player-empty {
     border-color: darken(@roster-player-bg, 20%);
@@ -62,13 +68,4 @@ roster-player {
   height: 295px;
   overflow-y: auto;
   overflow-x: hidden;
-
-  .roster-player {
-    cursor: -moz-grab;
-    cursor: -webkit-grab;
-
-    &:hover {
-      background-color: darken(@roster-player-bg, 20%);
-    }
-  }
 }

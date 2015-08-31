@@ -23,7 +23,7 @@ module SmashLeague.Players {
     }
 
     public GetPlayerAsync(
-      username: string): ng.IPromise<any> {
+      username: string): ng.IHttpPromise<any> {
 
       return this._http.get('/api/player/' + username);
     }

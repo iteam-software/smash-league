@@ -19,7 +19,15 @@ namespace SmashLeague.Controllers
             _playerManager = playerManager;
         }
 
-        [Route("{username}")]
+        [HttpGet("search")]
+        public async Task<Player[]> GetPartial([FromQuery] string partial)
+        {
+            var players = await _playerManager.GetPlayersByPartialNameAsync(partial);
+
+            return players.Select(x => (Player)x).ToArray();
+        }
+
+        [HttpGet("{username}")]
         public async Task<Player> Get(string username)
         {
             Player player = await _playerManager.GetPlayerByUserNameAsync(username);

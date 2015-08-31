@@ -7,6 +7,7 @@ namespace SmashLeague.Services
     {
         Task<Player> CreatePlayerForUserAsync(ApplicationUser user);
         Task<Player> GetPlayerByUserNameAsync(string username);
+        Task<Player[]> GetPlayersByPartialNameAsync(string partial);
         Task<Player[]> GetPlayersAsync(int? max = null);
     }
 }

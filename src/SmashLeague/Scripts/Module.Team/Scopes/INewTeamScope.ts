@@ -10,7 +10,9 @@ module SmashLeague.Teams {
     Member3: any;
     Member4: any;
     Roster: any[];
-    AddToRoster: (event: ng.IAngularEvent, player: any) => void;
+    Suggestions: any[];
+    AddToRoster: (player: any) => void;
+    RemoveFromRoster: (Players: any) => void;
     ProfileService: Profile.ProfileService;
   }
 }
