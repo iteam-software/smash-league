@@ -34,6 +34,9 @@
     },
     "signalr/signalr.d.ts": {
       "commit": "fa8d9683f37d07ed79617a6e037916c6718aeb11"
+    },
+    "bootstrap/bootstrap.d.ts": {
+      "commit": "04cf218909016059c09061d0b1b34f6ea63a9f48"
     }
   }
 }
