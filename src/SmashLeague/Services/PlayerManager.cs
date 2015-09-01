@@ -5,6 +5,7 @@ using System.Linq;
 using SmashLeague.Data.Extensions;
 using System;
 using System.Collections.Generic;
+using SmashLeague.Models;
 
 namespace SmashLeague.Services
 {
@@ -83,6 +84,41 @@ namespace SmashLeague.Services
             }
 
             return list.ToArray();
+        }
+
+        public async Task<Player> UpdatePlayerAsync(Profile profile)
+        {
+            if (profile == null)
+            {
+                throw new ArgumentNullException("profile");
+            }
+
+            if (string.IsNullOrEmpty(profile.Username))
+            {
+                throw new ArgumentException("profile must have a valid username");
+            }
+
+            var user = await _userManager.FindByNameAsync(profile.Username);
+            if (user == null)
+            {
+                throw new ArgumentException($"No user found with username {profile.Username}");
+            }
+
+            var player = await _db.Players
+                .Include(x => x.User)
+                .SingleOrDefaultAsync(x => x.User == user);
+            if (player == null)
+            {
+                throw new ArgumentException($"No player found with username {profile.Username}");
+            }
+
+            player.PreferredRole = profile.PreferredRoles;
+            player.LookingForTeam = profile.LookingForTeam;
+
+            _db.Update(player);
+            await _db.SaveChangesAsync();
+
+            return player;
         }
     }
 }

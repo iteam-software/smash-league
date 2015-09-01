@@ -19,20 +19,23 @@ namespace SmashLeague.Controllers
     public class ProfileApiController : Controller
     {
         private readonly IImageManager _imageManager;
+        private readonly IPlayerManager _playerManager;
         private readonly ApplicationUserManager _userManager;
 
         public ProfileApiController(
             ApplicationUserManager userManager,
+            IPlayerManager playerManager,
             IImageManager imageManager)
         {
             _userManager = userManager;
+            _playerManager = playerManager;
             _imageManager = imageManager;
         }
 
         [HttpGet]
         public async Task<Profile> Get()
         {
-            return await _userManager.FindByNameAsync(User.GetUserName());
+            return await _playerManager.GetPlayerByUserNameAsync(User.GetUserName());
         }
 
         [HttpPut]
@@ -69,10 +72,13 @@ namespace SmashLeague.Controllers
                 await _imageManager.UpdateBannerImageAsync(user, updating.BannerImageEditData);
             }
 
+            // Update the player
+            var player = await _playerManager.UpdatePlayerAsync(updating);
+
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
-                return user;
+                return player;
             }
             else
             {

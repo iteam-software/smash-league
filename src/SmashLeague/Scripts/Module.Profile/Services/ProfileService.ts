@@ -48,8 +48,14 @@ module SmashLeague.Profile {
       this._profile = undefined;
     }
 
-    public UpdateProfile(profile) {
-      this._http.put('/api/profile', profile)
+    public GetProfile(
+      ): ng.IHttpPromise<any> {
+      return this._http.get('/api/profile');
+    }
+
+    public UpdateProfile(
+      profile): ng.IHttpPromise<any> {
+      return this._http.put('/api/profile', profile)
         .success(updated => this.Profile = updated);
     }
 

@@ -57,12 +57,12 @@ body {
         color: #fff;
       }
 
-      button:hover.btn-info,
-      button:hover.btn-success {
+      button.btn-info:hover,
+      button.btn-success:hover {
         color: #fff;
       }
 
-      button:hover.btn-default {
+      button.btn-default:hover {
         color: @btn-default-color;
       }
 
@@ -83,6 +83,24 @@ body {
 
     .profile-username {
       margin-bottom: 0;
+    }
+
+    .profile-preferred-roles {
+      margin-bottom: 15px;
+
+      a {
+        text-decoration: none;
+      }
+
+      li > a,
+      li > h1 {
+        opacity: 0.5;
+      }
+
+      li.active > a,
+      li.active > h1 {
+        opacity: 1;
+      }
     }
   }
 

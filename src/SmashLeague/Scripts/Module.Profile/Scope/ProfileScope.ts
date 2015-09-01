@@ -7,5 +7,8 @@ module SmashLeague.Profile {
     BeginEdit: () => void;
     Save: () => void;
     Cancel: () => void;
+    ToggleRole: (role: string) => void;
+    IsRoleActive: (field: number, role: string) => boolean;
+    Profile: any;
   }
 }

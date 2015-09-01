@@ -6,13 +6,13 @@
 }
 
 <div class="profile">
-  <div class="profile-banner" ng-class="{editing:IsEditing}" ng-style="{'background-image': (IsEditing && Edit.Banner.Src && 'url(' + Edit.Banner.Src +')') || (Service.Profile.BannerImageSrc && 'url(' + Service.Profile.BannerImageSrc +')')}">
+  <div class="profile-banner" ng-class="{editing:IsEditing}" ng-style="{'background-image': (IsEditing && Edit.Banner.Src && 'url(' + Edit.Banner.Src +')') || (Profile.BannerImageSrc && 'url(' + Profile.BannerImageSrc +')')}">
     <div class="container" style="height:100%">
       <file-selector class="profile-banner-edit" ng-if="IsEditing" selector-file="Edit.Banner" selector-wrap-url="true">
         <h3><span class="fa fa-camera"></span> Upload a new banner</h3>
       </file-selector>
       <a ui-sref="Profile" class="profile-img">
-        <img ng-if="Service.Profile" ng-class="{editing:IsEditing}" ng-src="{{(IsEditing && Edit.Image.Src) || Service.Profile.ProfileImageSrc}}" />
+        <img ng-if="Profile" ng-class="{editing:IsEditing}" ng-src="{{(IsEditing && Edit.Image.Src) || Profile.ProfileImageSrc}}" />
       </a>
       <file-selector class="profile-img profile-img-edit" ng-if="IsEditing" selector-file="Edit.Image" selector-wrap-url="false">
         <h1><span class="fa fa-camera"></span></h1>
@@ -24,19 +24,34 @@
       <div class="row">
         <div class="col-md-2">
           <div ng-if="!IsEditing" class="profile-details">
-            <h4 class="profile-username"><strong>{{Service.Profile.Username}}</strong></h4>
-            <p class="profile-name">{{Service.Profile.Name}}</p>
-            <p><span class="fa fa-map-marker" ng-if="Service.Profile.Location"></span> {{Service.Profile.Location}}</p>
-            <p>{{Service.Profile.Birthday}}</p>
+            <h4 class="profile-username"><strong>{{Profile.Username}}</strong></h4>
+            <p class="profile-name">{{Profile.Name}}</p>
+            <p><span class="fa fa-map-marker" ng-if="Profile.Location"></span> {{Profile.Location}}</p>
+            <p>{{Profile.Birthday}}</p>
+            <ul class="form-group list-inline profile-preferred-roles">
+              <li ng-class="{active:(Profile.PreferredRoles | isPlayerRoleActive:'tank')}"><h1 class="smashleague-glyph-tank"></h1></li>
+              <li ng-class="{active:(Profile.PreferredRoles | isPlayerRoleActive:'assassin')}"><h1 class="smashleague-glyph-assassin"></h1></li>
+              <li ng-class="{active:(Profile.PreferredRoles | isPlayerRoleActive:'support')}"><h1 class="smashleague-glyph-support"></h1></li>
+              <li ng-class="{active:(Profile.PreferredRoles | isPlayerRoleActive:'specialist')}"><h1 class="smashleague-glyph-specialist"></h1></li>
+            </ul>
           </div>
           <div class="form profile-details" role="form" ng-if="IsEditing">
-            <h4 class="profile-username"><strong>{{Service.Profile.Username}}</strong></h4>
+            <h4 class="profile-username"><strong>{{Profile.Username}}</strong></h4>
             <div class="form-group">
-              <input class="form-control" ng-model="Service.Profile.Name" placeholder="Name" />
+              <input class="form-control" ng-model="Profile.Name" placeholder="Name" />
             </div>
             <div class="form-group">
-              <input class="form-control" ng-model="Service.Profile.Location" placeholder="Location" />
+              <input class="form-control" ng-model="Profile.Location" placeholder="Location" />
             </div>
+            <br />
+            <h5><strong>Preferred Roles</strong></h5>
+            <p class="help-block">Select preferred roles</p>
+            <ul class="form-group list-inline profile-preferred-roles">
+              <li ng-class="{active:(Edit.Role | isPlayerRoleActive:'tank')}" data-toggle="tooltip" tooltip data-placement="bottom" title="Tank"><a href="" class="h1 smashleague-glyph-tank" ng-click="ToggleRole('tank')"></a></li>
+              <li ng-class="{active:(Edit.Role | isPlayerRoleActive:'assassin')}" data-toggle="tooltip" tooltip data-placement="bottom" title="Assassin"><a href="" class="h1 smashleague-glyph-assassin" ng-click="ToggleRole('assassin')"></a></li>
+              <li ng-class="{active:(Edit.Role | isPlayerRoleActive:'support')}" data-toggle="tooltip" tooltip data-placement="bottom" title="Support"><a href="" class="h1 smashleague-glyph-support" ng-click="ToggleRole('support')"></a></li>
+              <li ng-class="{active:(Edit.Role | isPlayerRoleActive:'specialist')}" data-toggle="tooltip" tooltip data-placement="bottom" title="Specialist"><a href="" class="h1 smashleague-glyph-specialist" ng-click="ToggleRole('specialist')"></a></li>
+            </ul>
           </div>
         </div>
         <div class="col-md-10">

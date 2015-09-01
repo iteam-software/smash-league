@@ -2,9 +2,9 @@
 {
     public enum PlayerRoles
     {
-        Tank = 1,
-        Support,
-        Assassin,
-        Specialist
+        Tank = 0x1,
+        Assassin = 0x2,
+        Support = 0x4,
+        Specialist = 0x8
     }
 }

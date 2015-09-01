@@ -1,4 +1,6 @@
 ﻿
+using SmashLeague.Data;
+
 namespace SmashLeague.DataTransferObjects
 {
     public class Player
@@ -6,6 +8,7 @@ namespace SmashLeague.DataTransferObjects
         public string ProfileImageSrc { get; set; }
         public string BannerImageSrc { get; set; }
         public string Username { get; set; }
+        public PlayerRoles? PreferredRoles { get; set; }
 
         public static implicit operator Player(Data.Player entity)
         {
@@ -25,6 +28,8 @@ namespace SmashLeague.DataTransferObjects
             {
                 player.BannerImageSrc = entity.User.HeaderImage.Source;
             }
+
+            player.PreferredRoles = entity.PreferredRole;
 
             return player;
         }
