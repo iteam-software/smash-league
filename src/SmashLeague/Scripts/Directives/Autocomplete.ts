@@ -25,8 +25,13 @@ module SmashLeague {
       element: ng.IAugmentedJQuery,
       attrs: ng.IAttributes) {
 
-      // TODO: validate scope.Results && scope.Load
-      // Validate we are attached to an input
+      if (!scope.Results) {
+        throw 'ArgumentException: Results';
+      }
+
+      if (!scope.Load) {
+        throw 'ArgumentException: Load';
+      }
       
       var state = {};
 
