@@ -25,7 +25,11 @@
   },
 
   "frameworks": {
-    "dnx451": { },
+    "dnx451": {
+      "dependencies": {
+        "MailKit": "1.2.10"
+      }
+    },
     "dnxcore50": {
       "dependencies": {
         "System.Text.Encoding": "4.0.10-beta-23109"

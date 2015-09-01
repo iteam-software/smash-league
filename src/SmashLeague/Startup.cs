@@ -63,8 +63,8 @@ namespace SmashLeague
             // Add Mvc services
             services.AddMvc();
 
-            // Add SignalR services
-            //services.AddSignalR();
+            // Add email services
+            services.AddEmailService();
 
             // Add application services
             services.AddSmashLeagueServices(Environment);

@@ -1,6 +1,7 @@
 ﻿using SmashLeague.Data;
-using SmashLeague.Models;
+using SmashLeague.DataTransferObjects;
 using System.Threading.Tasks;
+using Player = SmashLeague.Data.Player;
 
 namespace SmashLeague.Services
 {

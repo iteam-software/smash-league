@@ -35,14 +35,14 @@
       <ul class="nav navbar-nav navbar-right" ng-if="Service.IsAuthenticated">
         <li class="dropdown" ng-controller="ProfileController" title="Profile options">
           <a href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" 
-             ng-class="{'btn-auth-profile-link':Service.Profile.ProfileImageSrc,'btn-auth-profile':!Service.Profile.ProfileImageSrc, 'btn-auth-profile-placeholder':!Service.Profile.ProfileImageSrc}">
-            <img ng-src="{{Service.Profile.ProfileImageSrc}}" ng-if="Service.Profile.ProfileImageSrc" class="btn-auth-profile img-rounded"/>
-            <span class="visible-xs-inline">{{Service.Profile.Username}}</span>
+             ng-class="{'btn-auth-profile-link':Profile.ProfileImageSrc,'btn-auth-profile':!Profile.ProfileImageSrc, 'btn-auth-profile-placeholder':!Profile.ProfileImageSrc}">
+            <img ng-src="{{Profile.ProfileImageSrc}}" ng-if="Profile.ProfileImageSrc" class="btn-auth-profile img-rounded"/>
+            <span class="visible-xs-inline">{{Profile.Username}}</span>
           </a>
           <ul class="dropdown-menu">
             <li class="nav-profile text-center">
               <a href="/#/profile">
-                <strong>{{Service.Profile.Username}}</strong>
+                <strong>{{Profile.Username}}</strong>
                 <p>My Profile</p>
               </a>
             </li>

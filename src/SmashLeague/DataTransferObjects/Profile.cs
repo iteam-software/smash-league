@@ -1,7 +1,7 @@
 ﻿using SmashLeague.Data;
 using System;
 
-namespace SmashLeague.Models
+namespace SmashLeague.DataTransferObjects
 {
     public class Profile
     {
@@ -39,7 +39,7 @@ namespace SmashLeague.Models
             return profile;
         }
 
-        public static implicit operator Profile(Player player)
+        public static implicit operator Profile(Data.Player player)
         {
             if (player.User == null)
             {

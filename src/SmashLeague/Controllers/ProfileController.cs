@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using SmashLeague.Data.Extensions;
-using SmashLeague.Models;
+using SmashLeague.DataTransferObjects;
 using SmashLeague.Services;
 using System;
 using System.Linq;

@@ -5,7 +5,8 @@ using System.Linq;
 using SmashLeague.Data.Extensions;
 using System;
 using System.Collections.Generic;
-using SmashLeague.Models;
+using SmashLeague.DataTransferObjects;
+using Player = SmashLeague.Data.Player;
 
 namespace SmashLeague.Services
 {
@@ -24,7 +25,7 @@ namespace SmashLeague.Services
 
         public async Task<Player> CreatePlayerForUserAsync(ApplicationUser user)
         {
-            var player = new Player { User = user };
+            var player = new Data.Player { User = user };
 
             _db.Players.Add(player);
             await _db.SaveChangesAsync();
