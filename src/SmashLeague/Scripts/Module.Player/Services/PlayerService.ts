@@ -22,6 +22,12 @@ module SmashLeague.Players {
       return this._http.get('/api/player');
     }
 
+    public CreatePlayerWithTagAsync(
+      tag: string): ng.IHttpPromise<any> {
+
+      return this._http.post('/api/player/placeholder', { Tag: tag });
+    }
+
     public GetPlayerPartialAsync(
       partial: string): ng.IHttpPromise<any[]> {
 

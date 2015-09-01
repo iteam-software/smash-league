@@ -4,6 +4,7 @@ using SmashLeague.Services;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.AspNet.Authorization;
+using System;
 
 namespace SmashLeague.Controllers
 {
@@ -17,6 +18,19 @@ namespace SmashLeague.Controllers
             IPlayerManager playerManager)
         {
             _playerManager = playerManager;
+        }
+
+        [HttpPost("placeholder")]
+        public async Task<Player> CreatePlaceholder([FromBody] Player dto)
+        {
+            if (dto == null)
+            {
+                throw new ArgumentNullException(nameof(dto));
+            }
+
+            Player player = await _playerManager.CreatePlayerWithTagAsync(dto.Tag);
+
+            return player;
         }
 
         [HttpGet("search")]

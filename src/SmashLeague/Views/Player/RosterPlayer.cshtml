@@ -9,7 +9,7 @@
 
   <img class="profile-img" ng-if="Player && Player.ProfileImageSrc" ng-src="{{Player.ProfileImageSrc}}" />
   <h3 class="help-block" ng-if="Player">
-    {{Player.Username}}
+    {{Player.Username || Player.Tag}}
     <span ng-if="Player.PreferredRoles | isPlayerRoleActive:'tank'" class="smashleague-glyph-tank"></span>
     <span ng-if="Player.PreferredRoles | isPlayerRoleActive:'assassin'" class="smashleague-glyph-assassin"></span>
     <span ng-if="Player.PreferredRoles | isPlayerRoleActive:'support'" class="smashleague-glyph-support"></span>

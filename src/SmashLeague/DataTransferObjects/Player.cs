@@ -9,6 +9,7 @@ namespace SmashLeague.DataTransferObjects
         public string BannerImageSrc { get; set; }
         public string Username { get; set; }
         public PlayerRoles? PreferredRoles { get; set; }
+        public string Tag { get; set; }
 
         public static implicit operator Player(Data.Player entity)
         {
@@ -17,19 +18,23 @@ namespace SmashLeague.DataTransferObjects
                 return null;
             }
 
-            var player = new Player { Username = entity.User.UserName };
-
-            if (entity.User.ProfileImage != null)
+            var player = new Player();
+            if (entity.User != null)
             {
-                player.ProfileImageSrc = entity.User.ProfileImage.Source;
-            }
+                player.Username = entity.User.UserName;
+                if (entity.User.ProfileImage != null)
+                {
+                    player.ProfileImageSrc = entity.User.ProfileImage.Source;
+                }
 
-            if (entity.User.HeaderImage != null)
-            {
-                player.BannerImageSrc = entity.User.HeaderImage.Source;
+                if (entity.User.HeaderImage != null)
+                {
+                    player.BannerImageSrc = entity.User.HeaderImage.Source;
+                }
             }
 
             player.PreferredRoles = entity.PreferredRole;
+            player.Tag = entity.Tag;
 
             return player;
         }

@@ -90,6 +90,10 @@
   position: absolute;
   right: 15px;
   top: 50%;
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
 }
 
@@ -113,4 +117,10 @@ ul.navbar-right {
   right: 5px;
   z-index: 1020;
   border: 2px solid darken(@roster-player-bg, 10%);
+}
+
+.navbar-btn {
+  (li > &) + (li > &) {
+    margin-left: 8px;
+  }
 }

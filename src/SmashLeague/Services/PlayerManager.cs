@@ -33,6 +33,28 @@ namespace SmashLeague.Services
             return player;
         }
 
+        public async Task<Player> CreatePlayerWithTagAsync(string tag)
+        {
+            if (string.IsNullOrEmpty(tag))
+            {
+                throw new ArgumentNullException(nameof(tag));
+            }
+
+            Player player;
+
+            // See if this player already exists
+            player = await _db.Players
+                .SingleOrDefaultAsync(x => tag.Equals(x.Tag, StringComparison.OrdinalIgnoreCase));
+            if (player == null)
+            {
+                player = new Player { Tag = tag };
+                _db.Add(player);
+                await _db.SaveChangesAsync();
+            }
+
+            return player;
+        }
+
         public async Task<Player> GetPlayerByUserNameAsync(string username)
         {
             var user = await _userManager.FindByNameAsync(username);
@@ -91,7 +113,7 @@ namespace SmashLeague.Services
         {
             if (profile == null)
             {
-                throw new ArgumentNullException("profile");
+                throw new ArgumentNullException(nameof(profile));
             }
 
             if (string.IsNullOrEmpty(profile.Username))

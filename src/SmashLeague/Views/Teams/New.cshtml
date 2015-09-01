@@ -6,7 +6,7 @@
 }
 
 <div class="content content-home">
-  <form class="container form" novalidate>
+  <form class="container form" novalidate name="CreateTeamForm">
     <div class="row">
 
       <div class="col-md-6">
@@ -48,7 +48,7 @@
                 <roster-player ng-repeat="player in Roster | not:Captain" ng-model="player">
                   <button class="btn btn-danger btn-roster-player" ng-click="RemoveFromRoster(player)" data-toggle="tooltip" data-placement="left" title="Remove from roster" tooltip><span class="fa fa-minus"></span></button>
                 </roster-player>
-                <div class="form-group">
+                <div class="form-group" ng-if="Roster.length < 5">
                   <div class="input-group dropdown">
                     <input class="form-control" ng-model="SelectedPlayerUsername" placeholder="Player username" type="text" data-toggle="dropdown" auto-complete load="FindPlayers" results="SearchResults" />
                     <ul class="dropdown-menu dropdown-menu-players" ng-if="SearchResults && (SearchResults | unselected:Roster).length > 0">
@@ -66,7 +66,7 @@
                       <button class="btn btn-success" ng-disabled="!SelectedPlayer" ng-click="AddToRoster(SelectedPlayer)"><span class="fa fa-plus"></span> Player</button>
                     </span>
                   </div>
-                  <p class="help-block text-subtle">If the player you want to add hasn't registered with SmashLeague, <a href="">invite them to the league!</a>.</p>
+                  <p class="help-block text-subtle">If the player you want to add hasn't registered with SmashLeague, <a href="" data-toggle="modal" data-target="#invite-player" data-backdrop="static">invite them to the league!</a>.</p>
                 </div>
               </div>
               <div class="col-md-6">
@@ -81,11 +81,50 @@
               </div>
             </div>
             <div class="form-group">
-              <button class="btn btn-success" disabled><span class="fa fa-plus"></span> Create Team</button>
+              <button class="btn btn-success" ng-disabled="CreateTeamForm.$invalid || Roster.length < 5"><span class="fa fa-plus"></span> Create Team</button>
             </div>
           </main>
         </section>
       </div>
     </div>
   </form>
+
+  <div class="modal fade" id="invite-player">
+    <div class="modal-dialog">
+      <section class="modal-content" ng-controller="InvitePlayerController">
+        <header class="modal-header">
+          <h3>Invite a player to Smash League!</h3>
+        </header>
+        <main class="modal-body">
+          <form class="form" novalidate ng-submit="Invite(InviteForm.Email)" name="InviteForm" ng-if="!IsInviteComplete">
+            <div class="form-group">
+              <p class="help-block">Please enter the email address of the person you would like to invite.</p>
+              <input type="email" class="form-control" ng-model="Invitee" name="Email" placeholder="Email Address" ng-disabled="IsInviting"/>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-success" ng-disabled="IsInviting">Invite</button>
+            </div>
+          </form>
+          <div class="text-center" ng-if="IsInviteComplete">
+            <div class="text-danger" ng-if="Errors && Errors.length">
+              <p ng-repeat="error in Errors">
+                {{error}}
+              </p>
+            </div>
+            <div class="text-success" ng-if="Invited">
+              You have invited <code>{{Invited.Tag}}!</code>
+            </div>
+          </div>
+        </main>
+        <footer class="modal-footer">
+          <div class="navbar">
+            <ul class="nav navbar-nav navbar-right">
+              <li><button ng-if="IsInviteComplete" class="btn btn-info navbar-btn" ng-click="Reset()">Reset</button></li>
+              <li><button class="btn btn-default navbar-btn" data-dismiss="modal">Close</button></li>
+            </ul>
+          </div>
+        </footer>
+      </section>
+    </div>
+  </div>
 </div>
