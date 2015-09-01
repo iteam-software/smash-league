@@ -5,14 +5,15 @@ module SmashLeague.Teams {
   export interface INewTeamScope extends ng.IScope {
     Name: string;
     Captain: any;
-    Member1: any;
-    Member2: any;
-    Member3: any;
-    Member4: any;
+    SelectedPlayer: any;
+    SelectedPlayerUsername: string;
     Roster: any[];
     Suggestions: any[];
     AddToRoster: (player: any) => void;
     RemoveFromRoster: (Players: any) => void;
+    FindPlayers: (partial: string) => ng.IHttpPromise<any[]>;
+    SelectPlayer: (player: any) => void;
+    SearchResults: any[];
     ProfileService: Profile.ProfileService;
   }
 }

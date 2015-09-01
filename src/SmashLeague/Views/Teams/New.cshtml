@@ -49,10 +49,15 @@
                   <button class="btn btn-danger btn-roster-player" ng-click="RemoveFromRoster(player)" data-toggle="tooltip" data-placement="left" title="Remove from roster" tooltip><span class="fa fa-minus"></span></button>
                 </roster-player>
                 <div class="form-group">
-                  <div class="input-group">
-                    <input class="form-control" placeholder="Player username" type="text" />
+                  <div class="input-group dropdown">
+                    <input class="form-control" ng-model="SelectedPlayerUsername" placeholder="Player username" type="text" data-toggle="dropdown" auto-complete load="FindPlayers" results="SearchResults" />
+                    <ul class="dropdown-menu" ng-if="SearchResults && (SearchResults | unselected:Roster).length > 0">
+                      <li ng-repeat="player in SearchResults | unselected:Roster">
+                        <a href="" ng-click="SelectPlayer(player)"><img class="img-player-dropdown" ng-src="{{player.ProfileImageSrc}}" /> {{player.Username}}</a>
+                      </li>
+                    </ul>
                     <span class="input-group-btn">
-                      <button class="btn btn-success" disabled><span class="fa fa-plus"></span> Player</button>
+                      <button class="btn btn-success" ng-disabled="!SelectedPlayer" ng-click="AddToRoster(SelectedPlayer)"><span class="fa fa-plus"></span> Player</button>
                     </span>
                   </div>
                   <p class="help-block text-subtle">If the player you want to add hasn't registered with SmashLeague, <a href="">invite them to the league!</a>.</p>

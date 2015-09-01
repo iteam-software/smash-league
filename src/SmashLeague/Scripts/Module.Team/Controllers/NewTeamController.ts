@@ -27,8 +27,14 @@ module SmashLeague.Teams {
       this._playersService = playersService;
 
       this._scope.Roster = this.Roster;
+      this._scope.SearchResults = [];
+      this._scope.SelectedPlayer = undefined;
+      this._scope.SelectedPlayerUsername = undefined;
+
       this._scope.AddToRoster = $.proxy(this.AddToRoster, this);
       this._scope.RemoveFromRoster = $.proxy(this.RemoveFromRoster, this);
+      this._scope.FindPlayers = $.proxy(this.FindPlayers, this);
+      this._scope.SelectPlayer = $.proxy(this.SelectPlayer, this);
 
       // Load suggestions
       teamService.GetSuggestionsAsync()
@@ -52,15 +58,34 @@ module SmashLeague.Teams {
       if (this._roster.indexOf(player) == -1) {
         this._roster.push(player);
       }
+
+      if (player == this._scope.SelectedPlayer) {
+        this._scope.SelectedPlayer = undefined;
+        this._scope.SelectedPlayerUsername = undefined;
+      }
     }
 
     public RemoveFromRoster(
       player: any) {
 
       var playerIndex = this._roster.indexOf(player);
-      if (playerIndex> -1) {
-        this._roster.splice(playerIndex);
+      if (playerIndex > -1) {
+        this._roster.splice(playerIndex, 1);
       }
+    }
+
+    // For use with Autocomplete directive
+    public FindPlayers(
+      partial: string) {
+
+      return this._playersService.GetPlayerPartialAsync(partial);
+    }
+
+    public SelectPlayer(
+      player: any) {
+
+      this._scope.SelectedPlayer = player;
+      this._scope.SelectedPlayerUsername = player.Username;
     }
 
     private SetCaptain(

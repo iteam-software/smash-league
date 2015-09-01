@@ -22,6 +22,12 @@ module SmashLeague.Players {
       return this._http.get('/api/player');
     }
 
+    public GetPlayerPartialAsync(
+      partial: string): ng.IHttpPromise<any[]> {
+
+      return this._http.get('/api/player/search?partial=' + partial);
+    }
+
     public GetPlayerAsync(
       username: string): ng.IHttpPromise<any> {
 
