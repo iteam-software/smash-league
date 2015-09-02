@@ -1,4 +1,5 @@
-﻿namespace SmashLeague.Services
+﻿
+namespace SmashLeague.Services
 {
     public class EmailError
     {
