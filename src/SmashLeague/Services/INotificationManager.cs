@@ -13,6 +13,6 @@ namespace SmashLeague.Services
         Task<Notification[]> GetReadForUserAsync(string username);
         Task<Notification> ReadAsync(DataTransferObjects.Notification note, string username);
         Task DeleteAsync(int id);
-        Task NotifiyTeamCreatedAsync(Team team);
+        Task NotifyTeamInvite(Team team);
     }
 }

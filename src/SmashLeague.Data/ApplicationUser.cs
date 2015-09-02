@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SmashLeague.Data
@@ -16,5 +17,7 @@ namespace SmashLeague.Data
         public string Location { get; set; }
         public DateTime? Birthday { get; set; }
         public bool EmailNotifications { get; set; }
+
+        public ICollection<Notification> Notifications { get; set; }
     }
 }

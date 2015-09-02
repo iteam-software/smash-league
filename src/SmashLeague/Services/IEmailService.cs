@@ -4,6 +4,6 @@ namespace SmashLeague.Services
 {
     public interface IEmailService
     {
-        Task<EmailResult> Send(string sendTo, string message);
+        Task<EmailResult> SendAsync(string sendTo, string message);
     }
 }

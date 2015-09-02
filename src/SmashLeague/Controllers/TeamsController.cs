@@ -35,7 +35,7 @@ namespace SmashLeague.Controllers
             var result = await _teamManager.CreateTeamAsync(team);
             if (result.Succeeded)
             {
-                await _notificationManager.NotifiyTeamCreatedAsync(result.Team);
+                await _notificationManager.NotifyTeamInvite(result.Team);
             }
             else
             {

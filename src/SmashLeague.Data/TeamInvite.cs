@@ -2,7 +2,7 @@
 
 namespace SmashLeague.Data
 {
-    public class TeamPotentialPlayer
+    public class TeamInvite
     {
         public int TeamId { get; set; }
         [ForeignKey("TeamId")]

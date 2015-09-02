@@ -15,10 +15,11 @@ namespace SmashLeague.Data
         public DbSet<Matchup> Matchups { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<TeamPlayer> TeamPlayers { get; set; }
-        public DbSet<TeamPotentialPlayer> TeamPotentialPlayers { get; set; }
+        public DbSet<TeamInvite> TeamPotentialPlayers { get; set; }
         public DbSet<TeamOwner> TeamOwners { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<DefaultImages> DefaultImages { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         public SmashLeagueDbContext()
         {
@@ -29,9 +30,15 @@ namespace SmashLeague.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<Notification>()
+                .Reference(x => x.User)
+                .InverseCollection(x => x.Notifications);
+
             builder.Entity<Team>()
                 .ToTable("Teams")
                 .Index(team => team.Name);
+            builder.Entity<Team>()
+                .AlternateKey(x => x.Name);
 
             builder.Entity<Matchup>()
                 .Key(x => new { x.MatchId, x.TeamId });
@@ -55,15 +62,6 @@ namespace SmashLeague.Data
                 .Reference(x => x.Player)
                 .InverseCollection(x => x.Teams);
 
-            builder.Entity<TeamPotentialPlayer>()
-                .Key(x => new { x.PlayerId, x.TeamId });
-            builder.Entity<TeamPotentialPlayer>()
-                .Reference(x => x.Team)
-                .InverseCollection(x => x.PotentialMember);
-            builder.Entity<TeamPotentialPlayer>()
-                .Reference(x => x.Player)
-                .InverseCollection(x => x.PotentialTeams);
-
             builder.Entity<TeamOwner>()
                 .Key(x => new { x.TeamId, x.PlayerId });
             builder.Entity<TeamOwner>()
@@ -72,6 +70,15 @@ namespace SmashLeague.Data
             builder.Entity<TeamOwner>()
                 .Reference(x => x.Player)
                 .InverseCollection(x => x.OwnedTeams);
+
+            builder.Entity<TeamInvite>()
+                .Key(x => new { x.TeamId, x.PlayerId });
+            builder.Entity<TeamInvite>()
+                .Reference(x => x.Team)
+                .InverseCollection(x => x.Invitees);
+            builder.Entity<TeamInvite>()
+                .Reference(x => x.Player)
+                .InverseCollection(x => x.Invites);
         }
     }
 }

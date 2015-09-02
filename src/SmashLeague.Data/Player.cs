@@ -17,8 +17,7 @@ namespace SmashLeague.Data
 
         public ICollection<Rank> Rankings { get; set; }
         public ICollection<TeamPlayer> Teams { get; set; }
-        public ICollection<TeamPotentialPlayer> PotentialTeams { get; set; }
         public ICollection<TeamOwner> OwnedTeams { get; set; }
-        public ICollection<Notification> Notifications { get; set; }
+        public ICollection<TeamInvite> Invites { get; set; }
     }
 }

@@ -18,8 +18,8 @@ namespace SmashLeague.Data
 
         public ICollection<Rank> Rankings { get; set; }
         public ICollection<TeamPlayer> Members { get; set; }
-        public ICollection<TeamPotentialPlayer> PotentialMember { get; set; }
         public ICollection<Matchup> Matchups { get; set; }
         public ICollection<Match> Wins { get; set; }
+        public ICollection<TeamInvite> Invitees { get; set; }
     }
 }

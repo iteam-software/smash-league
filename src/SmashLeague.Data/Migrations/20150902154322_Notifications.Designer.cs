@@ -7,9 +7,19 @@ using SmashLeague.Data;
 namespace SmashLeagueDataMigrations
 {
     [ContextType(typeof(SmashLeagueDbContext))]
-    partial class SmashLeagueDbContextModelSnapshot : ModelSnapshot
+    partial class Notifications
     {
-        public override void BuildModel(ModelBuilder builder)
+        public override string Id
+        {
+            get { return "20150902154322_Notifications"; }
+        }
+
+        public override string ProductVersion
+        {
+            get { return "7.0.0-beta6-13815"; }
+        }
+
+        public override void BuildTargetModel(ModelBuilder builder)
         {
             builder
                 .Annotation("ProductVersion", "7.0.0-beta6-13815")
@@ -326,15 +336,6 @@ namespace SmashLeagueDataMigrations
                     b.Annotation("Relational:TableName", "Teams");
                 });
 
-            builder.Entity("SmashLeague.Data.TeamInvite", b =>
-                {
-                    b.Property<int>("TeamId");
-
-                    b.Property<int>("PlayerId");
-
-                    b.Key("TeamId", "PlayerId");
-                });
-
             builder.Entity("SmashLeague.Data.TeamOwner", b =>
                 {
                     b.Property<int>("TeamId");
@@ -345,6 +346,15 @@ namespace SmashLeagueDataMigrations
                 });
 
             builder.Entity("SmashLeague.Data.TeamPlayer", b =>
+                {
+                    b.Property<int>("PlayerId");
+
+                    b.Property<int>("TeamId");
+
+                    b.Key("PlayerId", "TeamId");
+                });
+
+            builder.Entity("SmashLeague.Data.TeamPotentialPlayer", b =>
                 {
                     b.Property<int>("PlayerId");
 
@@ -491,17 +501,6 @@ namespace SmashLeagueDataMigrations
                         .ForeignKey("SeasonSeasonId");
                 });
 
-            builder.Entity("SmashLeague.Data.TeamInvite", b =>
-                {
-                    b.Reference("SmashLeague.Data.Player")
-                        .InverseCollection()
-                        .ForeignKey("PlayerId");
-
-                    b.Reference("SmashLeague.Data.Team")
-                        .InverseCollection()
-                        .ForeignKey("TeamId");
-                });
-
             builder.Entity("SmashLeague.Data.TeamOwner", b =>
                 {
                     b.Reference("SmashLeague.Data.Player")
@@ -514,6 +513,17 @@ namespace SmashLeagueDataMigrations
                 });
 
             builder.Entity("SmashLeague.Data.TeamPlayer", b =>
+                {
+                    b.Reference("SmashLeague.Data.Player")
+                        .InverseCollection()
+                        .ForeignKey("PlayerId");
+
+                    b.Reference("SmashLeague.Data.Team")
+                        .InverseCollection()
+                        .ForeignKey("TeamId");
+                });
+
+            builder.Entity("SmashLeague.Data.TeamPotentialPlayer", b =>
                 {
                     b.Reference("SmashLeague.Data.Player")
                         .InverseCollection()

@@ -14,13 +14,13 @@ namespace SmashLeague.Services
             _logger = factory.CreateLogger(nameof(EmailService));
         }
 
-        public Task<EmailResult> Send(string sendTo, string message)
+        public async Task<EmailResult> SendAsync(string sendTo, string message)
         {
             var errorMsg = $"Mail service not fully implemented. Unable to send message to {sendTo}.";
 
             _logger.LogWarning(errorMsg);
 
-            return Task.Run(() => EmailResult.Failed(new EmailError[] { new EmailError { Message = errorMsg } }));
+            return await Task.Run(() => EmailResult.Failed(new EmailError[] { new EmailError { Message = errorMsg } }));
         }
     }
 }

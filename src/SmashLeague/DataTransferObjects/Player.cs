@@ -1,10 +1,11 @@
-﻿
-using SmashLeague.Data;
+﻿using SmashLeague.Data;
+using System;
 
 namespace SmashLeague.DataTransferObjects
 {
     public class Player
     {
+        public int PlayerId { get; set; }
         public string ProfileImageSrc { get; set; }
         public string BannerImageSrc { get; set; }
         public string Username { get; set; }
@@ -35,8 +36,24 @@ namespace SmashLeague.DataTransferObjects
 
             player.PreferredRoles = entity.PreferredRole;
             player.Tag = entity.Tag;
+            player.PlayerId = entity.PlayerId;
 
             return player;
+        }
+
+        public static implicit operator Player(Data.TeamOwner entity)
+        {
+            if (entity == null)
+            {
+                return null;
+            }
+
+            if (entity.Player == null)
+            {
+                throw new ArgumentNullException(nameof(entity.Player));
+            }
+
+            return entity.Player;
         }
     }
 }
