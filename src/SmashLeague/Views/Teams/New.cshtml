@@ -6,7 +6,7 @@
 }
 
 <div class="content content-home">
-  <form class="container form" novalidate name="CreateTeamForm">
+  <form class="container form" novalidate name="CreateTeamForm" ng-submit="CreateTeam(CreateTeamForm)">
     <div class="row">
 
       <div class="col-md-6">
@@ -81,7 +81,7 @@
               </div>
             </div>
             <div class="form-group">
-              <button class="btn btn-success" ng-disabled="CreateTeamForm.$invalid || Roster.length < 5"><span class="fa fa-plus"></span> Create Team</button>
+              <button class="btn btn-success" ng-disabled="CreateTeamForm.$invalid || Roster.length < 5" type="submit"><span class="fa fa-plus"></span> Create Team</button>
             </div>
           </main>
         </section>

@@ -16,9 +16,20 @@ module SmashLeague.Teams {
       this._http = http;
     }
 
+    public CreateTeam(
+      team: any) {
+      return this._http.post('/api/team', team);
+    }
+
     public GetSuggestionsAsync(
       players?: any[]): ng.IHttpPromise<any[]> {
       return this._http.post('/api/team/suggest', players);
+    }
+
+    public GetTeamsForPlayer(
+      username: string): ng.IHttpPromise<any[]> {
+
+      return this._http.get('/api/team/' + username + '/teams');
     }
 
     public static get Factory() {

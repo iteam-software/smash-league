@@ -5,11 +5,11 @@ module SmashLeague.Teams {
   export class TeamController {
 
     public static $inject = [
-      '$state'
+      'TeamsService'
     ];
 
     constructor(
-      state: ng.ui.IStateService) {
+      teamsService) {
       
     }
   }

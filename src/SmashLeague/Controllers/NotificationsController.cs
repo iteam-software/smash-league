@@ -50,7 +50,7 @@ namespace SmashLeague.Controllers
             return await _notificationManager.ReadAsync(note, User.GetUserName());
         }
 
-        [HttpDelete("{id")]
+        [HttpDelete("{id}")]
         public async Task Delete([FromQuery] int id)
         {
             await _notificationManager.DeleteAsync(id);

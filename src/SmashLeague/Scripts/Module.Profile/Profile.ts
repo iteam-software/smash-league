@@ -20,7 +20,7 @@ module SmashLeague.Profile {
             controller: 'ProfileController'
           },
           'ProfileContent@Profile': {
-            template: '<p>Feed</p>'
+            templateUrl: '/profile/my-feed'
           }
         }
       });
@@ -29,7 +29,8 @@ module SmashLeague.Profile {
         url: '/teams',
         views: {
           'ProfileContent': {
-            template: '<p>Teams</p>'
+            templateUrl: '/profile/my-teams',
+            controller: 'ProfileTeamsController'
           }
         }
       });
@@ -38,7 +39,7 @@ module SmashLeague.Profile {
         url: '/stats',
         views: {
           'ProfileContent': {
-            template: '<p>Stats</p>'
+            templateUrl: '/profile/my-stats'
           }
         }
       });
@@ -47,7 +48,7 @@ module SmashLeague.Profile {
         url: '/history',
         views: {
           'ProfileContent': {
-            template: '<p>History</p>'
+            templateUrl: '/profile/my-history'
           }
         }
       });
@@ -56,7 +57,7 @@ module SmashLeague.Profile {
 
   Application.Config.$inject = ['$stateProvider'];
 
-  Application.Module = angular.module('SmashLeague.Profile', ['ui.router', 'SmashLeague.Common', 'SmashLeague.Player']);
+  Application.Module = angular.module('SmashLeague.Profile', ['ui.router', 'SmashLeague.Common', 'SmashLeague.Player', 'SmashLeague.Team']);
 
   Application.Module.config(Application.Config);
 }

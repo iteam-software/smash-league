@@ -4,12 +4,15 @@
     {
         public TeamPlayer(Player player)
         {
-            PlayerId = player.PlayerId;
-            Username = player.Username;
-            PreferredRoles = player.PreferredRoles;
-            ProfileImageSrc = player.ProfileImageSrc;
-            BannerImageSrc = player.BannerImageSrc;
-            Tag = player.Tag;
+            if (player != null)
+            {
+                PlayerId = player.PlayerId;
+                Username = player.Username;
+                PreferredRoles = player.PreferredRoles;
+                ProfileImageSrc = player.ProfileImageSrc;
+                BannerImageSrc = player.BannerImageSrc;
+                Tag = player.Tag;
+            }
         }
 
         public bool Invitee { get; set; }

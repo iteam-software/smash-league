@@ -48,8 +48,12 @@ namespace SmashLeague.Services
             {
                 throw new ArgumentNullException(nameof(team.Name));
             }
+            if (!Team.TeamNameRegex.IsMatch(team.Name))
+            {
+                throw new InvalidOperationException($"Team name {team.Name} is invalid");
+            }
 
-            var entity = new Team { Name = team.Name };
+            var entity = new Team { Name = team.Name, NormalizedName = team.Name.ToLower().Replace(' ', '-') };
             // TODO: Should we see if a team already exists or wait for the uniqueness constraint to fail?
 
             // Create team roster
@@ -72,7 +76,7 @@ namespace SmashLeague.Services
                         var user = await _userManager.FindByNameAsync(invitee.Username);
                         if (user == null)
                         {
-                            throw new InvalidOperationException($"Username not found: {invitee.Username}");
+                            throw new InvalidOperationException($"User not found: {invitee.Username}");
                         }
 
                         player = _db.Players
@@ -136,6 +140,41 @@ namespace SmashLeague.Services
             }
 
             return TeamResult.Success(entity);
+        }
+
+        public async Task<Team[]> GetTeamsForPlayer(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
+
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                throw new InvalidOperationException($"User not found: {username}");
+            }
+
+            var player = await _db.Players
+                .Include(x => x.Invites).ThenInclude(x => x.Player)
+                .Include(x => x.Invites).ThenInclude(x => x.Team)
+                .Include(x => x.Teams).ThenInclude(x => x.Player)
+                .Include(x => x.Teams).ThenInclude(x => x.Team)
+                .Include(x => x.OwnedTeams).ThenInclude(x => x.Player)
+                .Include(x => x.OwnedTeams).ThenInclude(x => x.Team)
+                .Include(x => x.User)
+                .SingleOrDefaultAsync(x => x.User == user);
+            if (player == null)
+            {
+                throw new InvalidProgramException($"Player entity for user {user.UserName} not found.");
+            }
+
+            var teams = new List<Team>();
+            teams.AddRange(player.Teams.Select(x => x.Team));
+            teams.AddRange(player.OwnedTeams.Select(x => x.Team));
+            teams.AddRange(player.Invites.Select(x => x.Team));
+
+            return teams.ToArray();
         }
 
         public async Task<Player[]> Suggest(DataTransferObjects.Player[] players)

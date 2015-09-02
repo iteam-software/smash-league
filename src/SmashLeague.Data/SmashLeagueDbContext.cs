@@ -5,7 +5,7 @@ namespace SmashLeague.Data
 {
     public class SmashLeagueDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<TeamPlayer> Teams { get; set; }
+        public DbSet<Team> Teams { get; set; }
         public DbSet<Rank> Ranks { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Season> Seasons { get; set; }
@@ -39,6 +39,8 @@ namespace SmashLeague.Data
                 .Index(team => team.Name);
             builder.Entity<Team>()
                 .AlternateKey(x => x.Name);
+            builder.Entity<Team>()
+                .AlternateKey(x => x.NormalizedName);
 
             builder.Entity<Matchup>()
                 .Key(x => new { x.MatchId, x.TeamId });

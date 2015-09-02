@@ -19,7 +19,7 @@
       </file-selector>
     </div>
   </div>
-  <div class="profile-content">
+  <div class="content content-profile">
     <div class="container">
       <div class="row">
         <div class="col-md-2">
@@ -73,9 +73,7 @@
               <li ng-show="IsEditing"><button class="btn btn-success" ng-click="Save()"><span class="fa fa-save"></span> Save</button></li>
             </ul>
           </div>
-          <div class="profile-content-main">
-            <ui-view name="ProfileContent"></ui-view>
-          </div>
+          <ui-view name="ProfileContent"></ui-view>
         </div>
       </div>
     </div>

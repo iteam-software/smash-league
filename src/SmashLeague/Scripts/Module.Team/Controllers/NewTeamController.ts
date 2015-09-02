@@ -5,12 +5,15 @@ module SmashLeague.Teams {
   export class NewTeamController {
 
     private _scope: INewTeamScope;
+    private _location: ng.ILocationService;
     private _playersService: Players.PlayersService;
+    private _teamService: TeamService;
 
     private _roster: any[];
 
     public static $inject = [
       '$scope',
+      '$location',
       'AuthenticationService',
       'PlayersService',
       'TeamService'
@@ -18,13 +21,16 @@ module SmashLeague.Teams {
 
     constructor(
       scope,
+      location,
       authService: Common.IAuthenticationService,
       playersService: Players.PlayersService,
       teamService: TeamService) {
 
       this._roster = [];
       this._scope = scope;
+      this._location = location;
       this._playersService = playersService;
+      this._teamService = teamService;
 
       this._scope.Roster = this.Roster;
       this._scope.SearchResults = [];
@@ -35,6 +41,7 @@ module SmashLeague.Teams {
       this._scope.RemoveFromRoster = $.proxy(this.RemoveFromRoster, this);
       this._scope.FindPlayers = $.proxy(this.FindPlayers, this);
       this._scope.SelectPlayer = $.proxy(this.SelectPlayer, this);
+      this._scope.CreateTeam = $.proxy(this.CreateTeam, this);
 
       // Load suggestions
       teamService.GetSuggestionsAsync()
@@ -86,6 +93,20 @@ module SmashLeague.Teams {
 
       this._scope.SelectedPlayer = player;
       this._scope.SelectedPlayerUsername = player.Username;
+
+      if (!this._scope.$$phase && !this._scope.$root.$$phase) {
+        this._scope.$apply();
+      }
+    }
+
+    public CreateTeam(
+      createTeamForm: ng.IFormController) {
+
+      if (createTeamForm.$valid) {
+        this._teamService.CreateTeam({ Name: this._scope.Name, Owner: this._scope.Captain, Roster: this._scope.Roster })
+          .success((team: any) => this._location.url('/team/' + team.NormalizedName))
+          .error((errors) => this._scope.Errors = errors);
+      }
     }
 
     private SetCaptain(

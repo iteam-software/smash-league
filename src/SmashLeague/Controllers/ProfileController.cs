@@ -96,5 +96,29 @@ namespace SmashLeague.Controllers
         {
             return View();
         }
+
+        [Route("my-teams")]
+        public IActionResult Teams()
+        {
+            return View();
+        }
+
+        [Route("my-feed")]
+        public IActionResult Feed()
+        {
+            return View();
+        }
+
+        [Route("my-stats")]
+        public IActionResult Stats()
+        {
+            return View();
+        }
+
+        [Route("my-history")]
+        public IActionResult History()
+        {
+            return View();
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace SmashLeague.Controllers
             _notificationManager = notificationManager;
         }
 
+        // TODO: move this to player API
         [HttpPost("suggest")]
         public async Task<Player[]> Suggest([FromBody] Player[] players)
         {
@@ -29,7 +30,7 @@ namespace SmashLeague.Controllers
             return suggeestions.Select(x => (Player)x).ToArray();
         }
 
-        [HttpPost("new")]
+        [HttpPost]
         public async Task<Team> Create([FromBody] Team team)
         {
             var result = await _teamManager.CreateTeamAsync(team);
@@ -43,6 +44,14 @@ namespace SmashLeague.Controllers
             }
 
             return result.Team;
+        }
+
+        [HttpGet("{username}/teams")]
+        public async Task<Team[]> GetTeamsForPlayer(string username)
+        {
+            var teams = await _teamManager.GetTeamsForPlayer(username);
+
+            return teams.Select(x => (Team)x).ToArray();
         }
     }
 

@@ -15,11 +15,18 @@ h4 {
   }
 }
 
+.clean-link {
+  a&:hover,
+  a&:focus {
+    text-decoration: none;
+  }
+}
+
 .nav-profile-icon {
 }
 
 .profile-username {
-  color: darken(@content-bg, 50%);
+  color: lighten(@content-bg, 50%);
 }
 
 .profile-banner-edit {
@@ -39,10 +46,7 @@ h4 {
 @font-face {
   font-family: 'SmashLeague';
   src: url('../fonts/SmashLeague.eot?-yl6o3f');
-  src: url('../fonts/SmashLeague.eot?#iefix-yl6o3f') format('embedded-opentype'), 
-    url('../fonts/SmashLeague.ttf?-yl6o3f') format('truetype'),
-    url('../fonts/SmashLeague.woff?-yl6o3f') format('woff'), 
-    url('../fonts/SmashLeague.svg?-yl6o3f#SmashLeague') format('svg');
+  src: url('../fonts/SmashLeague.eot?#iefix-yl6o3f') format('embedded-opentype'), url('../fonts/SmashLeague.ttf?-yl6o3f') format('truetype'), url('../fonts/SmashLeague.woff?-yl6o3f') format('woff'), url('../fonts/SmashLeague.svg?-yl6o3f#SmashLeague') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -60,18 +64,32 @@ h4 {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.smashleague-glyph-bracket:before {
-  content: "\e600";
+.smashleague-glyph-bracket {
+  &:before {
+    content: "\e600";
+  }
 }
-.smashleague-glyph-specialist:before {
-	content: "\e601";
+
+.smashleague-glyph-specialist {
+  &:before {
+    content: "\e601";
+  }
 }
-.smashleague-glyph-support:before {
-	content: "\e602";
+
+.smashleague-glyph-support {
+  &:before {
+    content: "\e602";
+  }
 }
-.smashleague-glyph-assassin:before {
-	content: "\e603";
+
+.smashleague-glyph-assassin {
+  &:before {
+    content: "\e603";
+  }
 }
-.smashleague-glyph-tank:before {
-	content: "\e604";
+
+.smashleague-glyph-tank {
+  &:before {
+    content: "\e604";
+  }
 }
