@@ -15,7 +15,12 @@ namespace SmashLeague.Services
             _db = db;
         }
 
-        public async Task<Data.Player[]> Suggest(DataTransferObjects.Player[] players)
+        public Task<TeamResult> CreateTeamAsync(DataTransferObjects.Team team)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Player[]> Suggest(DataTransferObjects.Player[] players)
         {
             var suggestions = await _db.Players
                 .Include(x => x.User).ThenInclude(x => x.ProfileImage)

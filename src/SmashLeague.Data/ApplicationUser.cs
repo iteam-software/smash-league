@@ -15,5 +15,6 @@ namespace SmashLeague.Data
         public string Name { get; set; }
         public string Location { get; set; }
         public DateTime? Birthday { get; set; }
+        public bool EmailNotifications { get; set; }
     }
 }

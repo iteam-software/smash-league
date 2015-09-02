@@ -5,8 +5,6 @@ using SmashLeague.Services;
 using System.Linq;
 using System.Threading.Tasks;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace SmashLeague.Controllers
 {
     [Authorize]
@@ -14,11 +12,14 @@ namespace SmashLeague.Controllers
     public class TeamsApiController : Controller
     {
         private readonly ITeamManager _teamManager;
+        private readonly INotificationManager _notificationManager;
 
         public TeamsApiController(
-            ITeamManager teamManager)
+            ITeamManager teamManager,
+            INotificationManager notificationManager)
         {
             _teamManager = teamManager;
+            _notificationManager = notificationManager;
         }
 
         [HttpPost("suggest")]
@@ -26,6 +27,22 @@ namespace SmashLeague.Controllers
         {
             var suggeestions = await _teamManager.Suggest(players);
             return suggeestions.Select(x => (Player)x).ToArray();
+        }
+
+        [HttpPost("new")]
+        public async Task<Team> Create([FromBody] Team team)
+        {
+            var result = await _teamManager.CreateTeamAsync(team);
+            if (result.Succeeded)
+            {
+                await _notificationManager.NotifiyTeamCreatedAsync(result.Team);
+            }
+            else
+            {
+                throw ManagerException<TeamError>.Create(result);
+            }
+
+            return result.Team;
         }
     }
 
