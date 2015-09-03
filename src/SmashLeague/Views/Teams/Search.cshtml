@@ -1,0 +1,19 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="content content-home">
+  <div class="container">
+    <section class="panel panel-team">
+      <header class="panel-heading">
+        <h2><span class="fa fa-search"></span> Search Results: {{Query}}</h2>
+      </header>
+      <main class="panel-body">
+        <p class="text-subtle">Currently we support searching by team name.  More search options to follow!</p>
+        <p class="help-block" ng-if="!SearchResults || SearchResults.length == 0">No results found <span class="fa fa-frown-o"></span></p>
+        <team-listing ng-repeat="team in SearchResults" ng-model="team"></team-listing>
+      </main>
+    </section>
+  </div>
+</div>

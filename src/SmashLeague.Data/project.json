@@ -10,10 +10,10 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta6",
-    "Microsoft.Framework.Configuration.Json": "1.0.0-beta5",
-    "EntityFramework.SqlServer": "7.0.0-beta6",
-    "EntityFramework.Commands": "7.0.0-beta6"
+    "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta7",
+    "Microsoft.Framework.Configuration.Json": "1.0.0-beta7",
+    "EntityFramework.SqlServer": "7.0.0-beta7",
+    "EntityFramework.Commands": "7.0.0-beta7"
   },
 
   "frameworks": {

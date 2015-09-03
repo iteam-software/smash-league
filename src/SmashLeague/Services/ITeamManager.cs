@@ -9,5 +9,6 @@ namespace SmashLeague.Services
         Task<TeamResult> CreateTeamAsync(DataTransferObjects.Team team);
         Task<Team[]> GetTeamsForPlayerAsync(string username);
         Task<Team[]> GetTopTeamsAsync(int number);
+        Task<Team[]> SearchForTeamsAsync(string q);
     }
 }

@@ -25,7 +25,7 @@ namespace SmashLeague.Services
 
         public async Task<Player> CreatePlayerForUserAsync(ApplicationUser user)
         {
-            var player = new Data.Player { User = user };
+            var player = new Player { User = user };
 
             _db.Players.Add(player);
             await _db.SaveChangesAsync();
@@ -57,12 +57,10 @@ namespace SmashLeague.Services
 
         public async Task<Player> GetPlayerByUserNameAsync(string username)
         {
-            var user = await _userManager.FindByNameAsync(username);
-            var player = await _db.Players
-                .Include(x => x.User)
-                .SingleOrDefaultAsync(x => x.User == user);
-
-            return player;
+            return await _db.Players
+                .Include(x => x.User).ThenInclude(x => x.HeaderImage)
+                .Include(x => x.User).ThenInclude(x => x.ProfileImage)
+                .SingleOrDefaultAsync(x => x.User.UserName == username);
         }
 
         public async Task<Player[]> GetPlayersAsync(int? max = default(int?))
@@ -86,27 +84,11 @@ namespace SmashLeague.Services
 
         public async Task<Player[]> GetPlayersByPartialNameAsync(string partial)
         {
-            // TODO: once EF7 is stable, this needs to use related navigation property from Player dbset
-            // to load the players
-            var list = new List<Player>();
-            var users = await _db.Users
-                .Where(x => x.UserName.StartsWith(partial, StringComparison.OrdinalIgnoreCase))
+            return await _db.Players
+                .Include(x => x.User).ThenInclude(x => x.ProfileImage)
+                .Include(x => x.User).ThenInclude(x => x.ProfileImage)
+                .Where(x => x.User.UserName.StartsWith(partial, StringComparison.OrdinalIgnoreCase))
                 .ToArrayAsync();
-
-            foreach (var user in users)
-            {
-                var player = await _db.Players
-                    .Include(x => x.User).ThenInclude(x => x.ProfileImage)
-                    .Include(x => x.User).ThenInclude(x => x.HeaderImage)
-                    .SingleOrDefaultAsync(x => x.User == user);
-
-                if (player != null)
-                {
-                    list.Add(player);
-                }
-            }
-
-            return list.ToArray();
         }
 
         public async Task<Player> UpdatePlayerAsync(Profile profile)

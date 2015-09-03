@@ -22,6 +22,22 @@ module SmashLeague.Teams {
         }
       });
 
+      stateProvider.state('Team-Search', {
+        url: '/search?q',
+        resolve: {
+          query: ['$stateParams', (params) => params.q]
+        },
+        views: {
+          'Banner': {
+            templateUrl: '/teams/banner'
+          },
+          'Content': {
+            templateUrl: '/teams/search',
+            controller: 'TeamSearchController'
+          }
+        }
+      });
+
       stateProvider.state('Team-New', {
         url: '/team/new',
         resolve: {

@@ -54,6 +54,14 @@ namespace SmashLeague.Controllers
             return teams.Select(x => (Team)x).ToArray();
         }
 
+        [HttpGet("search")]
+        public async Task<Team[]> SearchForTeam([FromQuery] string q)
+        {
+            var teams = await _teamManager.SearchForTeamsAsync(q);
+
+            return teams.Select(x => (Team)x).ToArray();
+        }
+
         [HttpGet("{username}/teams")]
         public async Task<Team[]> GetTeamsForPlayer(string username)
         {
@@ -81,6 +89,12 @@ namespace SmashLeague.Controllers
 
         [Route("New")]
         public IActionResult New()
+        {
+            return View();
+        }
+
+        [Route("Search")]
+        public IActionResult Search()
         {
             return View();
         }

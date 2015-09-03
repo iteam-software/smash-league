@@ -11,9 +11,9 @@
       <div>
         <form class="navbar-form navbar-left">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Find a team" autofocus />
+            <input type="text" class="form-control" placeholder="Find a team" autofocus ng-model="Query" />
             <span class="input-group-btn">
-              <button class="btn btn-default">
+              <button class="btn btn-default" ui-sref="Team-Search({q:Query})">
                 <i class="fa fa-search"></i>
               </button>
             </span>

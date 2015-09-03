@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Hosting;
+﻿using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Identity;
 using Microsoft.Data.Entity;
 using Microsoft.Framework.Logging;

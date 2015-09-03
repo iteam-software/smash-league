@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
+using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
-using Microsoft.Framework.Runtime;
 using SmashLeague.Data;
 using SmashLeague.Security.Battlenet;
 using SmashLeague.Services;
@@ -51,7 +51,7 @@ namespace SmashLeague
             // Configure identity
             services.ConfigureIdentity(options =>
             {
-                options.User.UserNameValidationRegex = Security.AuthenticationDefaults.UsernameRegex;
+                options.User.AllowedUserNameCharacters = Security.AuthenticationDefaults.UsernameRegex;
             });
 
             // Configure cookie authentication

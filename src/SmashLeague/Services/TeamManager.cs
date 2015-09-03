@@ -75,18 +75,12 @@ namespace SmashLeague.Services
                 {
                     Player player = null;
 
-                    // If the player has a username, load the user
                     if (!string.IsNullOrEmpty(invitee.Username))
                     {
-                        var user = await _userManager.FindByNameAsync(invitee.Username);
-                        if (user == null)
-                        {
-                            throw new InvalidOperationException($"User not found: {invitee.Username}");
-                        }
-
+                        // If the player has a username, load the user
                         player = _db.Players
                             .Include(x => x.User)
-                            .SingleOrDefault(x => x.User == user);
+                            .SingleOrDefault(x => x.User.UserName == invitee.Username);
                         if (player == null)
                         {
                             throw new InvalidProgramException($"Player entity for user {invitee.Username} not found.");
@@ -108,18 +102,12 @@ namespace SmashLeague.Services
             }
 
             // Create team owner
-            var ownerUser = await _userManager.FindByNameAsync(team.Owner.Username);
-            if (ownerUser == null)
-            {
-                throw new InvalidOperationException($"Team owner not found: {team.Owner.Username}");
-            }
-
             var ownerPlayer = _db.Players
                 .Include(x => x.User)
-                .SingleOrDefault(x => x.User == ownerUser);
+                .SingleOrDefault(x => x.User.UserName == team.Owner.Username);
             if (ownerPlayer == null)
             {
-                throw new InvalidProgramException($"Player entity for owner {ownerUser.UserName} not found.");
+                throw new InvalidProgramException($"Player entity for owner {team.Owner.Username} not found.");
             }
 
             var teamOwner = new TeamOwner { Player = ownerPlayer, Team = entity };
@@ -158,12 +146,6 @@ namespace SmashLeague.Services
                 throw new ArgumentNullException(nameof(username));
             }
 
-            var user = await _userManager.FindByNameAsync(username);
-            if (user == null)
-            {
-                throw new InvalidOperationException($"User not found: {username}");
-            }
-
             var player = await _db.Players
                 .Include(x => x.Invites).ThenInclude(x => x.Player)
                 .Include(x => x.Invites).ThenInclude(x => x.Team).ThenInclude(x => x.TeamImage)
@@ -172,16 +154,22 @@ namespace SmashLeague.Services
                 .Include(x => x.Invites).ThenInclude(x => x.Team).ThenInclude(x => x.Rank).ThenInclude(x => x.RankBracket)
                 .Include(x => x.Teams).ThenInclude(x => x.Player)
                 .Include(x => x.Teams).ThenInclude(x => x.Team).ThenInclude(x => x.TeamImage)
+                .Include(x => x.Teams).ThenInclude(x => x.Team).ThenInclude(x => x.Rank)
+                .Include(x => x.Teams).ThenInclude(x => x.Team).ThenInclude(x => x.Rank).ThenInclude(x => x.Rating)
+                .Include(x => x.Teams).ThenInclude(x => x.Team).ThenInclude(x => x.Rank).ThenInclude(x => x.RankBracket)
                 .Include(x => x.OwnedTeams).ThenInclude(x => x.Player)
                 .Include(x => x.OwnedTeams).ThenInclude(x => x.Team).ThenInclude(x => x.TeamImage)
+                .Include(x => x.OwnedTeams).ThenInclude(x => x.Team).ThenInclude(x => x.Rank)
+                .Include(x => x.OwnedTeams).ThenInclude(x => x.Team).ThenInclude(x => x.Rank).ThenInclude(x => x.Rating)
+                .Include(x => x.OwnedTeams).ThenInclude(x => x.Team).ThenInclude(x => x.Rank).ThenInclude(x => x.RankBracket)
                 .Include(x => x.Rank).ThenInclude(x => x.RankBracket)
                 .Include(x => x.Rank).ThenInclude(x => x.Rating)
                 .Include(x => x.User)
-                .SingleOrDefaultAsync(x => x.User == user);
+                .SingleOrDefaultAsync(x => x.User.UserName == username);
 
             if (player == null)
             {
-                throw new InvalidProgramException($"Player entity for user {user.UserName} not found.");
+                throw new InvalidProgramException($"Player entity for user {username} not found.");
             }
 
             var teams = new List<Team>();
@@ -194,16 +182,20 @@ namespace SmashLeague.Services
 
         public async Task<Team[]> GetTopTeamsAsync(int number)
         {
-            return await _db.Teams
-                .Include(x => x.Members).ThenInclude(x => x.Player)
-                .Include(x => x.Invitees).ThenInclude(x => x.Player)
-                .Include(x => x.Rank).ThenInclude(x => x.RankBracket)
-                .Include(x => x.Rank).ThenInclude(x => x.Rating)
-                .Include(x => x.Owner).ThenInclude(x => x.Player)
-                .Include(x => x.TeamImage)
+            return await BuildTeamQuery(_db.Teams)
                 .OrderByDescending(x => x.Rank.Rating.MatchMakingRating)
                 .Take(number)
                 .ToArrayAsync();
+        }
+
+        public async Task<Team[]> SearchForTeamsAsync(string q)
+        {
+            // Search by team name
+            var teamsByName = await BuildTeamQuery(_db.Teams)
+                .Where(x => x.Name.Contains(q))
+                .ToListAsync();
+
+            return teamsByName.ToArray();
         }
 
         public async Task<Player[]> SuggestAsync(DataTransferObjects.Player[] players)
@@ -215,6 +207,17 @@ namespace SmashLeague.Services
                 .ToArrayAsync();
 
             return suggestions;
+        }
+
+        private IQueryable<Team> BuildTeamQuery(DbSet<Team> set)
+        {
+            return set
+                .Include(x => x.Members).ThenInclude(x => x.Player).ThenInclude(x => x.User)
+                .Include(x => x.Invitees).ThenInclude(x => x.Player).ThenInclude(x => x.User)
+                .Include(x => x.Rank).ThenInclude(x => x.RankBracket)
+                .Include(x => x.Rank).ThenInclude(x => x.Rating)
+                .Include(x => x.Owner).ThenInclude(x => x.Player).ThenInclude( x => x.User)
+                .Include(x => x.TeamImage);
         }
     }
 }

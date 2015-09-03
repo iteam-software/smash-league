@@ -15,7 +15,7 @@ namespace SmashLeague.Security.Battlenet
             IDataProtectionProvider dataProtectionProvider, 
             ILoggerFactory loggerFactory, 
             IUrlEncoder encoder, 
-            IOptions<ExternalAuthenticationOptions> externalOptions, 
+            IOptions<SharedAuthenticationOptions> externalOptions, 
             IOptions<BattlenetAuthenticationOptions> options,
             ConfigureOptions<BattlenetAuthenticationOptions> configureOptions = null) 
             : base(next, dataProtectionProvider, loggerFactory, encoder, externalOptions, options, configureOptions)
