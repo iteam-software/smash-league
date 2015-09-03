@@ -7,6 +7,7 @@ namespace SmashLeague.Services
     {
         Task<Image> GetDefaultImageAsync(string image);
         Task<Image> CreateImage(Image image);
+        Task CreateDefaultImageForTeamAsync(Team team);
         Task UpdateProfileImageAsync(ApplicationUser user, string data);
         Task UpdateBannerImageAsync(ApplicationUser user, string data);
     }

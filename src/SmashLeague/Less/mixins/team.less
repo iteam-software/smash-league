@@ -1,0 +1,13 @@
+﻿
+.team-rating-variant(@color) {
+  .team-heading {
+    .team-name,
+    .team-rating {
+      color: @color;
+    }
+
+    a:hover .team-name {
+      color: lighten(@color, 20%);
+    }
+  }
+}

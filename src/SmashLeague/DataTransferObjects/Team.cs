@@ -9,6 +9,9 @@ namespace SmashLeague.DataTransferObjects
         public Player Owner { get; set; }
         public string Name { get; set; }
         public string NormalizedName { get; set; }
+        public string TeamImageSrc { get; set; }
+        public Data.RankBrackets Bracket { get; set; }
+        public int Rating { get; set; }
 
         public static implicit operator Team(Data.Team entity)
         {
@@ -19,6 +22,21 @@ namespace SmashLeague.DataTransferObjects
 
             var roster = new List<TeamPlayer>();
             var team = new Team { Name = entity.Name, Owner = entity.Owner, NormalizedName = entity.NormalizedName };
+
+            if (entity.TeamImage != null)
+            {
+                team.TeamImageSrc = entity.TeamImage.Source;
+            }
+
+            if (entity.Rank != null && entity.Rank.RankBracket != null)
+            {
+                team.Bracket = entity.Rank.RankBracket.Type;
+
+                if (entity.Rank.Rating != null)
+                {
+                    team.Rating = entity.Rank.Rating.MatchMakingRating;
+                }
+            }
 
             if (entity.Members != null)
             {

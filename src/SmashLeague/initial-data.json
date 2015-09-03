@@ -3,6 +3,9 @@
     "Images": {
       "Profile": {
         "Source": "/media/defaults/profile.png"
+      },
+      "Team": {
+        "Source": "/media/defaults/team.png"
       }
     }
   }

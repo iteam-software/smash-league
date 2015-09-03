@@ -11,14 +11,20 @@ namespace SmashLeague.Services
     public class TeamManager : ITeamManager
     {
         private readonly SmashLeagueDbContext _db;
+        private readonly IImageManager _imageMaanger;
+        private readonly IRankManager _rankManager;
         private readonly ApplicationUserManager _userManager;
 
         public TeamManager(
             SmashLeagueDbContext db,
-            ApplicationUserManager userManager)
+            ApplicationUserManager userManager,
+            IRankManager rankManager,
+            IImageManager imageManager)
         {
             _db = db;
             _userManager = userManager;
+            _rankManager = rankManager;
+            _imageMaanger = imageManager;
         }
 
         public async Task<TeamResult> CreateTeamAsync(DataTransferObjects.Team team)
@@ -54,7 +60,6 @@ namespace SmashLeague.Services
             }
 
             var entity = new Team { Name = team.Name, NormalizedName = team.Name.ToLower().Replace(' ', '-') };
-            // TODO: Should we see if a team already exists or wait for the uniqueness constraint to fail?
 
             // Create team roster
             var roster = new List<TeamInvite>();
@@ -133,6 +138,10 @@ namespace SmashLeague.Services
             try
             {
                 await _db.SaveChangesAsync();
+
+                // Setup rank & image
+                await _rankManager.CreateNewTeamRankingAsync(entity);
+                await _imageMaanger.CreateDefaultImageForTeamAsync(entity);
             }
             catch (Exception e)
             {
@@ -142,7 +151,7 @@ namespace SmashLeague.Services
             return TeamResult.Success(entity);
         }
 
-        public async Task<Team[]> GetTeamsForPlayer(string username)
+        public async Task<Team[]> GetTeamsForPlayerAsync(string username)
         {
             if (string.IsNullOrEmpty(username))
             {
@@ -157,13 +166,19 @@ namespace SmashLeague.Services
 
             var player = await _db.Players
                 .Include(x => x.Invites).ThenInclude(x => x.Player)
-                .Include(x => x.Invites).ThenInclude(x => x.Team)
+                .Include(x => x.Invites).ThenInclude(x => x.Team).ThenInclude(x => x.TeamImage)
+                .Include(x => x.Invites).ThenInclude(x => x.Team).ThenInclude(x => x.Rank)
+                .Include(x => x.Invites).ThenInclude(x => x.Team).ThenInclude(x => x.Rank).ThenInclude(x => x.Rating)
+                .Include(x => x.Invites).ThenInclude(x => x.Team).ThenInclude(x => x.Rank).ThenInclude(x => x.RankBracket)
                 .Include(x => x.Teams).ThenInclude(x => x.Player)
-                .Include(x => x.Teams).ThenInclude(x => x.Team)
+                .Include(x => x.Teams).ThenInclude(x => x.Team).ThenInclude(x => x.TeamImage)
                 .Include(x => x.OwnedTeams).ThenInclude(x => x.Player)
-                .Include(x => x.OwnedTeams).ThenInclude(x => x.Team)
+                .Include(x => x.OwnedTeams).ThenInclude(x => x.Team).ThenInclude(x => x.TeamImage)
+                .Include(x => x.Rank).ThenInclude(x => x.RankBracket)
+                .Include(x => x.Rank).ThenInclude(x => x.Rating)
                 .Include(x => x.User)
                 .SingleOrDefaultAsync(x => x.User == user);
+
             if (player == null)
             {
                 throw new InvalidProgramException($"Player entity for user {user.UserName} not found.");
@@ -174,10 +189,24 @@ namespace SmashLeague.Services
             teams.AddRange(player.OwnedTeams.Select(x => x.Team));
             teams.AddRange(player.Invites.Select(x => x.Team));
 
-            return teams.ToArray();
+            return teams.OrderByDescending(x => x.Rank.Rating.MatchMakingRating).ToArray();
         }
 
-        public async Task<Player[]> Suggest(DataTransferObjects.Player[] players)
+        public async Task<Team[]> GetTopTeamsAsync(int number)
+        {
+            return await _db.Teams
+                .Include(x => x.Members).ThenInclude(x => x.Player)
+                .Include(x => x.Invitees).ThenInclude(x => x.Player)
+                .Include(x => x.Rank).ThenInclude(x => x.RankBracket)
+                .Include(x => x.Rank).ThenInclude(x => x.Rating)
+                .Include(x => x.Owner).ThenInclude(x => x.Player)
+                .Include(x => x.TeamImage)
+                .OrderByDescending(x => x.Rank.Rating.MatchMakingRating)
+                .Take(number)
+                .ToArrayAsync();
+        }
+
+        public async Task<Player[]> SuggestAsync(DataTransferObjects.Player[] players)
         {
             var suggestions = await _db.Players
                 .Include(x => x.User).ThenInclude(x => x.ProfileImage)

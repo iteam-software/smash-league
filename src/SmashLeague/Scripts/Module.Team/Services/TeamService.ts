@@ -32,6 +32,12 @@ module SmashLeague.Teams {
       return this._http.get('/api/team/' + username + '/teams');
     }
 
+    public GetTopTeams(
+      count: number): ng.IHttpPromise<any[]> {
+
+      return this._http.get('/api/team/top/' + count);
+    }
+
     public static get Factory() {
 
       var factory = (http) => {

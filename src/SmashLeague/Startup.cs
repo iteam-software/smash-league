@@ -104,6 +104,19 @@ namespace SmashLeague
 
                 database.SaveChanges();
             }
+
+            if (!database.DefaultImages.Any(x => x.Name == Defaults.TeamImage))
+            {
+                var image = new Image
+                {
+                    Source = Configuration["Defaults:Images:Team:Source"]
+                };
+
+                database.Add(image);
+                database.DefaultImages.Add(new DefaultImages { Image = image, Name = Defaults.TeamImage });
+
+                database.SaveChanges();
+            }
         }
     }
 }

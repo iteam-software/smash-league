@@ -11,6 +11,7 @@ namespace SmashLeague.Data
 
         [Required]
         public string Name { get; set; }
+        public RankBrackets Type { get; set; }
 
         [Required, Range(0, int.MaxValue)]
         public int MinimumMMR { get; set; }

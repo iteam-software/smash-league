@@ -16,8 +16,5 @@ namespace SmashLeague.Data
 
         [Required, Range(0, int.MaxValue)]
         public int Position { get; set; }
-
-        public Player Player { get; set; }
-        public TeamPlayer Team { get; set; }
     }
 }

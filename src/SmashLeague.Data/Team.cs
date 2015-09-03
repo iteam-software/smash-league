@@ -22,7 +22,9 @@ namespace SmashLeague.Data
         [Required]
         public TeamOwner Owner { get; set; }
 
-        public ICollection<Rank> Rankings { get; set; }
+        public Image TeamImage { get; set; }
+        public Rank Rank { get; set; }
+
         public ICollection<TeamPlayer> Members { get; set; }
         public ICollection<Matchup> Matchups { get; set; }
         public ICollection<Match> Wins { get; set; }

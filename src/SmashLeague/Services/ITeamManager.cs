@@ -5,8 +5,9 @@ namespace SmashLeague.Services
 {
     public interface ITeamManager
     {
-        Task<Player[]> Suggest(DataTransferObjects.Player[] players);
+        Task<Player[]> SuggestAsync(DataTransferObjects.Player[] players);
         Task<TeamResult> CreateTeamAsync(DataTransferObjects.Team team);
-        Task<Team[]> GetTeamsForPlayer(string username);
+        Task<Team[]> GetTeamsForPlayerAsync(string username);
+        Task<Team[]> GetTopTeamsAsync(int number);
     }
 }

@@ -7,9 +7,19 @@ using SmashLeague.Data;
 namespace SmashLeagueDataMigrations
 {
     [ContextType(typeof(SmashLeagueDbContext))]
-    partial class SmashLeagueDbContextModelSnapshot : ModelSnapshot
+    partial class TeamImage
     {
-        public override void BuildModel(ModelBuilder builder)
+        public override string Id
+        {
+            get { return "20150903152016_TeamImage"; }
+        }
+
+        public override string ProductVersion
+        {
+            get { return "7.0.0-beta6-13815"; }
+        }
+
+        public override void BuildTargetModel(ModelBuilder builder)
         {
             builder
                 .Annotation("ProductVersion", "7.0.0-beta6-13815")
@@ -225,8 +235,6 @@ namespace SmashLeagueDataMigrations
 
                     b.Property<int?>("PreferredRole");
 
-                    b.Property<int?>("RankRankId");
-
                     b.Property<string>("Tag");
 
                     b.Property<string>("UserId");
@@ -239,11 +247,19 @@ namespace SmashLeagueDataMigrations
                     b.Property<int>("RankId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("PlayerPlayerId");
+
                     b.Property<int>("Position");
 
                     b.Property<int?>("RankBracketRankingBracketId");
 
                     b.Property<int?>("RatingRatingId");
+
+                    b.Property<int?>("TeamPlayerId");
+
+                    b.Property<int?>("TeamTeamId");
+
+                    b.Property<int?>("TeamTeamId1");
 
                     b.Key("RankId");
                 });
@@ -261,8 +277,6 @@ namespace SmashLeagueDataMigrations
                         .Required();
 
                     b.Property<int?>("SeasonSeasonId");
-
-                    b.Property<int>("Type");
 
                     b.Key("RankingBracketId");
                 });
@@ -316,8 +330,6 @@ namespace SmashLeagueDataMigrations
                     b.Property<string>("NormalizedName")
                         .Required()
                         .Annotation("MaxLength", 50);
-
-                    b.Property<int?>("RankRankId");
 
                     b.Property<int?>("TeamImageProfileImageId");
 
@@ -440,10 +452,6 @@ namespace SmashLeagueDataMigrations
 
             builder.Entity("SmashLeague.Data.Player", b =>
                 {
-                    b.Reference("SmashLeague.Data.Rank")
-                        .InverseCollection()
-                        .ForeignKey("RankRankId");
-
                     b.Reference("SmashLeague.Data.ApplicationUser")
                         .InverseCollection()
                         .ForeignKey("UserId");
@@ -451,6 +459,10 @@ namespace SmashLeagueDataMigrations
 
             builder.Entity("SmashLeague.Data.Rank", b =>
                 {
+                    b.Reference("SmashLeague.Data.Player")
+                        .InverseCollection()
+                        .ForeignKey("PlayerPlayerId");
+
                     b.Reference("SmashLeague.Data.RankBracket")
                         .InverseCollection()
                         .ForeignKey("RankBracketRankingBracketId");
@@ -458,6 +470,14 @@ namespace SmashLeagueDataMigrations
                     b.Reference("SmashLeague.Data.Rating")
                         .InverseCollection()
                         .ForeignKey("RatingRatingId");
+
+                    b.Reference("SmashLeague.Data.Team")
+                        .InverseCollection()
+                        .ForeignKey("TeamTeamId");
+
+                    b.Reference("SmashLeague.Data.TeamPlayer")
+                        .InverseCollection()
+                        .ForeignKey("TeamPlayerId", "TeamTeamId1");
                 });
 
             builder.Entity("SmashLeague.Data.RankBracket", b =>
@@ -480,10 +500,6 @@ namespace SmashLeagueDataMigrations
 
             builder.Entity("SmashLeague.Data.Team", b =>
                 {
-                    b.Reference("SmashLeague.Data.Rank")
-                        .InverseCollection()
-                        .ForeignKey("RankRankId");
-
                     b.Reference("SmashLeague.Data.Image")
                         .InverseCollection()
                         .ForeignKey("TeamImageProfileImageId");

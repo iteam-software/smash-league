@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+<section class="team team-listing" ng-class="{'team-never-lucky':Team.Bracket == 1, 'team-common':Team.Bracket == 2, 'team-rare':Team.Bracket == 3, 'team-legendary':Team.Bracket == 4}">
+  <header class="team-heading">
+    <img class="team-img" ng-src="{{Team.TeamImageSrc}}" />
+    <a href="/#/team/{{Team.NormalizedName}}"><h2 class="team-name">{{Team.Name}}</h2></a>
+    <h3 class="team-rating" tooltip data-toggle="tooltip" data-placement="left" title="Match Making Rating"><span class="fa fa-star"></span> {{Team.Rating}}</h3>
+  </header>
+  <main class="team-body">
+    <ul class="list-inline">
+      <li>
+        <a href="/#/player/{{Team.Owner.Username}}">
+          <span class="fa fa-star"></span> {{Team.Owner.Username}}
+        </a>
+      </li>
+      <li ng-repeat="member in Team.Roster">
+        <a href="/#/player/{{member.Username}}" ng-if="member.Username">
+          <span class="fa" ng-class="{'fa-user':member.Username}"></span> {{member.Username}}
+        </a>
+        <span ng-if="!member.Username">{{member.Tag}}</span>
+      </li>
+    </ul>
+  </main>
+</section>

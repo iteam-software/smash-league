@@ -148,5 +148,15 @@ namespace SmashLeague.Services
         {
             return Convert.FromBase64String(Image.GetBase64StringFromDataUri(data));
         }
+
+        public async Task CreateDefaultImageForTeamAsync(Team team)
+        {
+            var image = await GetDefaultImageAsync(Defaults.TeamImage);
+            team.TeamImage = image;
+
+            _db.Update(team);
+
+            await _db.SaveChangesAsync();
+        }
     }
 }

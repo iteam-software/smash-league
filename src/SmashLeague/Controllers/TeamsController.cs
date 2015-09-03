@@ -26,7 +26,7 @@ namespace SmashLeague.Controllers
         [HttpPost("suggest")]
         public async Task<Player[]> Suggest([FromBody] Player[] players)
         {
-            var suggeestions = await _teamManager.Suggest(players);
+            var suggeestions = await _teamManager.SuggestAsync(players);
             return suggeestions.Select(x => (Player)x).ToArray();
         }
 
@@ -46,10 +46,18 @@ namespace SmashLeague.Controllers
             return result.Team;
         }
 
+        [HttpGet("top/{number}")]
+        public async Task<Team[]> GetTopTeams(int number)
+        {
+            var teams = await _teamManager.GetTopTeamsAsync(number);
+
+            return teams.Select(x => (Team)x).ToArray();
+        }
+
         [HttpGet("{username}/teams")]
         public async Task<Team[]> GetTeamsForPlayer(string username)
         {
-            var teams = await _teamManager.GetTeamsForPlayer(username);
+            var teams = await _teamManager.GetTeamsForPlayerAsync(username);
 
             return teams.Select(x => (Team)x).ToArray();
         }
@@ -72,8 +80,13 @@ namespace SmashLeague.Controllers
         }
 
         [Route("New")]
-        [Authorize]
         public IActionResult New()
+        {
+            return View();
+        }
+
+        [Route("template/team-listing")]
+        public IActionResult Team()
         {
             return View();
         }

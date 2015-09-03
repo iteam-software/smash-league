@@ -16,7 +16,8 @@ module SmashLeague.Teams {
             templateUrl: '/teams/banner'
           },
           'Content': {
-            templateUrl: '/teams/content'
+            templateUrl: '/teams/content',
+            controller: 'TeamController'
           }
         }
       });

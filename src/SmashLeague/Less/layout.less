@@ -2,6 +2,10 @@
 @import "variables.less";
 @import "mixins/layout.less";
 
+a:hover {
+  text-decoration: none;
+}
+
 body {
   background-color: lighten(@navbar-inverse-bg, 20%);
 }
@@ -12,6 +16,8 @@ body {
   .profile-banner {
     width: 100%;
     position: relative;
+    background-position: top;
+    background-attachment: fixed;
 
     .profile-img {
       position: relative;

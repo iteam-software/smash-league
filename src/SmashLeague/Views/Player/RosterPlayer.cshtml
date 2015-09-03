@@ -5,7 +5,7 @@
     Layout = null;
 }
 
-<div class="roster-player" ng-class="{'roster-player-empty':!Player}">
+<section class="roster-player" ng-class="{'roster-player-empty':!Player}">
 
   <img class="profile-img" ng-if="Player && Player.ProfileImageSrc" ng-src="{{Player.ProfileImageSrc}}" />
   <h3 class="help-block" ng-if="Player">
@@ -18,4 +18,4 @@
   <div class="profile-banner" ng-if="Player" ng-style="{'background-image':Player.BannerImageSrc && 'url(' + Player.BannerImageSrc +')'}"></div>
 
   <ng-transclude></ng-transclude>
-</div>
+</section>

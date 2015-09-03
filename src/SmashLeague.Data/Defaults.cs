@@ -4,5 +4,6 @@
     {
         public const string ProfileImage = "Default:Image:Profile";
         public const string HeaderImage = "Default:Image:Header";
+        public const string TeamImage = "Default:Image:Team";
     }
 }

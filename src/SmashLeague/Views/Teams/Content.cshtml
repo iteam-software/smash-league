@@ -5,6 +5,22 @@
 
 <div class="content content-home">
   <div class="container">
+    <section class="panel panel-team">
+      <header class="panel-heading">
+        <h2><span class="fa fa-star text-legendary"></span> Top Teams</h2>
+      </header>
+      <main class="panel-body">
+        <team-listing ng-repeat="team in TopTeams" ng-model="team"></team-listing>
+      </main>
+    </section>
 
+    <section class="panel panel-team">
+      <header class="panel-heading">
+        <h2><span class="fa fa-search"></span> Seach Results</h2>
+      </header>
+      <main class="panel-body">
+
+      </main>
+    </section>
   </div>
 </div>
