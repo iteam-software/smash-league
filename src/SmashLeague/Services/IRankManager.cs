@@ -5,6 +5,6 @@ namespace SmashLeague.Services
 {
     public interface IRankManager
     {
-        Task CreateNewTeamRankingAsync(Team team, Season season = null);
+        Task CreateNewTeamRankingAsync(Team team, Season season);
     }
 }

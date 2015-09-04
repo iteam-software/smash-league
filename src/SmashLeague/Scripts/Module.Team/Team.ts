@@ -29,7 +29,8 @@ module SmashLeague.Teams {
         },
         views: {
           'Banner': {
-            templateUrl: '/teams/banner'
+            templateUrl: '/teams/banner',
+            controller: 'TeamSearchQueryController'
           },
           'Content': {
             templateUrl: '/teams/search',
@@ -50,6 +51,22 @@ module SmashLeague.Teams {
           'Content': {
             templateUrl: '/teams/new',
             controller: 'NewTeamController'
+          }
+        }
+      });
+
+      stateProvider.state('Team-Detail', {
+        url: '/team/{normalizedName}',
+        resolve: {
+          normalizedName: ['$stateParams', (stateParams) => stateParams.normalizedName]
+        },
+        views: {
+          'Banner': {
+            template: '<div class="banner banner-blue"></div>'
+          },
+          'Content': {
+            templateUrl: '/teams/detail',
+            controller: 'TeamDetailController'
           }
         }
       });

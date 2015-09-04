@@ -11,20 +11,23 @@ namespace SmashLeague.Services
     public class TeamManager : ITeamManager
     {
         private readonly SmashLeagueDbContext _db;
-        private readonly IImageManager _imageMaanger;
+        private readonly IImageManager _imageManager;
         private readonly IRankManager _rankManager;
+        private readonly ISeasonManager _seasonManager;
         private readonly ApplicationUserManager _userManager;
 
         public TeamManager(
             SmashLeagueDbContext db,
             ApplicationUserManager userManager,
             IRankManager rankManager,
-            IImageManager imageManager)
+            IImageManager imageManager,
+            ISeasonManager seasonManager)
         {
             _db = db;
             _userManager = userManager;
             _rankManager = rankManager;
-            _imageMaanger = imageManager;
+            _imageManager = imageManager;
+            _seasonManager = seasonManager;
         }
 
         public async Task<TeamResult> CreateTeamAsync(DataTransferObjects.Team team)
@@ -57,6 +60,13 @@ namespace SmashLeague.Services
             if (!Team.TeamNameRegex.IsMatch(team.Name))
             {
                 throw new InvalidOperationException($"Team name {team.Name} is invalid");
+            }
+
+            // Make sure we have a default season
+            var season = await _seasonManager.GetCurrentSeasonAsync();
+            if (season == null)
+            {
+                throw new InvalidProgramException("Current season not found");
             }
 
             var entity = new Team { Name = team.Name, NormalizedName = team.Name.ToLower().Replace(' ', '-') };
@@ -116,6 +126,8 @@ namespace SmashLeague.Services
             entity.Owner = teamOwner;
 
             // Save these changes
+            var transaction = await _db.Database.BeginTransactionAsync();
+
             _db.Add(teamOwner);
             _db.Add(entity);
             foreach (var invitee in roster)
@@ -128,15 +140,25 @@ namespace SmashLeague.Services
                 await _db.SaveChangesAsync();
 
                 // Setup rank & image
-                await _rankManager.CreateNewTeamRankingAsync(entity);
-                await _imageMaanger.CreateDefaultImageForTeamAsync(entity);
+                await _rankManager.CreateNewTeamRankingAsync(entity, season);
+                await _imageManager.CreateDefaultImageForTeamAsync(entity);
             }
             catch (Exception e)
             {
+                transaction.Rollback();
+
                 return TeamResult.Failed(e);
             }
 
+            transaction.Commit();
+
             return TeamResult.Success(entity);
+        }
+
+        public async Task<Team> GetTeamByNormalizedNameAsync(string normalizedName)
+        {
+            return await BuildTeamQuery(_db.Teams)
+                .SingleOrDefaultAsync(x => x.NormalizedName == normalizedName);
         }
 
         public async Task<Team[]> GetTeamsForPlayerAsync(string username)
@@ -148,16 +170,25 @@ namespace SmashLeague.Services
 
             var player = await _db.Players
                 .Include(x => x.Invites).ThenInclude(x => x.Player)
+                .Include(x => x.Invites).ThenInclude(x => x.Team).ThenInclude(x => x.Invitees).ThenInclude(x => x.Player).ThenInclude(x => x.User)
+                .Include(x => x.Invites).ThenInclude(x => x.Team).ThenInclude(x => x.Members).ThenInclude(x => x.Player).ThenInclude(x => x.User)
+                .Include(x => x.Invites).ThenInclude(x => x.Team).ThenInclude(x => x.Owner).ThenInclude(x => x.Player).ThenInclude(x => x.User)
                 .Include(x => x.Invites).ThenInclude(x => x.Team).ThenInclude(x => x.TeamImage)
                 .Include(x => x.Invites).ThenInclude(x => x.Team).ThenInclude(x => x.Rank)
                 .Include(x => x.Invites).ThenInclude(x => x.Team).ThenInclude(x => x.Rank).ThenInclude(x => x.Rating)
                 .Include(x => x.Invites).ThenInclude(x => x.Team).ThenInclude(x => x.Rank).ThenInclude(x => x.RankBracket)
                 .Include(x => x.Teams).ThenInclude(x => x.Player)
+                .Include(x => x.Teams).ThenInclude(x => x.Team).ThenInclude(x => x.Invitees).ThenInclude(x => x.Player).ThenInclude(x => x.User)
+                .Include(x => x.Teams).ThenInclude(x => x.Team).ThenInclude(x => x.Members).ThenInclude(x => x.Player).ThenInclude(x => x.User)
+                .Include(x => x.Teams).ThenInclude(x => x.Team).ThenInclude(x => x.Owner).ThenInclude(x => x.Player).ThenInclude(x => x.User)
                 .Include(x => x.Teams).ThenInclude(x => x.Team).ThenInclude(x => x.TeamImage)
                 .Include(x => x.Teams).ThenInclude(x => x.Team).ThenInclude(x => x.Rank)
                 .Include(x => x.Teams).ThenInclude(x => x.Team).ThenInclude(x => x.Rank).ThenInclude(x => x.Rating)
                 .Include(x => x.Teams).ThenInclude(x => x.Team).ThenInclude(x => x.Rank).ThenInclude(x => x.RankBracket)
                 .Include(x => x.OwnedTeams).ThenInclude(x => x.Player)
+                .Include(x => x.OwnedTeams).ThenInclude(x => x.Team).ThenInclude(x => x.Invitees).ThenInclude(x => x.Player).ThenInclude(x => x.User)
+                .Include(x => x.OwnedTeams).ThenInclude(x => x.Team).ThenInclude(x => x.Members).ThenInclude(x => x.Player).ThenInclude(x => x.User)
+                .Include(x => x.OwnedTeams).ThenInclude(x => x.Team).ThenInclude(x => x.Owner).ThenInclude(x => x.Player).ThenInclude(x => x.User)
                 .Include(x => x.OwnedTeams).ThenInclude(x => x.Team).ThenInclude(x => x.TeamImage)
                 .Include(x => x.OwnedTeams).ThenInclude(x => x.Team).ThenInclude(x => x.Rank)
                 .Include(x => x.OwnedTeams).ThenInclude(x => x.Team).ThenInclude(x => x.Rank).ThenInclude(x => x.Rating)

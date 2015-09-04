@@ -132,6 +132,16 @@ namespace SmashLeague.Services
             }
         }
 
+        public async Task CreateDefaultImageForTeamAsync(Team team)
+        {
+            var image = await GetDefaultImageAsync(Defaults.TeamImage);
+            team.TeamImage = image;
+
+            _db.Update(team);
+
+            await _db.SaveChangesAsync();
+        }
+
         private string GetEncodedTime()
         {
             return Convert.ToBase64String(BitConverter.GetBytes(DateTime.Now.Ticks))
@@ -147,16 +157,6 @@ namespace SmashLeague.Services
         private byte[] GetImageBytes(string data)
         {
             return Convert.FromBase64String(Image.GetBase64StringFromDataUri(data));
-        }
-
-        public async Task CreateDefaultImageForTeamAsync(Team team)
-        {
-            var image = await GetDefaultImageAsync(Defaults.TeamImage);
-            team.TeamImage = image;
-
-            _db.Update(team);
-
-            await _db.SaveChangesAsync();
         }
     }
 }

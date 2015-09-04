@@ -8,7 +8,7 @@ namespace SmashLeague.Data
     public class Image
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ProfileImageId { get; set; }
+        public int ImageId { get; set; }
 
         [Required]
         public string Source { get; set; }

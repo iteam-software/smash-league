@@ -37,6 +37,7 @@ namespace SmashLeague.Data
                 .AddDefaultTokenProviders();
 
             services.AddTransient<ApplicationUserManager>();
+            services.AddTransient<SmashLeagueDbInitializer>();
 
             return services;
         }

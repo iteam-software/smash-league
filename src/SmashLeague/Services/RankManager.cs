@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Entity;
 using SmashLeague.Data;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,22 +16,30 @@ namespace SmashLeague.Services
             _db = db;
         }
 
-        public async Task CreateNewTeamRankingAsync(Team team, Season season = null)
+        public async Task CreateNewTeamRankingAsync(Team team, Season season)
         {
+            if (team == null)
+            {
+                throw new ArgumentNullException(nameof(team));
+            }
+            if (season == null)
+            {
+                throw new ArgumentNullException(nameof(season));
+            }
+
             // Find the worst rank in the basic bracket
             var neverLucky = await _db.RankBrackets
-                .Include(x => x.Season)
-                .FirstOrDefaultAsync(x => x.Type == RankBrackets.NeverLucky && x.Season == season);
+                    .Include(x => x.Season)
+                    .SingleOrDefaultAsync(x => x.Type == RankBrackets.NeverLucky && x.Season.SeasonId == season.SeasonId);
 
-            var worstRank = await _db.Ranks
-                .Include(x => x.RankBracket)
-                .OrderByDescending(x => x.Position)
-                .FirstOrDefaultAsync(x => x.RankBracket == neverLucky);
+            if (neverLucky == null)
+            {
+                throw new InvalidProgramException("Unable to load baseline bracket for new team");
+            }
 
             var rank = new Rank
             {
                 RankBracket = neverLucky,
-                Position = worstRank != null ? worstRank.Position + 1 : 1,
                 Rating = new Rating { MatchMakingRating = 1500 }
             };
 

@@ -41,6 +41,10 @@ namespace SmashLeague.DataTransferObjects
 
         public static implicit operator Profile(Data.Player player)
         {
+            if (player == null)
+            {
+                throw new ArgumentNullException(nameof(player));
+            }
             if (player.User == null)
             {
                 throw new ArgumentException("Player must have a loaded user to implicitly convert to profile");

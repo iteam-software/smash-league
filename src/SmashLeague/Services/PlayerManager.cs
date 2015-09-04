@@ -103,15 +103,9 @@ namespace SmashLeague.Services
                 throw new ArgumentException("profile must have a valid username");
             }
 
-            var user = await _userManager.FindByNameAsync(profile.Username);
-            if (user == null)
-            {
-                throw new ArgumentException($"No user found with username {profile.Username}");
-            }
-
             var player = await _db.Players
                 .Include(x => x.User)
-                .SingleOrDefaultAsync(x => x.User == user);
+                .SingleOrDefaultAsync(x => x.User.UserName == profile.Username);
             if (player == null)
             {
                 throw new ArgumentException($"No player found with username {profile.Username}");

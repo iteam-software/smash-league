@@ -9,6 +9,7 @@ namespace SmashLeague.Data
         public DbSet<Rank> Ranks { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Season> Seasons { get; set; }
+        public DbSet<DefaultSeason> DefaultSeasons { get; set; }
         public DbSet<RankBracket> RankBrackets { get; set; }
         public DbSet<Series> Series { get; set; }
         public DbSet<Match> Matches { get; set; }
@@ -41,6 +42,19 @@ namespace SmashLeague.Data
                 .AlternateKey(x => x.Name);
             builder.Entity<Team>()
                 .AlternateKey(x => x.NormalizedName);
+
+            builder.Entity<RankBracket>()
+                .Reference(x => x.Season)
+                .InverseCollection(x => x.Brackets);
+            builder.Entity<RankBracket>()
+                .Key(x => new { x.Type, x.SeasonId });
+            builder.Entity<RankBracket>()
+                .Property(x => x.Type)
+                .ValueGeneratedOnAdd();
+            var rankBracketMetadata = builder.Entity<RankBracket>().Property(x => x.Type).Metadata;
+            rankBracketMetadata.SentinelValue = -1;
+            rankBracketMetadata.IsReadOnlyAfterSave = true;
+            rankBracketMetadata.IsReadOnlyBeforeSave = false;
 
             builder.Entity<Matchup>()
                 .Key(x => new { x.MatchId, x.TeamId });

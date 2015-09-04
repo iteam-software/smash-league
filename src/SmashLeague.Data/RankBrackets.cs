@@ -1,7 +1,6 @@
-﻿
-namespace SmashLeague.Data
+﻿namespace SmashLeague.Data
 {
-    public enum RankBrackets
+    public enum RankBrackets : byte
     {
         NeverLucky = 1,
         Common,

@@ -38,6 +38,12 @@ module SmashLeague.Teams {
       return this._http.get('/api/team/top/' + count);
     }
 
+    public GetTeam(
+      normalizedName: string): ng.IHttpPromise<any> {
+
+      return this._http.get('/api/team/' + normalizedName);
+    }
+
     public SearchForTeams(
       q: string): ng.IHttpPromise<any[]> {
 

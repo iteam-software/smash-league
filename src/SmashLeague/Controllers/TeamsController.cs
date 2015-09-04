@@ -62,6 +62,12 @@ namespace SmashLeague.Controllers
             return teams.Select(x => (Team)x).ToArray();
         }
 
+        [HttpGet("{normalizedName}")]
+        public async Task<Team> Get(string normalizedName)
+        {
+            return await _teamManager.GetTeamByNormalizedNameAsync(normalizedName);
+        }
+
         [HttpGet("{username}/teams")]
         public async Task<Team[]> GetTeamsForPlayer(string username)
         {
@@ -95,6 +101,12 @@ namespace SmashLeague.Controllers
 
         [Route("Search")]
         public IActionResult Search()
+        {
+            return View();
+        }
+
+        [Route("Detail")]
+        public IActionResult Detail()
         {
             return View();
         }

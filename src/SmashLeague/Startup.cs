@@ -6,9 +6,9 @@ using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using SmashLeague.Data;
+using SmashLeague.Data.Extensions;
 using SmashLeague.Security.Battlenet;
 using SmashLeague.Services;
-using System.Linq;
 
 namespace SmashLeague
 {
@@ -48,12 +48,6 @@ namespace SmashLeague
                 options.ClientSecret = Configuration["Battlenet:ClientSecret"];
             });
 
-            // Configure identity
-            services.ConfigureIdentity(options =>
-            {
-                options.User.AllowedUserNameCharacters = Security.AuthenticationDefaults.UsernameRegex;
-            });
-
             // Configure cookie authentication
             services.ConfigureCookieAuthentication(options =>
             {
@@ -70,7 +64,7 @@ namespace SmashLeague
             services.AddSmashLeagueServices(Environment);
         }
 
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, SmashLeagueDbContext database)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
             // Setup logging
             loggerFactory.AddConsole();
@@ -90,33 +84,7 @@ namespace SmashLeague
             app.UseMvc();
 
             // Data initialization
-            //
-            // Check default profile image and create if it is missing
-            if (!database.DefaultImages.Any(x => x.Name == Defaults.ProfileImage))
-            {
-                var image = new Image
-                {
-                    Source = Configuration["Defaults:Images:Profile:Source"]
-                };
-
-                database.Add(image);
-                database.DefaultImages.Add(new DefaultImages { Image = image, Name = Defaults.ProfileImage });
-
-                database.SaveChanges();
-            }
-
-            if (!database.DefaultImages.Any(x => x.Name == Defaults.TeamImage))
-            {
-                var image = new Image
-                {
-                    Source = Configuration["Defaults:Images:Team:Source"]
-                };
-
-                database.Add(image);
-                database.DefaultImages.Add(new DefaultImages { Image = image, Name = Defaults.TeamImage });
-
-                database.SaveChanges();
-            }
+            app.UseSmashLeagueData(Configuration).Wait();
         }
     }
 }

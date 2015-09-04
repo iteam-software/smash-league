@@ -7,6 +7,16 @@
       "Team": {
         "Source": "/media/defaults/team.png"
       }
+    },
+    "Season": {
+      "SeasonName": "Beta 1"
     }
+  },
+
+  "Admin": {
+    "Username": "retrofunk",
+    "Email": "mlynam@iteamnm.com",
+    "Battletag": "retrofunk#1776",
+    "BattlenetUserId": 75459011
   }
 }

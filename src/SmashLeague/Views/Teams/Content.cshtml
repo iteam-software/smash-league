@@ -11,6 +11,7 @@
       </header>
       <main class="panel-body">
         <team-listing ng-repeat="team in TopTeams" ng-model="team"></team-listing>
+        <p class="help-block" ng-if="!TopTeams || !TopTeams.length">No top teams found <span class="fa fa-frown-o"></span></p>
       </main>
     </section>
   </div>
