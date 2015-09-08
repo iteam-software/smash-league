@@ -27,6 +27,16 @@ namespace SmashLeague.Services
             return image;
         }
 
+        public async Task CreateDefaultImageForTeamAsync(Team team)
+        {
+            var image = await GetDefaultImageAsync(Defaults.TeamImage);
+            team.TeamImage = image;
+
+            _db.Update(team);
+
+            await _db.SaveChangesAsync();
+        }
+
         public async Task<Image> GetDefaultImageAsync(string image)
         {
             var defaultImage = await _db.DefaultImages
@@ -40,60 +50,43 @@ namespace SmashLeague.Services
         {
             if (user == null)
             {
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException(nameof(user));
             }
 
             if (string.IsNullOrEmpty(data))
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
             var type = GetImageType(data);
             var bytes = GetImageBytes(data);
-            var encodedTime = GetEncodedTime();
-            
+            var encodedTime = GetEncodedTime();            
             var relativePath = $"/media/users/{user.UserName}.h-{encodedTime}.{type}";
-            var file = _fileProvider.GetFileInfo(relativePath);
-            using (var fileStream = new FileStream(file.PhysicalPath, FileMode.Create))
+
+            var image = await UpdateImageAsync(user.HeaderImage, Defaults.HeaderImage, relativePath, bytes);
+
+
+            if (user.HeaderImage == null)
             {
-                await fileStream.WriteAsync(bytes, 0, bytes.Length);
-            }
-
-            if (user.HeaderImage != null)
-            {
-                var oldRelativePath = user.HeaderImage.Source;
-
-                user.HeaderImage.Source = relativePath;
-                _db.Attach(user.HeaderImage);
-                await _db.SaveChangesAsync();
-
-                // Delete the old image
-                var oldFile = _fileProvider.GetFileInfo(oldRelativePath);
-                if (oldFile.Exists)
-                {
-                    File.Delete(oldFile.PhysicalPath);
-                }
-            }
-            else
-            {
-                var image = new Image { Source = relativePath };
-                _db.Images.Add(image);
-                await _db.SaveChangesAsync();
-
                 user.HeaderImage = image;
+                _db.Add(image);
             }
+
+            _db.Attach(user);
+
+            await _db.SaveChangesAsync();
         }
 
         public async Task UpdateProfileImageAsync(ApplicationUser user, string data)
         {
             if (user == null)
             {
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException(nameof(user));
             }
 
             if (string.IsNullOrEmpty(data))
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
             var type = GetImageType(data);
@@ -101,19 +94,53 @@ namespace SmashLeague.Services
             var encodedTime = GetEncodedTime();
 
             var relativePath = $"/media/users/{user.UserName}.p-{encodedTime}.{type}";
-            var file = _fileProvider.GetFileInfo(relativePath);
+
+            var image = await UpdateImageAsync(user.ProfileImage, Defaults.ProfileImage, relativePath, bytes);
+            if (user.ProfileImage == null)
+            {
+                user.ProfileImage = image;
+                _db.Add(image);
+            }
+
+            _db.Attach(user);
+
+            await _db.SaveChangesAsync();
+        }
+
+        public Task UpdateProfileImageAsync(Team team, string data)
+        {
+            if (team == null)
+            {
+                throw new ArgumentNullException(nameof(team));
+            }
+
+            if (string.IsNullOrEmpty(data))
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateBannerImageAsync(Team team, string data)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async Task<Image> UpdateImageAsync(Image oldImage, string imageDefault, string newImagePath, byte[] bytes)
+        {
+            // Write the new image to disk
+            var file = _fileProvider.GetFileInfo(newImagePath);
             using (var fileStream = new FileStream(file.PhysicalPath, FileMode.Create))
             {
                 await fileStream.WriteAsync(bytes, 0, bytes.Length);
             }
 
-            if (user.ProfileImage != null && user.ProfileImage != await GetDefaultImageAsync(Defaults.ProfileImage))
+            if (oldImage != null && oldImage != await GetDefaultImageAsync(imageDefault))
             {
-                var oldRelativePath = user.ProfileImage.Source;
+                var oldRelativePath = oldImage.Source;
 
-                user.ProfileImage.Source = relativePath;
-                _db.Attach(user.ProfileImage);
-                await _db.SaveChangesAsync();
+                oldImage.Source = newImagePath;
 
                 // Delete the old image
                 var oldFile = _fileProvider.GetFileInfo(oldRelativePath);
@@ -121,25 +148,15 @@ namespace SmashLeague.Services
                 {
                     File.Delete(oldFile.PhysicalPath);
                 }
+
+                return oldImage;
             }
             else
             {
-                var image = new Image { Source = relativePath };
-                _db.Images.Add(image);
-                await _db.SaveChangesAsync();
+                var image = new Image { Source = newImagePath };
 
-                user.ProfileImage = image;
+                return image;
             }
-        }
-
-        public async Task CreateDefaultImageForTeamAsync(Team team)
-        {
-            var image = await GetDefaultImageAsync(Defaults.TeamImage);
-            team.TeamImage = image;
-
-            _db.Update(team);
-
-            await _db.SaveChangesAsync();
         }
 
         private string GetEncodedTime()

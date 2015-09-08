@@ -22,6 +22,7 @@ namespace SmashLeague.Data
         [Required]
         public TeamOwner Owner { get; set; }
 
+        public Image HeaderImage { get; set; }
         public Image TeamImage { get; set; }
         public Rank Rank { get; set; }
 
