@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using SmashLeague.DataTransferObjects;
+using SmashLeague.Security.Authorization;
 using SmashLeague.Services;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,7 +24,7 @@ namespace SmashLeague.Controllers
             _notificationManager = notificationManager;
         }
 
-        // TODO: move this to player API
+        // TODO: move this to player API?
         [HttpPost("suggest")]
         public async Task<Player[]> Suggest([FromBody] Player[] players)
         {
@@ -74,6 +76,15 @@ namespace SmashLeague.Controllers
             var teams = await _teamManager.GetTeamsForPlayerAsync(username);
 
             return teams.Select(x => (Team)x).ToArray();
+        }
+
+        [HttpPut("{normalizedName}/owner")]
+        [Authorize(AuthorizationDefaults.PolicyTeamOwner)]
+        public async Task<Team> ChangeOwner(string normalizedName, [FromBody] string newOwner)
+        {
+            var team = await _teamManager.UpdateTeamOwner(normalizedName, newOwner);
+
+            return team;
         }
     }
 

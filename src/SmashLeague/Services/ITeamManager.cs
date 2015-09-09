@@ -11,5 +11,6 @@ namespace SmashLeague.Services
         Task<Team[]> GetTopTeamsAsync(int number);
         Task<Team[]> SearchForTeamsAsync(string q);
         Task<Team> GetTeamByNormalizedNameAsync(string normalizedName);
+        Task<Team> UpdateTeamOwner(string normalizedName, string newOwner);
     }
 }

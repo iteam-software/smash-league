@@ -1,10 +1,15 @@
-﻿using SmashLeague.Data;
-using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using SmashLeague.Data;
 using SmashLeague.Data.Extensions;
+using SmashLeague.Security.Authorization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SmashLeague.Services
 {
@@ -13,12 +18,14 @@ namespace SmashLeague.Services
         private readonly SmashLeagueDbContext _db;
         private readonly IImageManager _imageManager;
         private readonly IRankManager _rankManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ISeasonManager _seasonManager;
         private readonly ApplicationUserManager _userManager;
 
         public TeamManager(
             SmashLeagueDbContext db,
             ApplicationUserManager userManager,
+            RoleManager<IdentityRole> roleManager,
             IRankManager rankManager,
             IImageManager imageManager,
             ISeasonManager seasonManager)
@@ -28,6 +35,7 @@ namespace SmashLeague.Services
             _rankManager = rankManager;
             _imageManager = imageManager;
             _seasonManager = seasonManager;
+            _roleManager = roleManager;
         }
 
         public async Task<TeamResult> CreateTeamAsync(DataTransferObjects.Team team)
@@ -122,11 +130,30 @@ namespace SmashLeague.Services
 
             var teamOwner = new TeamOwner { Player = ownerPlayer, Team = entity };
 
+            // Begin transaction as this is where we begin save operations
+            var transaction = await _db.Database.BeginTransactionAsync();
+
+            var teamOwnerRole = await _roleManager.FindByNameAsync("TeamOwner");
+            if (teamOwnerRole == null)
+            {
+                // Create the team owner role
+                teamOwnerRole = new IdentityRole("TeamOwner");
+                var r = await _roleManager.CreateAsync(teamOwnerRole);
+                EnsureIdentitySucceeded(r);
+
+                var userRole = new IdentityUserRole<string> { UserId = ownerPlayer.User.Id, RoleId = teamOwnerRole.Id };
+
+                teamOwnerRole.Users.Add(userRole);
+
+                r = await _roleManager.UpdateAsync(teamOwnerRole);
+                EnsureIdentitySucceeded(r);
+            }
+
+            var result = await _roleManager.AddClaimAsync(teamOwnerRole, new Claim(AuthorizationDefaults.ClaimTypeTeamOwner, entity.NormalizedName));
+            EnsureIdentitySucceeded(result);
+
             entity.Invitees = roster;
             entity.Owner = teamOwner;
-
-            // Save these changes
-            var transaction = await _db.Database.BeginTransactionAsync();
 
             _db.Add(teamOwner);
             _db.Add(entity);
@@ -240,6 +267,11 @@ namespace SmashLeague.Services
             return suggestions;
         }
 
+        public Task<Team> UpdateTeamOwner(string normalizedName, string newOwner)
+        {
+            throw new NotImplementedException();
+        }
+
         private IQueryable<Team> BuildTeamQuery(DbSet<Team> set)
         {
             return set
@@ -249,6 +281,20 @@ namespace SmashLeague.Services
                 .Include(x => x.Rank).ThenInclude(x => x.Rating)
                 .Include(x => x.Owner).ThenInclude(x => x.Player).ThenInclude( x => x.User)
                 .Include(x => x.TeamImage);
+        }
+
+        private void EnsureIdentitySucceeded(IdentityResult result)
+        {
+            if (!result.Succeeded)
+            {
+                var errors = new StringBuilder('\n');
+                foreach (var error in result.Errors)
+                {
+                    errors.AppendLine($"{error.Code}: {error.Description}");
+                }
+
+                throw new InvalidProgramException($"Identity operation failed => {errors}");
+            }
         }
     }
 }

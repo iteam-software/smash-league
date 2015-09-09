@@ -58,10 +58,8 @@ namespace SmashLeague.Services
                 throw new ArgumentNullException(nameof(data));
             }
 
-            var type = GetImageType(data);
             var bytes = GetImageBytes(data);
-            var encodedTime = GetEncodedTime();            
-            var relativePath = $"/media/users/{user.UserName}.h-{encodedTime}.{type}";
+            var relativePath = BuildImagePath("users", user.UserName, data);
 
             var image = await UpdateImageAsync(user.HeaderImage, Defaults.HeaderImage, relativePath, bytes);
 
@@ -89,11 +87,8 @@ namespace SmashLeague.Services
                 throw new ArgumentNullException(nameof(data));
             }
 
-            var type = GetImageType(data);
             var bytes = GetImageBytes(data);
-            var encodedTime = GetEncodedTime();
-
-            var relativePath = $"/media/users/{user.UserName}.p-{encodedTime}.{type}";
+            var relativePath = BuildImagePath("users", user.UserName, data);
 
             var image = await UpdateImageAsync(user.ProfileImage, Defaults.ProfileImage, relativePath, bytes);
             if (user.ProfileImage == null)
@@ -157,6 +152,14 @@ namespace SmashLeague.Services
 
                 return image;
             }
+        }
+
+        private string BuildImagePath(string folder, string identifier, string data)
+        {
+            var type = GetImageType(data);
+            var encodedTime = GetEncodedTime();
+
+            return $"/media/{folder}/{identifier}-{encodedTime}.{type}";
         }
 
         private string GetEncodedTime()

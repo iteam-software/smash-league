@@ -9,9 +9,14 @@ using Microsoft.Data.Entity.SqlServer.Metadata;
 namespace SmashLeague.Data.Migrations
 {
     [DbContext(typeof(SmashLeagueDbContext))]
-    partial class SmashLeagueDbContextModelSnapshot : ModelSnapshot
+    partial class ImageHeaderToTeam
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        public override string Id
+        {
+            get { return "20150908164733_ImageHeaderToTeam"; }
+        }
+
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .Annotation("ProductVersion", "7.0.0-beta7-15540")

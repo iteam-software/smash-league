@@ -7,6 +7,7 @@ using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using SmashLeague.Data;
 using SmashLeague.Data.Extensions;
+using SmashLeague.Security.Authorization;
 using SmashLeague.Security.Battlenet;
 using SmashLeague.Services;
 
@@ -62,6 +63,8 @@ namespace SmashLeague
 
             // Add application services
             services.AddSmashLeagueServices(Environment);
+
+            services.AddSmashLeagueAuthorization();
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)

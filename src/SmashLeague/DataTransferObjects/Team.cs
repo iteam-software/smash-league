@@ -10,6 +10,7 @@ namespace SmashLeague.DataTransferObjects
         public string Name { get; set; }
         public string NormalizedName { get; set; }
         public string TeamImageSrc { get; set; }
+        public string HeaderImageSrc { get; private set; }
         public Data.RankBrackets Bracket { get; set; }
         public int Rating { get; set; }
 
@@ -26,6 +27,11 @@ namespace SmashLeague.DataTransferObjects
             if (entity.TeamImage != null)
             {
                 team.TeamImageSrc = entity.TeamImage.Source;
+            }
+
+            if (entity.HeaderImage != null)
+            {
+                team.HeaderImageSrc = entity.HeaderImage.Source;
             }
 
             if (entity.Rank != null && entity.Rank.RankBracket != null)
