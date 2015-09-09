@@ -149,8 +149,8 @@ namespace SmashLeague.Services
                 EnsureIdentitySucceeded(r);
             }
 
-            var result = await _roleManager.AddClaimAsync(teamOwnerRole, new Claim(AuthorizationDefaults.ClaimTypeTeamOwner, entity.NormalizedName));
-            EnsureIdentitySucceeded(result);
+            var result = await _userManager.AddClaimAsync(ownerPlayer.User, new Claim(AuthorizationDefaults.ClaimTypeTeamOwner, entity.NormalizedName));
+            EnsureIdentitySucceeded(result);            
 
             entity.Invitees = roster;
             entity.Owner = teamOwner;
