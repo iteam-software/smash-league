@@ -182,7 +182,7 @@ namespace SmashLeague.Services
             return TeamResult.Success(entity);
         }
 
-        public async Task<Team> GetTeamByNormalizedNameAsync(string normalizedName)
+        public async Task<Team> FindTeamByNormalizedNameAsync(string normalizedName)
         {
             return await BuildTeamQuery(_db.Teams)
                 .SingleOrDefaultAsync(x => x.NormalizedName == normalizedName);
@@ -265,6 +265,16 @@ namespace SmashLeague.Services
                 .ToArrayAsync();
 
             return suggestions;
+        }
+
+        public Task<Data.Team> UpdateTeam(DataTransferObjects.Team team)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Data.Team> UpdateTeamOwner(Data.Team team, string newOwner)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<Team> UpdateTeamOwner(string normalizedName, string newOwner)

@@ -3,7 +3,6 @@ using Microsoft.AspNet.Mvc;
 using SmashLeague.DataTransferObjects;
 using SmashLeague.Security.Authorization;
 using SmashLeague.Services;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,12 +14,15 @@ namespace SmashLeague.Controllers
     {
         private readonly ITeamManager _teamManager;
         private readonly INotificationManager _notificationManager;
+        private readonly IImageManager _imageManager;
 
         public TeamsApiController(
             ITeamManager teamManager,
+            IImageManager imageManager,
             INotificationManager notificationManager)
         {
             _teamManager = teamManager;
+            _imageManager = imageManager;
             _notificationManager = notificationManager;
         }
 
@@ -67,7 +69,7 @@ namespace SmashLeague.Controllers
         [HttpGet("{normalizedName}")]
         public async Task<Team> Get(string normalizedName)
         {
-            return await _teamManager.GetTeamByNormalizedNameAsync(normalizedName);
+            return await _teamManager.FindTeamByNormalizedNameAsync(normalizedName);
         }
 
         [HttpGet("{username}/teams")]
@@ -82,9 +84,31 @@ namespace SmashLeague.Controllers
         [Authorize(AuthorizationDefaults.PolicyTeamOwner)]
         public async Task<Team> ChangeOwner(string normalizedName, [FromBody] string newOwner)
         {
-            var team = await _teamManager.UpdateTeamOwner(normalizedName, newOwner);
+            var team = await _teamManager.FindTeamByNormalizedNameAsync(normalizedName);
+            team = await _teamManager.UpdateTeamOwner(team, newOwner);
+
+            // TODO notify the new owner
 
             return team;
+        }
+
+        [HttpPut("{normalizedName}")]
+        [Authorize(AuthorizationDefaults.PolicyTeamOwner)]
+        public async Task<Team> UpdateTeam([FromBody] Team team)
+        {
+            var updated = await _teamManager.UpdateTeam(team);
+
+            if (!string.IsNullOrEmpty(team.TeamImageEditSrc))
+            {
+                await _imageManager.UpdateProfileImageAsync(updated, team.TeamImageEditSrc);
+            }
+
+            if (!string.IsNullOrEmpty(team.HeaderImageEditSrc))
+            {
+                await _imageManager.UpdateBannerImageAsync(updated, team.HeaderImageEditSrc);
+            }
+
+            return updated;
         }
     }
 

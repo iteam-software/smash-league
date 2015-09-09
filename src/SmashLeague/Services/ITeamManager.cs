@@ -10,7 +10,8 @@ namespace SmashLeague.Services
         Task<Team[]> GetTeamsForPlayerAsync(string username);
         Task<Team[]> GetTopTeamsAsync(int number);
         Task<Team[]> SearchForTeamsAsync(string q);
-        Task<Team> GetTeamByNormalizedNameAsync(string normalizedName);
-        Task<Team> UpdateTeamOwner(string normalizedName, string newOwner);
+        Task<Team> FindTeamByNormalizedNameAsync(string normalizedName);
+        Task<Team> UpdateTeamOwner(Team team, string newOwner);
+        Task<Team> UpdateTeam(DataTransferObjects.Team team);
     }
 }

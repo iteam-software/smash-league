@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SmashLeague.DataTransferObjects
 {
@@ -11,6 +10,8 @@ namespace SmashLeague.DataTransferObjects
         public string NormalizedName { get; set; }
         public string TeamImageSrc { get; set; }
         public string HeaderImageSrc { get; private set; }
+        public string TeamImageEditSrc { get; set; }
+        public string HeaderImageEditSrc { get; private set; }
         public Data.RankBrackets Bracket { get; set; }
         public int Rating { get; set; }
 
