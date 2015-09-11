@@ -9,9 +9,9 @@ namespace SmashLeague.DataTransferObjects
         public string Name { get; set; }
         public string NormalizedName { get; set; }
         public string TeamImageSrc { get; set; }
-        public string HeaderImageSrc { get; private set; }
+        public string HeaderImageSrc { get; set; }
         public string TeamImageEditSrc { get; set; }
-        public string HeaderImageEditSrc { get; private set; }
+        public string HeaderImageEditSrc { get; set; }
         public Data.RankBrackets Bracket { get; set; }
         public int Rating { get; set; }
 

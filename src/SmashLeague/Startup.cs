@@ -53,6 +53,7 @@ namespace SmashLeague
             services.ConfigureCookieAuthentication(options =>
             {
                 options.LoginPath = null;
+                options.AccessDeniedPath = null;
             });
 
             // Add Mvc services

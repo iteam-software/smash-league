@@ -50,6 +50,12 @@ module SmashLeague.Teams {
       return this._http.get('/api/team/search?q=' + q);
     }
 
+    public UpdateTeam(
+      team: any): ng.IHttpPromise<any> {
+
+      return this._http.put('/api/team/' + team.NormalizedName, team);
+    }
+
     public static get Factory() {
 
       var factory = (http) => {

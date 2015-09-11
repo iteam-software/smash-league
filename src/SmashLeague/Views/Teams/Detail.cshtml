@@ -5,20 +5,27 @@
     Layout = null;
 }
 
-<div class="profile">
-  <div class="profile-banner">
+<div class="profile team" ng-class="{'team-never-lucky':Team.Bracket == 1, 'team-common':Team.Bracket == 2, 'team-rare':Team.Bracket == 3, 'team-legendary':Team.Bracket == 4}">
+  <div class="profile-banner" ng-class="{editing:IsEditing}" ng-style="{'background-image': (IsEditing && Edit.Banner.Src && 'url(' + Edit.Banner.Src +')') || (Team.HeaderImageSrc && 'url(' + Team.HeaderImageSrc +')')}">
     <div class="container" style="height:100%">
+      <file-selector class="profile-banner-edit" ng-if="IsEditing" selector-file="Edit.Banner" selector-wrap-url="true">
+        <h3><span class="fa fa-camera"></span> Upload a new banner</h3>
+      </file-selector>
       <a class="profile-img">
         <img ng-src="{{(IsEditing && Edit.Image.Src) || Team.TeamImageSrc}}" />
       </a>
+      <file-selector class="profile-img profile-img-edit" ng-if="IsEditing" selector-file="Edit.Image" selector-wrap-url="false">
+        <h1><span class="fa fa-camera"></span></h1>
+      </file-selector>
     </div>
   </div>
   <div class="content content-profile">
     <div class="container">
       <div class="row">
         <div class="col-md-2">
-          <div class="profile-details">
-            <h4 class="profile-username"><strong>{{Team.Name}}</strong></h4>
+          <div class="profile-details team-heading">
+            <h4 class="team-name"><strong>{{Team.Name}}</strong></h4>
+            <p class="team-rating"><span class="fa fa-star"></span> {{Team.Rating}}</p>
           </div>
         </div>
         <div class="col-md-10">
@@ -34,11 +41,11 @@
                 <button class="btn btn-link navbar-btn" ng-disabled="IsEditing"><span class="fa fa-history"></span> Match History</button>
               </li>
             </ul>
-            @*<ul class="nav-profile-edit">
+            <ul class="nav-profile-edit" ng-if="AuthService.IsAuthenticated && AuthService.Username == Team.Owner.Username">
               <li ng-show="!IsEditing"><button class="btn btn-info" ng-click="BeginEdit()"><span class="fa fa-pencil"></span> Edit</button></li>
               <li ng-show="IsEditing"><button class="btn btn-default" ng-click="Cancel()">Cancel</button></li>
               <li ng-show="IsEditing"><button class="btn btn-success" ng-click="Save()"><span class="fa fa-save"></span> Save</button></li>
-            </ul>*@
+            </ul>
           </div>
           <ui-view name="TeamContent"></ui-view>
         </div>

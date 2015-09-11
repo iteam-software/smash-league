@@ -18,14 +18,14 @@ namespace SmashLeague.Services
         private readonly SmashLeagueDbContext _db;
         private readonly IImageManager _imageManager;
         private readonly IRankManager _rankManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ISeasonManager _seasonManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicationUserManager _userManager;
 
         public TeamManager(
             SmashLeagueDbContext db,
             ApplicationUserManager userManager,
-            RoleManager<IdentityRole> roleManager,
+            SignInManager<ApplicationUser> signInManager,
             IRankManager rankManager,
             IImageManager imageManager,
             ISeasonManager seasonManager)
@@ -35,10 +35,10 @@ namespace SmashLeague.Services
             _rankManager = rankManager;
             _imageManager = imageManager;
             _seasonManager = seasonManager;
-            _roleManager = roleManager;
+            _signInManager = signInManager;
         }
 
-        public async Task<TeamResult> CreateTeamAsync(DataTransferObjects.Team team)
+        public async Task<TeamResult> CreateTeamAsync(ClaimsPrincipal signedInUser, DataTransferObjects.Team team)
         {
             // Validate team
             if (team == null)
@@ -127,30 +127,21 @@ namespace SmashLeague.Services
             {
                 throw new InvalidProgramException($"Player entity for owner {team.Owner.Username} not found.");
             }
+            if (ownerPlayer.User.Id != signedInUser.GetUserId())
+            {
+                throw new InvalidOperationException($"Team owner must be currently signed in user.");
+            }
 
             var teamOwner = new TeamOwner { Player = ownerPlayer, Team = entity };
 
             // Begin transaction as this is where we begin save operations
             var transaction = await _db.Database.BeginTransactionAsync();
 
-            var teamOwnerRole = await _roleManager.FindByNameAsync("TeamOwner");
-            if (teamOwnerRole == null)
-            {
-                // Create the team owner role
-                teamOwnerRole = new IdentityRole("TeamOwner");
-                var r = await _roleManager.CreateAsync(teamOwnerRole);
-                EnsureIdentitySucceeded(r);
+            var result = await _userManager.AddClaimAsync(ownerPlayer.User, new Claim($"{AuthorizationDefaults.ClaimTypeTeamOwner}:{entity.NormalizedName}", ownerPlayer.User.UserName));
+            EnsureIdentitySucceeded(result);
 
-                var userRole = new IdentityUserRole<string> { UserId = ownerPlayer.User.Id, RoleId = teamOwnerRole.Id };
-
-                teamOwnerRole.Users.Add(userRole);
-
-                r = await _roleManager.UpdateAsync(teamOwnerRole);
-                EnsureIdentitySucceeded(r);
-            }
-
-            var result = await _userManager.AddClaimAsync(ownerPlayer.User, new Claim(AuthorizationDefaults.ClaimTypeTeamOwner, entity.NormalizedName));
-            EnsureIdentitySucceeded(result);            
+            // Refresh the signin to add the owner cookie
+            await _signInManager.RefreshSignInAsync(ownerPlayer.User);
 
             entity.Invitees = roster;
             entity.Owner = teamOwner;
@@ -267,17 +258,20 @@ namespace SmashLeague.Services
             return suggestions;
         }
 
-        public Task<Data.Team> UpdateTeam(DataTransferObjects.Team team)
+        public async Task<Team> UpdateTeam(DataTransferObjects.Team team)
         {
-            throw new NotImplementedException();
+            if (team == null)
+            {
+                throw new ArgumentNullException(nameof(team));
+            }
+
+            var entity = await BuildTeamQuery(_db.Teams)
+                .SingleOrDefaultAsync(x => x.NormalizedName == team.NormalizedName);
+
+            return entity;
         }
 
-        public Task<Data.Team> UpdateTeamOwner(Data.Team team, string newOwner)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Team> UpdateTeamOwner(string normalizedName, string newOwner)
+        public Task<Team> UpdateTeamOwner(Team team, string newOwner)
         {
             throw new NotImplementedException();
         }
@@ -289,8 +283,9 @@ namespace SmashLeague.Services
                 .Include(x => x.Invitees).ThenInclude(x => x.Player).ThenInclude(x => x.User)
                 .Include(x => x.Rank).ThenInclude(x => x.RankBracket)
                 .Include(x => x.Rank).ThenInclude(x => x.Rating)
-                .Include(x => x.Owner).ThenInclude(x => x.Player).ThenInclude( x => x.User)
-                .Include(x => x.TeamImage);
+                .Include(x => x.Owner).ThenInclude(x => x.Player).ThenInclude(x => x.User)
+                .Include(x => x.TeamImage)
+                .Include(x => x.HeaderImage);
         }
 
         private void EnsureIdentitySucceeded(IdentityResult result)

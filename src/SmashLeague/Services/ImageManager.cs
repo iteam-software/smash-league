@@ -62,14 +62,12 @@ namespace SmashLeague.Services
             var relativePath = BuildImagePath("users", user.UserName, data);
 
             var image = await UpdateImageAsync(user.HeaderImage, Defaults.HeaderImage, relativePath, bytes);
-
-
-            if (user.HeaderImage == null)
+            if (image.ImageId <= 0)
             {
-                user.HeaderImage = image;
                 _db.Add(image);
             }
 
+            user.HeaderImage = image;
             _db.Attach(user);
 
             await _db.SaveChangesAsync();
@@ -91,18 +89,18 @@ namespace SmashLeague.Services
             var relativePath = BuildImagePath("users", user.UserName, data);
 
             var image = await UpdateImageAsync(user.ProfileImage, Defaults.ProfileImage, relativePath, bytes);
-            if (user.ProfileImage == null)
+            if (image.ImageId <= 0)
             {
-                user.ProfileImage = image;
                 _db.Add(image);
             }
 
+            user.ProfileImage = image;
             _db.Attach(user);
 
             await _db.SaveChangesAsync();
         }
 
-        public Task UpdateProfileImageAsync(Team team, string data)
+        public async Task UpdateProfileImageAsync(Team team, string data)
         {
             if (team == null)
             {
@@ -114,12 +112,46 @@ namespace SmashLeague.Services
                 throw new ArgumentNullException(nameof(data));
             }
 
-            throw new NotImplementedException();
+            var bytes = GetImageBytes(data);
+            var relativePath = BuildImagePath("teams", team.NormalizedName, data);
+
+            var image = await UpdateImageAsync(team.TeamImage, Defaults.TeamImage, relativePath, bytes);
+            if (image.ImageId <= 0)
+            {
+                _db.Add(image);
+            }
+
+            team.TeamImage = image;
+            _db.Attach(team);
+
+            await _db.SaveChangesAsync();
         }
 
-        public Task UpdateBannerImageAsync(Team team, string data)
+        public async Task UpdateBannerImageAsync(Team team, string data)
         {
-            throw new NotImplementedException();
+            if (team == null)
+            {
+                throw new ArgumentNullException(nameof(team));
+            }
+
+            if (string.IsNullOrEmpty(data))
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+
+            var bytes = GetImageBytes(data);
+            var relativePath = BuildImagePath("teams", team.NormalizedName, data);
+
+            var image = await UpdateImageAsync(team.HeaderImage, Defaults.HeaderImage, relativePath, bytes);
+            if (image.ImageId <= 0)
+            {
+                _db.Add(image);
+            }
+
+            team.HeaderImage = image;
+            _db.Attach(team);
+
+            await _db.SaveChangesAsync();
         }
 
         private async Task<Image> UpdateImageAsync(Image oldImage, string imageDefault, string newImagePath, byte[] bytes)

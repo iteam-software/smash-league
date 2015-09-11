@@ -14,9 +14,11 @@ namespace SmashLeague.Security.Authorization
 
             services.AddTransient<TeamOwnerRequirement>();
 
+            var provider = services.BuildServiceProvider();
+
             services.AddAuthorization(x =>
             {
-                x.AddTeamOwnerPolicy();
+                x.AddTeamOwnerPolicy(provider);
             });
 
             return services;

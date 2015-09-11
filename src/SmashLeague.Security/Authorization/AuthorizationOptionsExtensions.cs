@@ -5,7 +5,7 @@ namespace SmashLeague.Security.Authorization
 {
     public static class AuthorizationOptionsExtensions
     {
-        public static void AddTeamOwnerPolicy(this AuthorizationOptions options)
+        public static void AddTeamOwnerPolicy(this AuthorizationOptions options, IServiceProvider provider)
         {
             if (options == null)
             {
@@ -16,7 +16,7 @@ namespace SmashLeague.Security.Authorization
             var ownershipRequirements = new IAuthorizationRequirement[]
             {
                     new DenyAnonymousAuthorizationRequirement(),
-                    new TeamOwnerRequirement()
+                    (TeamOwnerRequirement)provider.GetService(typeof(TeamOwnerRequirement))
             };
 
             var ownershipPolicy = new AuthorizationPolicy(ownershipRequirements, new string[0]);

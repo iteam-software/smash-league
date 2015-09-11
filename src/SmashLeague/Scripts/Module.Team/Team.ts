@@ -79,7 +79,8 @@ module SmashLeague.Teams {
     'ui.router',
     'ngDragDrop',
     'SmashLeague.Player',
-    'SmashLeague.Profile'
+    'SmashLeague.Profile',
+    'SmashLeague.Common'
   ]);
   
   Application.Module.config(Application.Config);

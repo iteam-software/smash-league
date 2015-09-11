@@ -37,7 +37,7 @@ namespace SmashLeague.Controllers
         [HttpPost]
         public async Task<Team> Create([FromBody] Team team)
         {
-            var result = await _teamManager.CreateTeamAsync(team);
+            var result = await _teamManager.CreateTeamAsync(User, team);
             if (result.Succeeded)
             {
                 await _notificationManager.NotifyTeamInvite(result.Team);
@@ -81,7 +81,7 @@ namespace SmashLeague.Controllers
         }
 
         [HttpPut("{normalizedName}/owner")]
-        [Authorize(AuthorizationDefaults.PolicyTeamOwner, Roles = "TeamOwner")]
+        [Authorize(AuthorizationDefaults.PolicyTeamOwner)]
         public async Task<Team> ChangeOwner(string normalizedName, [FromBody] string newOwner)
         {
             var team = await _teamManager.FindTeamByNormalizedNameAsync(normalizedName);
@@ -93,7 +93,7 @@ namespace SmashLeague.Controllers
         }
 
         [HttpPut("{normalizedName}")]
-        [Authorize(AuthorizationDefaults.PolicyTeamOwner, Roles = "TeamOwner")]
+        [Authorize(AuthorizationDefaults.PolicyTeamOwner)]
         public async Task<Team> UpdateTeam([FromBody] Team team)
         {
             var updated = await _teamManager.UpdateTeam(team);
